@@ -77,13 +77,32 @@ export const loginFacebook = async() => {
 
 export const loginGoogle = async() => {
     try {
-        const { type, token, user } = await Google.logInAsync({
-            expoClientId: `148201193183-rq1ttebsi3oaub2hbij2misj6n1uum8b.apps.googleusercontent.com`,
-            iosClientId: `148201193183-7cjvnn24d2a5pkvd0162uignadheb8ig.apps.googleusercontent.com`,
-            androidClientId: `148201193183-b2jp16kn90lc9u02v1ipl51up89pkrr1.apps.googleusercontent.com`,
+        const { type, accessToken, user} = await Google.logInAsync({
+            androidClientId: '148201193183-45607r93v6vlvtkr4u8gcec95l7tc9rm.apps.googleusercontent.com',
+            scopes: ['profile', 'email'],
           });
+        if(type === 'success') {
+            const credential = firebase.auth.GoogleAuthProvider.credential(accessToken)
+            const res = await firebase.auth().signInWithCredential(credential)
+            
+            // const userProfile = {
+            //     uid: res.user.uid,
+            //     email: res.user.email,
+            // } 
+            // const ActiveUser = await usersCollection.doc(res.user.uid).get();
+
+            // if(ActiveUser.exists) {
+            //     const data = ActiveUser.data();
+            //     return {isAuth: true, user: data}
+            // } else {
+            //     await usersCollection.doc(res.user.uid).set(userProfile);
+            //     return {isAuth: true, user: userProfile}
+            // }
+            console.log(user)
+        }
     } catch (error) {
-        
+        console.log(error)
+        return {error: error.message}
     }
     
 }

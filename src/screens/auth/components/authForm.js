@@ -5,7 +5,7 @@ import { Input, Button } from 'react-native-elements'
 import { StyleSheet } from 'react-native'
 import { Colors } from '../../../reusable/tools'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginFacebookUser, loginUser, registerUser } from '../../../store/actions/authActions'
+import { loginFacebookUser, loginGoogleUser, loginUser, registerUser } from '../../../store/actions/authActions'
 
 export const AuthForm = () => {
 
@@ -43,7 +43,8 @@ export const AuthForm = () => {
     }
 
     const handleGoogleLogin = () => {
-        
+        setLoadingGoogle(true)
+        dispatch(loginGoogleUser())
     }
 
     const changeType = () => {
