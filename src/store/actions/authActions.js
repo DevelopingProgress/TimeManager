@@ -1,5 +1,5 @@
-import { login, loginFacebook, loginGoogle, register } from "../api/apiAuth"
-import { AUTH_USER } from "../types"
+import { login, loginFacebook, loginGoogle, register, autoLogin, logout } from "../api/apiAuth"
+import { AUTH_USER, LOGOUT_USER } from "../types"
 
 export const registerUser = (values) => ({
     type: AUTH_USER,
@@ -19,4 +19,14 @@ export const loginFacebookUser = () => ({
 export const loginGoogleUser = () => ({
     type: AUTH_USER,
     payload: loginGoogle()
+})
+
+export const autoLoginUser = () => ({
+    type: AUTH_USER,
+    payload: autoLogin()
+})
+
+export const logoutUser = () => ({
+    type: LOGOUT_USER,
+    payload: logout()
 })

@@ -77,28 +77,29 @@ export const loginFacebook = async() => {
 
 export const loginGoogle = async() => {
     try {
-        const { type, accessToken, user} = await Google.logInAsync({
-            androidClientId: '148201193183-45607r93v6vlvtkr4u8gcec95l7tc9rm.apps.googleusercontent.com',
+        const { type, user, idToken} = await Google.logInAsync({
+            androidClientId: `148201193183-45607r93v6vlvtkr4u8gcec95l7tc9rm.apps.googleusercontent.com`,
+            iosClientId: `148201193183-tc11ghq6ecuvlbb4blcslvg6oustjod9.apps.googleusercontent.com`,
+            expoClientId: ``,
             scopes: ['profile', 'email'],
           });
         if(type === 'success') {
-            const credential = firebase.auth.GoogleAuthProvider.credential(accessToken)
+            const credential = firebase.auth.GoogleAuthProvider.credential(idToken)
             const res = await firebase.auth().signInWithCredential(credential)
             
-            // const userProfile = {
-            //     uid: res.user.uid,
-            //     email: res.user.email,
-            // } 
-            // const ActiveUser = await usersCollection.doc(res.user.uid).get();
+            const userProfile = {
+                uid: res.user.uid,
+                email: res.user.email,
+            } 
+            const ActiveUser = await usersCollection.doc(res.user.uid).get();
 
-            // if(ActiveUser.exists) {
-            //     const data = ActiveUser.data();
-            //     return {isAuth: true, user: data}
-            // } else {
-            //     await usersCollection.doc(res.user.uid).set(userProfile);
-            //     return {isAuth: true, user: userProfile}
-            // }
-            console.log(user)
+            if(ActiveUser.exists) {
+                const data = ActiveUser.data();
+                return {isAuth: true, user: data}
+            } else {
+                await usersCollection.doc(res.user.uid).set(userProfile);
+                return {isAuth: true, user: userProfile}
+            }
         }
     } catch (error) {
         console.log(error)
@@ -107,16 +108,20 @@ export const loginGoogle = async() => {
     
 }
 
-// export const autoLogin = () => (
-//     new Promise((resolve,reject)=>{
-//         firebase.auth().onAuthStateChanged( user => {
-//             if(user){
-//                 usersCollection.doc(user.uid).get().then( snapshot =>{
-//                     resolve({ isAuth: true, user: snapshot.data() })
-//                 })
-//             } else {
-//                 resolve({ isAuth: false, user:[] })
-//             }
-//         })
-//     })
-// )
+export const autoLogin = () => (
+    new Promise((resolve,reject)=>{
+        firebase.auth().onAuthStateChanged( user => {
+            if(user){
+                usersCollection.doc(user.uid).get().then( snapshot =>{
+                    resolve({ isAuth: true, user: snapshot.data() })
+                })
+            } else {
+                resolve({ isAuth: false, user:[] })
+            }
+        })
+    })
+)
+
+export const logout = () => {
+    //Logout
+}
