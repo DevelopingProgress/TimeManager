@@ -5,7 +5,7 @@ import { Input, Button } from 'react-native-elements'
 import { StyleSheet } from 'react-native'
 import { Colors } from '../../../reusable/tools'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser, registerUser } from '../../../store/actions/authActions'
+import { loginFacebookUser, loginUser, registerUser } from '../../../store/actions/authActions'
 
 export const AuthForm = () => {
 
@@ -14,6 +14,8 @@ export const AuthForm = () => {
     const [showPass, setShowPass] = useState(true)
     const [showConfirmPass, setShowConfirmPass] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [loadingFacebook, setLoadingFacebook] = useState(false)
+    const [loadingGoogle, setLoadingGoogle] = useState(false)
     const nameRegex =  /^[A-Za-z0-9]+([A-Za-z0-9]*|[._-]?[A-Za-z0-9]+)*$/g
     const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
     const error = useSelector(state => state.auth.error)
@@ -35,6 +37,15 @@ export const AuthForm = () => {
         } 
     }
 
+    const handleFacebookLogin = () => {
+        setLoadingFacebook(true)
+        dispatch(loginFacebookUser())
+    }
+
+    const handleGoogleLogin = () => {
+        
+    }
+
     const changeType = () => {
         if(formType === 'Login') {
             setFormType('Register')
@@ -44,6 +55,7 @@ export const AuthForm = () => {
     }
 
     return (
+        <>
         <Formik 
             initialValues={
                 formType === 'Login' ? {
@@ -143,7 +155,6 @@ export const AuthForm = () => {
                         maxLength={16}
                     />
                     }
-
                     <Button
                         title={ formType === 'Login' ? 'Zaloguj' : 'Zarejestruj'}
                         buttonStyle={{
@@ -154,22 +165,62 @@ export const AuthForm = () => {
                         onPress={handleSubmit}
                         loading={loading}
                     />
-
-                    <Button
-                        title={`${
-                            formType === 'Login' ? 'Nie masz konta? Zarejestruj się' 
-                            : 'Masz konto? Zaloguj się'
-                        }`}
-                        buttonStyle={{
-                            margin: 10,
-                        }}
-                        titleStyle={{width: '100%',  color: Colors.black2}}
-                        onPress={changeType}
-                        type='clear'
-                    />
                 </>
             )}
         </Formik>
+        {formType === 'Login' &&
+        <>
+        <Button
+            title="Zaloguj za pomocą Facebook"
+            buttonStyle={{
+                backgroundColor: Colors.fbblue,
+                margin: 10,
+                padding: 10,
+                paddingHorizontal: 15
+            }}
+            // titleStyle={{width: '100%'}}
+            onPress={handleFacebookLogin}
+            loading={loadingFacebook}
+            icon={{
+                type: "fontawesome",
+                name: "facebook",
+                color: Colors.white
+            }}
+        />
+
+        <Button
+            title="Zaloguj za pomocą Google"
+            buttonStyle={{
+                backgroundColor: Colors.red,
+                margin: 10,
+                padding: 10,
+                paddingHorizontal: 25
+            }}
+            titleStyle={{marginLeft: 6}}
+            onPress={handleGoogleLogin}
+            loading={loadingGoogle}
+            icon={{
+                type: "fontisto",
+                name: "google",
+                color: Colors.white,
+                style: {marginStart: 0}
+            }}
+        />    
+        </>
+        }
+        <Button
+            title={`${
+                formType === 'Login' ? 'Nie masz konta? Zarejestruj się' 
+                : 'Masz konto? Zaloguj się'
+            }`}
+            buttonStyle={{
+                margin: 10,
+            }}
+            titleStyle={{width: '100%',  color: Colors.black2}}
+            onPress={changeType}
+            type='clear'
+        />
+        </>
     )
 }
 
