@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet, ScrollView, Button } from 'react-native'
 import { AuthForm } from './components/authForm'
-import { Logo } from './components/logo'
+import { Logo } from '../../reusable/logo'
 
 export const AuthScreen = ({navigation}) => {
     return (
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#e4e4e4'
     },
     container: {
-        marginTop: 30,
         padding: 50,
         alignItems: 'center',
     }

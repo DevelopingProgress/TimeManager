@@ -12,6 +12,9 @@
     "@react-navigation/stack": "^6.0.11",
     "axios": "^0.24.0",
     "expo": "~43.0.0",
+    "expo-facebook": "~12.0.3",
+    "expo-google-app-auth": "~9.0.0",
+    "expo-google-sign-in": "~10.0.3",
     "expo-status-bar": "~1.1.0",
     "firebase": "^8.2.3",
     "formik": "^2.2.9",
@@ -21,6 +24,7 @@
     "react-native": "0.64.2",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-progress": "^5.0.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
     "react-native-vector-icons": "^9.0.0",
@@ -29,9 +33,7 @@
     "redux": "^4.1.2",
     "redux-promise": "^0.6.0",
     "yup": "^0.32.11",
-    "expo-facebook": "~12.0.3",
-    "expo-google-app-auth": "~9.0.0",
-    "expo-google-sign-in": "~10.0.3"
+    "react-native-svg": "12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

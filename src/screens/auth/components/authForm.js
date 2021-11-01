@@ -177,15 +177,14 @@ export const AuthForm = () => {
                 backgroundColor: Colors.fbblue,
                 margin: 10,
                 padding: 10,
-                paddingHorizontal: 15
             }}
-            // titleStyle={{width: '100%'}}
             onPress={handleFacebookLogin}
             loading={loadingFacebook}
+            titleStyle={{marginEnd: 5}}
             icon={{
                 type: "fontawesome",
                 name: "facebook",
-                color: Colors.white
+                color: Colors.white,
             }}
         />
 
@@ -194,8 +193,7 @@ export const AuthForm = () => {
             buttonStyle={{
                 backgroundColor: Colors.red,
                 margin: 10,
-                padding: 10,
-                paddingHorizontal: 25
+                padding: 10
             }}
             titleStyle={{marginLeft: 6}}
             onPress={handleGoogleLogin}
