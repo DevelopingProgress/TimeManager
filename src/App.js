@@ -3,8 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { HomeStack } from './routes/stacks';
 import { AuthScreen } from './screens/auth';
-import { HomeScreen } from './screens/home';
 import { SplashScreen } from './screens/splash';
 import { autoLoginUser } from './store/actions/authActions';
 
@@ -28,8 +28,8 @@ class App extends Component {
         <Stack.Navigator>
           {this.props.auth.isAuth ? (
               <Stack.Screen 
-              name="HomeScreen" 
-              component={HomeScreen} 
+              name="Home" 
+              component={HomeStack} 
               options={{headerShown: false}}
               />
           )
