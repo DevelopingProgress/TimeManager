@@ -10,7 +10,7 @@ export const SplashScreen = () => {
             <Text style={{fontWeight: 'bold', fontSize: 18}}>
                 Ładowanie
             </Text>
-            <Loading/>
+            <Loading circlesnail/>
         </View>
     )
 }

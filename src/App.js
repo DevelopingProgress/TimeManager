@@ -16,11 +16,11 @@ class App extends Component {
     loading: true
   }
 
-  // componentDidMount() {
-  //   this.props.dispatch(autoLoginUser()).then(() => {
-  //     this.setState({loading: false})
-  //   })
-  // }
+  componentDidMount() {
+    this.props.dispatch(autoLoginUser()).then(() => {
+      this.setState({loading: false})
+    })
+  }
 
   render() {
     return (
