@@ -1,17 +1,17 @@
 import React from 'react'
-import { Text } from 'react-native'
 import * as Progress from 'react-native-progress'
 import { Colors } from './tools'
 
-export const Loading = () => {
+export const Loading = (props) => {
     return (
         <>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>
-                Ładowanie
-            </Text>
             <Progress.CircleSnail
-                style={{margin: 10}}
-                color={Colors.blue} 
+                style={{margin: 10, ...props.style}}
+                color={
+                    props.style && props.style.color 
+                    ? props.style.color 
+                    : Colors.blue 
+                } 
                 spinDuration={500}
             />
         </>
