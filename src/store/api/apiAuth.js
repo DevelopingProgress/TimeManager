@@ -124,5 +124,5 @@ export const autoLogin = () => (
 )
 
 export const logout = () => {
-    //Logout
+    firebase.auth().signOut()
 }

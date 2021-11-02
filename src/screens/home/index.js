@@ -7,26 +7,25 @@ import TasksImage from '../../assets/images/Tasks.jpg'
 import TimeImage from '../../assets/images/Time.jpg'
 import AnalyticsImage from '../../assets/images/Analytics.jpg'
 import CalendarImage from '../../assets/images/Calendar.jpg'
-import { Icon } from 'react-native-elements'
+import { SettingsIcon } from '../../reusable/settingsIcon'
 
 export const HomeScreen = ({navigation}) => {
 
     var hours = new Date().getHours()
-    const name = useSelector(state => state.auth.user.name)
-    const greetingName = name.split(' ', 1)
+    const user = useSelector(state => state.auth.user)
+ 
     
     const GreetingText = () => (
         <View style={{flex: 1}}>
             <Text style={styles.greetingText}>
                 {hours && hours < 17 && hours > 4 ? 'Dzień Dobry' : 'Dobry Wieczór'}
                 , <Text style={styles.greetingName}>
-                    {greetingName}
+                    {user && user.name ? user.name.split(' ', 1) : null}
                 </Text>
             </Text>
         </View>
             
     )
-
 
     const Panes = () => (
         <>
@@ -66,7 +65,7 @@ export const HomeScreen = ({navigation}) => {
         <ScrollView style={styles.mainContainer}>
             <View style={styles.container}>
                 <GreetingText/>
-                <SettingsIcon/>
+                <SettingsIcon navigation={navigation}/>
             </View>
             <Panes/>
         </ScrollView>
@@ -74,20 +73,7 @@ export const HomeScreen = ({navigation}) => {
     )
 }
 
-export const SettingsIcon = () => (
-    <View>
-        <Icon 
-            type='entypo' 
-            name='dots-three-vertical' 
-            size={25} 
-            style={{
-                marginTop: 5,
-                color: Colors.black2,
-            }}
 
-        />
-    </View>
-)
 
 export const styles = StyleSheet.create({
     mainContainer: {

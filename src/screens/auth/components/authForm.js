@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { Input, Button } from 'react-native-elements'
 import { Platform, StyleSheet } from 'react-native'
 import { Colors } from '../../../reusable/tools'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginFacebookUser, loginGoogleUser, loginUser, registerUser } from '../../../store/actions/authActions'
+import { clearAuthError, loginFacebookUser, loginGoogleUser, loginUser, registerUser } from '../../../store/actions/authActions'
+import { useFocusEffect } from '@react-navigation/core'
 
 export const AuthForm = () => {
 
@@ -25,8 +26,17 @@ export const AuthForm = () => {
             //ERROR COMPONENT
             alert(error)
             setLoading(false)
+            setLoadingFacebook(false)
+            setLoadingGoogle(false)
+            dispatch(clearAuthError())
         }
     }, [error])
+
+    useFocusEffect(
+        useCallback(() => {
+            return () => dispatch(clearAuthError())
+        },[],)
+    )
 
     const handleSubmit = values => {
         setLoading(true)
@@ -255,9 +265,6 @@ export const AuthForm = () => {
 }
 
 const styles = StyleSheet.create({
-    input: {
-        paddingHorizontal: 4
-    }, 
     containerStyle:{
         paddingHorizontal: 25
     }

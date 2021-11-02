@@ -1,14 +1,15 @@
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { GreetingText } from '../../reusable/greetingText'
-import { SettingsIcon, styles } from '../home'
+import { styles } from '../home'
+import { SettingsIcon } from '../../reusable/settingsIcon'
 
-export const CalendarScreen = () => {
+export const CalendarScreen = ({navigation}) => {
     return (
         <ScrollView style={styles.mainContainer}>
             <View style={styles.container}>
                 <GreetingText title='Kalendarz'/>
-                <SettingsIcon/>
+                <SettingsIcon navigation={navigation}/>
             </View>
         </ScrollView>
     )

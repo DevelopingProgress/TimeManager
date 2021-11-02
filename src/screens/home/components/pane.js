@@ -5,11 +5,7 @@ import { Colors } from '../../../reusable/tools'
 
 export const Pane = (props) => {
     return (
-        <Card
-            containerStyle={{
-                backgroundColor: ''
-            }}
-        >
+        <Card containerStyle={styles.container}>
             <Card.Title>
                 <Text style={styles.cardTitle}>{props.title}</Text>
             </Card.Title>
@@ -35,8 +31,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     container: {
-        padding: 10, 
-        marginTop: Platform.OS === 'android' ? 40 : 30,
+        marginBottom: 20
     },
     greetingText: {
         fontSize: Platform.OS === 'android' ? 25 : 20

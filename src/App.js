@@ -9,6 +9,7 @@ import { AuthScreen } from './screens/auth';
 import { SplashScreen } from './screens/splash';
 import { autoLoginUser } from './store/actions/authActions';
 import { Text, View } from 'react-native';
+import { SettingsScreen } from './screens/settings';
 
 const Stack = createStackNavigator()
 
@@ -38,13 +39,23 @@ class App extends Component {
           />
         </View>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            initialRouteName
+          >
             {this.props.auth.isAuth ? (
+              <>
                 <Stack.Screen 
-                name="Home" 
-                component={HomeStack} 
-                options={{headerShown: false}}
+                  name="Home" 
+                  component={HomeStack} 
+                  options={{headerShown: false}}
                 />
+                <Stack.Screen 
+                  name="SettingsScreen" 
+                  component={SettingsScreen} 
+                  options={{headerShown: false}}
+                />
+              </>
+                
             )
             : (
               this.state.loading ? 
