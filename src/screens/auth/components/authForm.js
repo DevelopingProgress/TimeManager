@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { Input, Button } from 'react-native-elements'
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import { Colors } from '../../../reusable/tools'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginFacebookUser, loginGoogleUser, loginUser, registerUser } from '../../../store/actions/authActions'
@@ -86,6 +86,10 @@ export const AuthForm = () => {
                     .string()
                     .email('Nieprawidłowy adres e-mail')
                     .required('Adres e-mail jest wymagany'),
+                    name: Yup
+                    .string()
+                    .required('Imię jest wymagane')
+                    .matches(nameRegex),
                     password: Yup
                     .string()
                     .required('Hasło jest wymagane')
@@ -101,6 +105,7 @@ export const AuthForm = () => {
         >
             {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
                 <>   
+                    
                     <Input 
                         inputStyle={styles.input}
                         placeholder='Email'
@@ -113,7 +118,20 @@ export const AuthForm = () => {
                         errorStyle={{color: Colors.red, fontSize: 15}}
                         maxLength={50}
                     />
-                    
+                    {formType === 'Register' && 
+                    <Input 
+                        inputStyle={styles.input}
+                        placeholder='Imię'
+                        containerStyle={styles.containerStyle}
+                        onChangeText={handleChange('name')}
+                        onBlur={handleBlur('name')}
+                        value={values.name}
+                        renderErrorMessage={errors.name && touched.name}
+                        errorMessage={errors.name}
+                        errorStyle={{color: Colors.red, fontSize: 15}}
+                        maxLength={50}
+                    />
+                    }
 
                     <Input 
                         inputStyle={styles.input}
@@ -162,7 +180,10 @@ export const AuthForm = () => {
                             backgroundColor: Colors.blue,
                             margin: 10,
                         }}
-                        titleStyle={{width: '100%'}}
+                        titleStyle={{
+                            width: '100%',
+                            fontSize: Platform.OS === 'ios' ? 14 : 15
+                        }}
                         onPress={handleSubmit}
                         loading={loading}
                     />
@@ -180,7 +201,10 @@ export const AuthForm = () => {
             }}
             onPress={handleFacebookLogin}
             loading={loadingFacebook}
-            titleStyle={{marginEnd: 5}}
+            titleStyle={{
+                marginEnd: 5,
+                fontSize: Platform.OS === 'ios'  ? 12 : 15
+            }}
             icon={{
                 type: "fontawesome",
                 name: "facebook",
@@ -195,7 +219,10 @@ export const AuthForm = () => {
                 margin: 10,
                 padding: 10
             }}
-            titleStyle={{marginLeft: 6}}
+            titleStyle={{
+                marginLeft: 6,
+                fontSize: Platform.OS === 'ios' ? 12 : 15
+            }}
             onPress={handleGoogleLogin}
             loading={loadingGoogle}
             icon={{
@@ -213,9 +240,13 @@ export const AuthForm = () => {
                 : 'Masz konto? Zaloguj się'
             }`}
             buttonStyle={{
-                margin: 10,
+                margin: Platform.OS === 'ios' ? 0 : 10
             }}
-            titleStyle={{width: '100%',  color: Colors.black2}}
+            titleStyle={{
+                width: '100%',  
+                color: Colors.black2,
+                fontSize: Platform.OS === 'ios' ? 12 : 15
+            }}
             onPress={changeType}
             type='clear'
         />

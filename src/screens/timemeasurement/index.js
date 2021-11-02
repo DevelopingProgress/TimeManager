@@ -1,10 +1,14 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
+import { GreetingText } from '../../reusable/greetingText'
+import { styles } from '../home'
 
 export const TimeMeasurementScreen = () => {
     return (
-        <View>
-            <Text>Time Measurement Screen</Text>
-        </View>
+        <ScrollView style={styles.mainContainer}>
+            <View style={styles.container}>
+                <GreetingText title='Mierzenie czasu'/>
+            </View>
+        </ScrollView>
     )
 }

@@ -7,5 +7,6 @@ export const Colors = {
     'red':'#d74444',
     'blue': '#52C8FA',
     'fbblue': '#3b5998',
-    'lightgrey': '#f2f2f2'
+    'lightgrey': '#f2f2f2',
+    'transparentwhite': '#D9FFFFFF'
 }

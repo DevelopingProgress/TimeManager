@@ -3,7 +3,7 @@ import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 
 
-export const register = async({email, password}) => {
+export const register = async({email, name, password}) => {
     try {
         const res = await firebase.auth()
         .createUserWithEmailAndPassword(email, password);
@@ -13,6 +13,7 @@ export const register = async({email, password}) => {
         const userProfile = {
             uid: user.uid,
             email: email,
+            name: name
         } 
 
         await usersCollection.doc(user.uid).set(userProfile);
@@ -53,10 +54,10 @@ export const loginFacebook = async() => {
 
             const credential = firebase.auth.FacebookAuthProvider.credential(token)
             const res = await firebase.auth().signInWithCredential(credential)
-            
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
+                name: res.user.displayName
             } 
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 
@@ -86,10 +87,10 @@ export const loginGoogle = async() => {
         if(type === 'success') {
             const credential = firebase.auth.GoogleAuthProvider.credential(idToken)
             const res = await firebase.auth().signInWithCredential(credential)
-            
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
+                name: res.user.displayName
             } 
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 

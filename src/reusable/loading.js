@@ -14,12 +14,13 @@ export const Loading = (props) => {
               animProgress += 0.1
               setProgress(animProgress)
             }, 500);
-          }, 1500);
+        }, 1500);
     }
 
     useEffect(() => {
         animate()
     }, [])
+
 
     return (
         <>

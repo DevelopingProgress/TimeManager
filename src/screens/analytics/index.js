@@ -1,10 +1,14 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
+import { GreetingText } from '../../reusable/greetingText'
+import { styles } from '../home'
 
 export const AnalyticsScreen = () => {
     return (
-        <View>
-            <Text>Analytics Screen</Text>
-        </View>
+        <ScrollView style={styles.mainContainer}>
+            <View style={styles.container}>
+                <GreetingText title='Analityka'/>
+            </View>
+        </ScrollView>
     )
 }
