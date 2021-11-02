@@ -40,7 +40,7 @@ class App extends Component {
         </View>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName
+            initialRouteName="Home"
           >
             {this.props.auth.isAuth ? (
               <>

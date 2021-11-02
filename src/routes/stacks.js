@@ -2,18 +2,18 @@ import React from 'react'
 import { HomeScreen } from '../screens/home'
 import { Colors } from '../reusable/tools'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TasksScreen } from '../screens/tasks';
 import { TimeMeasurementScreen } from '../screens/timemeasurement';
 import { AnalyticsScreen } from '../screens/analytics';
 import { CalendarScreen } from '../screens/calendar';
 import { Icon } from 'react-native-elements';
-import { createStackNavigator } from '@react-navigation/stack';
+import { TasksScreen } from '../screens/tasks';
 
 const Tab = createBottomTabNavigator();
 
 const tabOptions = {
     tabBarActiveTintColor: Colors.blue
 }
+
 
 
 export const HomeStack = () => (

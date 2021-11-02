@@ -8,5 +8,5 @@ export const Colors = {
     'blue': '#52C8FA',
     'fbblue': '#3b5998',
     'lightgrey': '#f2f2f2',
-    'transparentwhite': '#D9FFFFFF'
+    'darkgrey': '#878787'
 }

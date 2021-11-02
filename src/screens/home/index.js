@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { Colors } from '../../reusable/tools'
@@ -8,12 +8,23 @@ import TimeImage from '../../assets/images/Time.jpg'
 import AnalyticsImage from '../../assets/images/Analytics.jpg'
 import CalendarImage from '../../assets/images/Calendar.jpg'
 import { SettingsIcon } from '../../reusable/settingsIcon'
+import { useFocusEffect } from '@react-navigation/core'
+
 
 export const HomeScreen = ({navigation}) => {
 
     var hours = new Date().getHours()
     const user = useSelector(state => state.auth.user)
- 
+    const scrollRef = useRef();
+    
+    useFocusEffect(
+        React.useCallback(() => {
+            scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+            })
+        })
+    )
     
     const GreetingText = () => (
         <View style={{flex: 1}}>
@@ -62,7 +73,7 @@ export const HomeScreen = ({navigation}) => {
     )
 
     return (
-        <ScrollView style={styles.mainContainer}>
+        <ScrollView style={styles.mainContainer} ref={scrollRef}>
             <View style={styles.container}>
                 <GreetingText/>
                 <SettingsIcon navigation={navigation}/>
@@ -77,9 +88,10 @@ export const HomeScreen = ({navigation}) => {
 
 export const styles = StyleSheet.create({
     mainContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.white,
     },
     container: {
+        backgroundColor: Colors.white,
         paddingTop: 10,
         paddingHorizontal: 10,
         paddingBottom: 5, 
@@ -97,5 +109,5 @@ export const styles = StyleSheet.create({
     },
     cardTitle: {
         fontSize: 25
-    }
+    },
 })
