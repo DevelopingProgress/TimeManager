@@ -4,6 +4,7 @@ import { GreetingText } from '../../reusable/greetingText'
 import { styles } from '../home'
 import { SettingsIcon } from '../../reusable/settingsIcon'
 
+
 export const TimeMeasurementScreen = ({navigation}) => {
     return (
         <ScrollView style={styles.mainContainer}>
