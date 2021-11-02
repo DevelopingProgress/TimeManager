@@ -5,12 +5,12 @@ import { Logo } from '../../reusable/logo'
 
 export const AuthScreen = ({navigation}) => {
     return (
-        <ScrollView style={styles.mainContainer}>
+        // <ScrollView style={styles.mainContainer}>
             <View style={styles.container}>
                 <Logo/>
                 <AuthForm/>
             </View>
-        </ScrollView>
+        // </ScrollView>
         
         
     )

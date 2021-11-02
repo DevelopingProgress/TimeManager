@@ -7,6 +7,7 @@ import TasksImage from '../../assets/images/Tasks.jpg'
 import TimeImage from '../../assets/images/Time.jpg'
 import AnalyticsImage from '../../assets/images/Analytics.jpg'
 import CalendarImage from '../../assets/images/Calendar.jpg'
+import { Icon } from 'react-native-elements'
 
 export const HomeScreen = ({navigation}) => {
 
@@ -15,13 +16,17 @@ export const HomeScreen = ({navigation}) => {
     const greetingName = name.split(' ', 1)
     
     const GreetingText = () => (
-        <Text style={styles.greetingText}>
-            {hours && hours < 17 && hours > 4 ? 'Dzień Dobry' : 'Dobry Wieczór'}
-            , <Text style={styles.greetingName}>
-                {greetingName}
+        <View style={{flex: 1}}>
+            <Text style={styles.greetingText}>
+                {hours && hours < 17 && hours > 4 ? 'Dzień Dobry' : 'Dobry Wieczór'}
+                , <Text style={styles.greetingName}>
+                    {greetingName}
+                </Text>
             </Text>
-        </Text>
+        </View>
+            
     )
+
 
     const Panes = () => (
         <>
@@ -61,6 +66,7 @@ export const HomeScreen = ({navigation}) => {
         <ScrollView style={styles.mainContainer}>
             <View style={styles.container}>
                 <GreetingText/>
+                <SettingsIcon/>
             </View>
             <Panes/>
         </ScrollView>
@@ -68,12 +74,30 @@ export const HomeScreen = ({navigation}) => {
     )
 }
 
+export const SettingsIcon = () => (
+    <View>
+        <Icon 
+            type='entypo' 
+            name='dots-three-vertical' 
+            size={25} 
+            style={{
+                marginTop: 5,
+                color: Colors.black2,
+            }}
+
+        />
+    </View>
+)
+
 export const styles = StyleSheet.create({
     mainContainer: {
         backgroundColor: '#fff',
     },
     container: {
-        padding: 10, 
+        paddingTop: 10,
+        paddingHorizontal: 10,
+        paddingBottom: 5, 
+        flexDirection: 'row'
     },
     greetingText: {
         marginLeft: 5,

@@ -1,9 +1,12 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { styles } from "../screens/home";
 import React from "react";
 
 export const GreetingText = (props) => (
-    <Text style={styles.greetingText}>
-        {props.title}
-    </Text>
+    <View style={{flex: 1}}>
+        <Text style={styles.greetingText}>
+            {props.title}
+        </Text>
+    </View>
+    
 )
