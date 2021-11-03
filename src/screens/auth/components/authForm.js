@@ -5,7 +5,7 @@ import { Input, Button } from 'react-native-elements'
 import { Platform, StyleSheet } from 'react-native'
 import { Colors } from '../../../reusable/tools'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearAuthError, loginFacebookUser, loginGoogleUser, loginUser, registerUser } from '../../../store/actions/authActions'
+import { clearAuthError, clearAuthMessage, loginFacebookUser, loginGoogleUser, loginUser, passwordResetUser, registerUser } from '../../../store/actions/authActions'
 import { useFocusEffect } from '@react-navigation/core'
 
 export const AuthForm = () => {
@@ -20,17 +20,26 @@ export const AuthForm = () => {
     const nameRegex =  /^[A-Za-z0-9]+([A-Za-z0-9]*|[._-]?[A-Za-z0-9]+)*$/g
     const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
     const error = useSelector(state => state.auth.error)
+    const message = useSelector(state => state.auth.message)
 
     useEffect(() => {
         if(error) {
-            //ERROR COMPONENT
+            //ERROR COMPONENT TODO
             alert(error)
             setLoading(false)
             setLoadingFacebook(false)
             setLoadingGoogle(false)
             dispatch(clearAuthError())
         }
-    }, [error])
+        if(message) {
+            //MESSAGE COMPONENT TODO
+            alert(message)
+            setLoading(false)
+            setLoadingFacebook(false)
+            setLoadingGoogle(false)
+            dispatch(clearAuthMessage())
+        }
+    }, [error, message])
 
     useFocusEffect(
         useCallback(() => {
@@ -42,8 +51,10 @@ export const AuthForm = () => {
         setLoading(true)
         if(formType === 'Login') {
             dispatch(loginUser(values))
-        } else {
+        } else if(formType === 'Register') {
             dispatch(registerUser(values))
+        } else if(formType === 'RemindPass') {
+            dispatch(passwordResetUser(values.email))
         } 
     }
 
@@ -60,6 +71,14 @@ export const AuthForm = () => {
     const changeType = () => {
         if(formType === 'Login') {
             setFormType('Register')
+        } else {
+            setFormType('Login')
+        }
+    }
+
+    const remindPassType = () => {
+        if(formType === 'Login') {
+            setFormType('RemindPass')
         } else {
             setFormType('Login')
         }
@@ -91,7 +110,7 @@ export const AuthForm = () => {
                     .min(8, 'Hasło musi zawierać co najmiej 6 znaków')
                     .max(16, 'Hasło musi zawierać maksymalnie 16 znaków')
                     .matches(passwordRegex, 'Hasło musi zawierać: 1 wielka litera, 1 mała litera, 1 cyfra, 1 znak specjalny, minimum 8 znaków'),
-                } : {
+                } : formType === 'Register' ? {
                     email: Yup
                     .string()
                     .email('Nieprawidłowy adres e-mail')
@@ -110,7 +129,12 @@ export const AuthForm = () => {
                     .string()
                     .required('Wymagane potwierdzenie hasła')
                     .oneOf([Yup.ref('password'), null], 'Hasła muszą być identyczne')
-                }
+                } : formType === 'RemindPass' ? {
+                    email: Yup
+                    .string()
+                    .email('Nieprawidłowy adres e-mail')
+                    .required('Adres e-mail jest wymagany'),
+                } : null
             )}
         >
             {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
@@ -142,7 +166,7 @@ export const AuthForm = () => {
                         maxLength={50}
                     />
                     }
-
+                    {formType !== 'RemindPass' && 
                     <Input 
                         inputStyle={styles.input}
                         placeholder='Hasło'
@@ -162,6 +186,7 @@ export const AuthForm = () => {
                         secureTextEntry={showPass}
                         maxLength={16}
                     />
+                    }
 
                     {formType === 'Register' && 
                     <Input 
@@ -184,19 +209,39 @@ export const AuthForm = () => {
                         maxLength={16}
                     />
                     }
-                    <Button
-                        title={ formType === 'Login' ? 'Zaloguj' : 'Zarejestruj'}
-                        buttonStyle={{
-                            backgroundColor: Colors.blue,
-                            margin: 10,
-                        }}
-                        titleStyle={{
-                            width: '100%',
-                            fontSize: Platform.OS === 'ios' ? 14 : 15
-                        }}
-                        onPress={handleSubmit}
-                        loading={loading}
-                    />
+                    {
+                        formType !== 'RemindPass' &&
+                        <Button
+                            title={ formType === 'Login' ? 'Zaloguj' : 'Zarejestruj'}
+                            buttonStyle={{
+                                backgroundColor: Colors.blue,
+                                marginBottom: 10,
+                            }}
+                            titleStyle={{
+                                width: '100%',
+                                fontSize: Platform.OS === 'ios' ? 14 : 15
+                            }}
+                            onPress={handleSubmit}
+                            loading={loading}
+                        />
+                    }
+                    {
+                        formType === 'RemindPass' &&
+                        <Button
+                            title='Zmień hasło'
+                            buttonStyle={{
+                                backgroundColor: Colors.blue,
+                                marginBottom: 10,
+                            }}
+                            titleStyle={{
+                                width: '100%',
+                                fontSize: Platform.OS === 'ios' ? 14 : 15
+                            }}
+                            onPress={handleSubmit}
+                            loading={loading}
+                        />
+                    }
+                    
                 </>
             )}
         </Formik>
@@ -244,13 +289,14 @@ export const AuthForm = () => {
         />    
         </>
         }
+        
         <Button
             title={`${
                 formType === 'Login' ? 'Nie masz konta? Zarejestruj się' 
-                : 'Masz konto? Zaloguj się'
+                : formType === 'Register' ? 'Masz konto? Zaloguj się' : ''
             }`}
             buttonStyle={{
-                margin: Platform.OS === 'ios' ? 0 : 10
+                marginTop: Platform.OS === 'ios' ? 0 : 5
             }}
             titleStyle={{
                 width: '100%',  
@@ -258,6 +304,19 @@ export const AuthForm = () => {
                 fontSize: Platform.OS === 'ios' ? 12 : 15
             }}
             onPress={changeType}
+            type='clear'
+        />
+        <Button
+            title={`${
+                formType === 'Login' ? 'Zapomniałeś hasła?' 
+                : formType === 'RemindPass' ? 'Powrót do logowania' : ''
+            }`}
+            titleStyle={{
+                width: '100%',  
+                color: Colors.black2,
+                fontSize: Platform.OS === 'ios' ? 12 : 15
+            }}
+            onPress={remindPassType}
             type='clear'
         />
         </>

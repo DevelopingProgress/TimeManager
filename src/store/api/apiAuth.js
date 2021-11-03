@@ -18,7 +18,11 @@ export const register = async({email, name, password}) => {
 
         await usersCollection.doc(user.uid).set(userProfile);
 
-        return {isAuth: true, user: userProfile}
+        await res.user.sendEmailVerification();
+
+        await firebase.auth().signOut()
+
+        return {isAuth: false, isVerified: false, message: 'Wysłano wiadomość e-mail z potwierdzeniem.'}
 
     } catch (error) {
         return {error: error.message}
@@ -32,11 +36,17 @@ export const login = async({email, password}) => {
 
         const userProfile = await usersCollection.doc(res.user.uid).get();
         const data = userProfile.data();
-
-        return {isAuth: true, user: data}
-
+        if(res.user.emailVerified) {
+            return {isAuth: true, isVerified: true, user: data}
+        } else {
+            return {
+                isAuth: false, 
+                isVerified: false, 
+                error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.'}
+        }
+        
     } catch (error) {
-        return {error: error.message}
+        return {error: 'Nie udało się zalogować, proszę sprawdzić swoje dane logowania.'}
     }
 }
 
@@ -63,15 +73,14 @@ export const loginFacebook = async() => {
 
             if(ActiveUser.exists) {
                 const data = ActiveUser.data();
-                return {isAuth: true, user: data}
+                return {isAuth: true, isVerified: true, user: data}
             } else {
                 await usersCollection.doc(res.user.uid).set(userProfile);
-                return {isAuth: true, user: userProfile}
+                return {isAuth: true, isVerified: true, user: userProfile}
             }
         } 
     } catch (error) {
-        console.log(error)
-        return {error: error.message}
+        return {error: 'Nie udało się zalogować, błąd logowania poprzez Facebook.'}
     }
     
 }
@@ -96,15 +105,14 @@ export const loginGoogle = async() => {
 
             if(ActiveUser.exists) {
                 const data = ActiveUser.data();
-                return {isAuth: true, user: data}
+                return {isAuth: true, isVerified: true, user: data}
             } else {
                 await usersCollection.doc(res.user.uid).set(userProfile);
-                return {isAuth: true, user: userProfile}
+                return {isAuth: true, isVerified: true, user: userProfile}
             }
         }
     } catch (error) {
-        console.log(error)
-        return {error: error.message}
+        return {error: 'Nie udało się zalogować, błąd logowania poprzez Google'}
     }
     
 }
@@ -114,7 +122,12 @@ export const autoLogin = () => (
         firebase.auth().onAuthStateChanged( user => {
             if(user){
                 usersCollection.doc(user.uid).get().then( snapshot =>{
-                    resolve({ isAuth: true, user: snapshot.data() })
+                    if(user.emailVerified) {
+                        resolve({ isAuth: true, isVerified: true, user: snapshot.data() })
+                    } else {
+                        resolve({ isAuth: false, isVerified: false, user:[], error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.' })
+                    }
+                    
                 })
             } else {
                 resolve({ isAuth: false, user:[] })
@@ -125,4 +138,13 @@ export const autoLogin = () => (
 
 export const logout = () => {
     firebase.auth().signOut()
+}
+
+export const passwordReset = async(email) => {
+    try {
+        await firebase.auth().sendPasswordResetEmail(email)
+        return {message: 'Wysłano e-mail do resetu hasła.'}
+    } catch (error) {
+        return {error: error.message}
+    }
 }

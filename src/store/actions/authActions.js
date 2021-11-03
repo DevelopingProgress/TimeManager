@@ -1,5 +1,5 @@
-import { login, loginFacebook, loginGoogle, register, autoLogin, logout } from "../api/apiAuth"
-import { AUTH_USER, CLEAR_AUTH_ERROR, LOGOUT_USER } from "../types"
+import { login, loginFacebook, loginGoogle, register, autoLogin, logout, passwordReset } from "../api/apiAuth"
+import { AUTH_USER, CLEAR_AUTH_ERROR, CLEAR_AUTH_MESSAGE, LOGOUT_USER, PASSWORD_RESET } from "../types"
 
 export const registerUser = (values) => ({
     type: AUTH_USER,
@@ -33,4 +33,13 @@ export const logoutUser = () => ({
 
 export const clearAuthError = () => ({
     type: CLEAR_AUTH_ERROR
+})
+
+export const clearAuthMessage = () => ({
+    type: CLEAR_AUTH_MESSAGE
+})
+
+export const passwordResetUser = (email) => ({
+    type: PASSWORD_RESET,
+    payload: passwordReset(email)
 })

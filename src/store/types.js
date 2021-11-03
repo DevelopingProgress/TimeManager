@@ -1,3 +1,5 @@
 export const AUTH_USER = 'AUTH_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const CLEAR_AUTH_ERROR = 'CLEAR_AUTH_ERROR'
+export const CLEAR_AUTH_MESSAGE = 'CLEAR_AUTH_MESSAGE'
+export const PASSWORD_RESET =  'PASSWORD_RESET'
