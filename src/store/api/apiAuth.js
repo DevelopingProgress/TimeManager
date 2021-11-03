@@ -59,11 +59,12 @@ export const loginFacebook = async() => {
         const {type, token} = await Facebook.logInWithReadPermissionsAsync({
             permissions: ['public_profile', 'email']
         })
-
+        
         if(type === 'success') {
 
             const credential = firebase.auth.FacebookAuthProvider.credential(token)
             const res = await firebase.auth().signInWithCredential(credential)
+            firebase.auth().updateCurrentUser(res.user)
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
@@ -80,14 +81,14 @@ export const loginFacebook = async() => {
             }
         } 
     } catch (error) {
-        return {error: 'Nie udało się zalogować, błąd logowania poprzez Facebook.'}
+        return {error: error.message}
     }
     
 }
 
 export const loginGoogle = async() => {
     try {
-        const { type, user, idToken} = await Google.logInAsync({
+        const { type, idToken} = await Google.logInAsync({
             androidClientId: `148201193183-45607r93v6vlvtkr4u8gcec95l7tc9rm.apps.googleusercontent.com`,
             iosClientId: `148201193183-tc11ghq6ecuvlbb4blcslvg6oustjod9.apps.googleusercontent.com`,
             expoClientId: ``,
@@ -127,7 +128,7 @@ export const autoLogin = () => (
                     } else {
                         resolve({ isAuth: false, isVerified: false, user:[], error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.' })
                     }
-                    
+                    console.log(user.emailVerified)
                 })
             } else {
                 resolve({ isAuth: false, user:[] })
