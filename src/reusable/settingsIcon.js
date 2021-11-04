@@ -5,6 +5,7 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 import { Divider, Icon } from 'react-native-elements'
 import { useDispatch } from 'react-redux'
 import { logoutUser } from '../store/actions/authActions'
+import { clearCategories } from '../store/actions/tasksActions'
 
 export const SettingsIcon = ({navigation}) => {
 
@@ -12,6 +13,7 @@ export const SettingsIcon = ({navigation}) => {
 
     const handleLogout = () => {
         dispatch(logoutUser())
+        dispatch(clearCategories())
     }
 
     return (

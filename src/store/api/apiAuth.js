@@ -97,6 +97,7 @@ export const loginGoogle = async() => {
         if(type === 'success') {
             const credential = firebase.auth.GoogleAuthProvider.credential(idToken)
             const res = await firebase.auth().signInWithCredential(credential)
+
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
@@ -106,6 +107,7 @@ export const loginGoogle = async() => {
 
             if(ActiveUser.exists) {
                 const data = ActiveUser.data();
+                alert(JSON.stringify(data))
                 return {isAuth: true, isVerified: true, user: data}
             } else {
                 await usersCollection.doc(res.user.uid).set(userProfile);
@@ -124,11 +126,11 @@ export const autoLogin = () => (
             if(user){
                 usersCollection.doc(user.uid).get().then( snapshot =>{
                     if(user.emailVerified) {
+                        
                         resolve({ isAuth: true, isVerified: true, user: snapshot.data() })
                     } else {
                         resolve({ isAuth: false, isVerified: false, user:[], error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.' })
                     }
-                    console.log(user.emailVerified)
                 })
             } else {
                 resolve({ isAuth: false, user:[] })
