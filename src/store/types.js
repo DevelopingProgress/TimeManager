@@ -18,3 +18,4 @@ export const CLEAR_TASKS = 'CLEAR_TASKS'
 //ADD
 export const ADD_CATEGORY = 'ADD_CATEGORY'
 export const ADD_PROJECT = 'ADD_PROJECT'
+export const ADD_TASK = 'ADD_TASK'

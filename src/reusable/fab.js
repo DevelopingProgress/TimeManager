@@ -3,16 +3,13 @@ import { Platform, View } from 'react-native'
 import { Colors } from './tools';
 import ModalForm from './modalForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, addProject } from '../store/actions/tasksActions';
+import { addCategory, addProject, addTask, listCategories, listProjects, listTasks } from '../store/actions/tasksActions';
 import { FAB, Portal } from 'react-native-paper';
 
 export const AddFab = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
     const [open, setOpen] = useState(false);
-
-    const dispatch = useDispatch()
-    const user = useSelector(state => state.auth.user)
 
     const handlePress = (value) => {
         switch (value) {
@@ -36,17 +33,28 @@ export const AddFab = () => {
         }
     }
 
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.auth.user)
+    const categories = useSelector(state => state.tasks.categories)
+    const projects = useSelector(state => state.tasks.projects)
+
+
     const handleSubmit = (values) => {
         if(modalType === 0) {
             setModalVisible(false)
             dispatch(addCategory(values.name, values.icon, user))
+            console.log(user)
+            dispatch(listCategories(user))
         } else if(modalType === 1) {
             setModalVisible(false)
-            dispatch(addProject(values.name, values.category, user))
-            console.log('Add project dispatch ' + JSON.stringify(values))
+            dispatch(addProject(values.name, values.category))
+            console.log(categories)
+            dispatch(listProjects(categories))
         } else if(modalType === 2) {
             setModalVisible(false)
-            console.log('Add task dispatch ' + JSON.stringify(values))
+            dispatch(addTask(values.name, values.project))
+            console.log(projects)
+            dispatch(listTasks(projects))
         } 
     }
 
@@ -60,6 +68,7 @@ export const AddFab = () => {
                 modalType={modalType}
                 handleSubmit={handleSubmit}
             />
+            
             <Portal>
                 <FAB.Group
                 style={{marginBottom: 60}}

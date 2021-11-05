@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Platform, ScrollView, View } from 'react-native'
 import { GreetingText } from '../../reusable/greetingText'
 import { SettingsIcon } from '../../reusable/settingsIcon'
@@ -9,10 +9,32 @@ import { CategoriesScreen } from './screens/categories'
 import { ProjectsScreen } from './screens/projects'
 import { TaskScreen } from './screens/tasks'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { useDispatch, useSelector } from 'react-redux'
+// import { listCategories, listTasks } from '../../store/actions/tasksActions'
 
 const TopTab = createMaterialTopTabNavigator();
 
-export const TasksScreen = ({navigation}) => (
+export const TasksScreen = ({navigation}) => {
+
+    // const dispatch = useDispatch()
+    // const projects = useSelector(state => state.tasks.projects)
+    // const categories = useSelector(state => state.tasks.categories)
+    // const user = useSelector(state => state.auth.user)
+    
+
+    // useEffect(() => {
+    //     if(user) {
+    //         dispatch(listCategories(user))
+    //     }
+    //     if(categories) {
+    //         dispatch(listCategories(categories))
+    //     }
+    //     if(projects) {
+    //         dispatch(listTasks(projects))
+    //     }
+    // }, [])
+
+    return(
         <>
             <View style={styles.container}>
                 <GreetingText title='Twoje zadania'/>
@@ -20,7 +42,7 @@ export const TasksScreen = ({navigation}) => (
             </View>
             
             <TopTab.Navigator 
-                initialRouteName="ProjectsScreen"
+                initialRouteName="HomeScreen"
                 screenOptions={{
                     tabBarActiveTintColor: Colors.blue,
                     tabBarInactiveTintColor: Colors.grey,
@@ -59,4 +81,5 @@ export const TasksScreen = ({navigation}) => (
                 />
             </TopTab.Navigator>
         </>
-)
+    )
+} 

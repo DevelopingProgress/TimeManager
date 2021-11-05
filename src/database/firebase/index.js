@@ -18,10 +18,12 @@ const DB = firebase.firestore();
 const usersCollection = DB.collection('users');
 const categoriesCollection = DB.collection('categories');
 const projectsCollection = DB.collection('projects');
+const tasksCollection = DB.collection('tasks');
 
 export {
     firebase,
     usersCollection,
     categoriesCollection,
-    projectsCollection
+    projectsCollection,
+    tasksCollection
 }
