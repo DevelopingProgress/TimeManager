@@ -2,6 +2,7 @@ import { useFocusEffect } from '@react-navigation/core'
 import { Icon, List, ListItem } from 'material-bread'
 import React from 'react'
 import { ScrollView, Text, View } from 'react-native'
+import { Menu } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { AddFab } from '../../../../reusable/fab'
 import { listProjects } from '../../../../store/actions/tasksActions'
@@ -10,26 +11,26 @@ import {styles} from '../../../home/index'
 export const ProjectsScreen = () => {
     const dispatch = useDispatch()
     const projects = useSelector(state => state.tasks.projects)
-    const user = useSelector(state => state.auth.user)
+    const categories = useSelector(state => state.tasks.categories)
 
     useFocusEffect(
         React.useCallback(() => {
-           dispatch(listProjects(user))
-        }, [dispatch, listProjects,user])
+           dispatch(listProjects(categories))
+        }, [dispatch, categories])
     )
 
     return (
         <ScrollView style={styles.mainContainer}>
             <View style={{margin: 10}}>
-                <List style={{ maxWidth: 300 }}>
-                    {projects ? projects.map((item) => (
-                        <ListItem
-                            key={item.projID}
-                            text={item.name}
-                            icon={<Icon name={item.icon} size={24} />}
-                        />
-                    )) : null}
-                </List>
+                {projects ? projects.map((item) => (
+                    <Menu.Item
+                        key={item.projID}
+                        title={item.name}
+                        icon={item.icon}
+                        theme={{dark: true}}
+                        onPress={() => console.log('Projekt nr ' + item.projID)}
+                    />
+                )) : null}
             </View>
             
             <AddFab/>

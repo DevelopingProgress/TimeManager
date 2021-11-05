@@ -1,4 +1,4 @@
-import { ADD_CATEGORY, CLEAR_CATEGORIES, CLEAR_PROJECTS, LIST_CATEGORIES, LIST_PROJECTS } from "../types";
+import { ADD_CATEGORY, ADD_PROJECT, CLEAR_CATEGORIES, CLEAR_PROJECTS, LIST_CATEGORIES, LIST_PROJECTS } from "../types";
 
 const INITIAL_STATE = {
     categories: [],
@@ -17,6 +17,8 @@ export default function (state=INITIAL_STATE,action) {
         case CLEAR_PROJECTS:
             return {...state, projects: []}
         case ADD_CATEGORY:
+            return {...state, ...action.payload}
+        case ADD_PROJECT:
             return {...state, ...action.payload}
         default:
             return state;

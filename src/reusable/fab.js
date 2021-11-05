@@ -3,7 +3,7 @@ import { Platform, View } from 'react-native'
 import { Colors } from './tools';
 import ModalForm from './modalForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, listCategories } from '../store/actions/tasksActions';
+import { addCategory, addProject } from '../store/actions/tasksActions';
 import { FAB, Portal } from 'react-native-paper';
 
 export const AddFab = () => {
@@ -41,8 +41,11 @@ export const AddFab = () => {
             setModalVisible(false)
             dispatch(addCategory(values.name, values.icon, user))
         } else if(modalType === 1) {
+            setModalVisible(false)
+            dispatch(addProject(values.name, values.category, user))
             console.log('Add project dispatch ' + JSON.stringify(values))
         } else if(modalType === 2) {
+            setModalVisible(false)
             console.log('Add task dispatch ' + JSON.stringify(values))
         } 
     }
@@ -59,7 +62,7 @@ export const AddFab = () => {
             />
             <Portal>
                 <FAB.Group
-                style={{marginBottom: 70}}
+                style={{marginBottom: 60}}
                 open={open}
                 icon={open ? 'close' : 'plus'}
                 fabStyle={{backgroundColor: Colors.blue}}

@@ -19,12 +19,24 @@ const ModalForm = (props) => {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                 <Formik
-                    initialValues={{
-                        name: '',
-                        icon: ''
-                    }}
+                    initialValues={
+                        props.modalType === 0 ?
+                        {
+                            name: '',
+                            icon: '',
+                        } : props.modalType === 1 ?
+                        {
+                            name: '',
+                            category: '',
+                        } : props.modalType === 2 ?
+                        {
+                            name: '',
+                            project: '',
+                        } : null
+                    }
                     onSubmit={values => props.handleSubmit(values)}
                     validationSchema={Yup.object(
+                        props.modalType === 0 ?
                         {
                             name: Yup
                             .string()
@@ -32,7 +44,22 @@ const ModalForm = (props) => {
                             icon: Yup
                             .string()
                             .required(),
-                        } 
+                        } : props.modalType === 1 ?
+                        {
+                            name: Yup
+                            .string()
+                            .required(),
+                            category: Yup
+                            .string()
+                            .required(),
+                        } : props.modalType === 2 ? {
+                            name: Yup
+                            .string()
+                            .required(),
+                            project: Yup
+                            .string()
+                            .required(),
+                        } : null
                     )}
                 >
                         {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
@@ -84,12 +111,12 @@ const ModalForm = (props) => {
                                 />
                                 <Input 
                                     
-                                    placeholder='Ikona projektu'
-                                    onChangeText={handleChange('icon')}
-                                    onBlur={handleBlur('icon')}
-                                    value={values.icon}
-                                    renderErrorMessage={errors.icon && touched.icon}
-                                    errorMessage={errors.icon}
+                                    placeholder='Kategoria'
+                                    onChangeText={handleChange('category')}
+                                    onBlur={handleBlur('category')}
+                                    value={values.category}
+                                    renderErrorMessage={errors.category && touched.category}
+                                    errorMessage={errors.category}
                                     errorStyle={{color: Colors.red, fontSize: 15}}
                                     maxLength={50}
                                     containerStyle={{paddingHorizontal: 35}}
@@ -114,12 +141,12 @@ const ModalForm = (props) => {
                                 />
                                 <Input 
                                     
-                                    placeholder='Ikona zadania'
-                                    onChangeText={handleChange('icon')}
-                                    onBlur={handleBlur('icon')}
-                                    value={values.icon}
-                                    renderErrorMessage={errors.icon && touched.icon}
-                                    errorMessage={errors.icon}
+                                    placeholder='Projekt'
+                                    onChangeText={handleChange('project')}
+                                    onBlur={handleBlur('project')}
+                                    value={values.project}
+                                    renderErrorMessage={errors.project && touched.project}
+                                    errorMessage={errors.project}
                                     errorStyle={{color: Colors.red, fontSize: 15}}
                                     maxLength={50}
                                     containerStyle={{paddingHorizontal: 35}}

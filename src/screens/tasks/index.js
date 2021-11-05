@@ -20,7 +20,7 @@ export const TasksScreen = ({navigation}) => (
             </View>
             
             <TopTab.Navigator 
-                initialRouteName="CategoriesScreen"
+                initialRouteName="ProjectsScreen"
                 screenOptions={{
                     tabBarActiveTintColor: Colors.blue,
                     tabBarInactiveTintColor: Colors.grey,
