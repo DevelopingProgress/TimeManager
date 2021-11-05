@@ -12,13 +12,13 @@ import { styles } from '../../../home/index'
 export const CategoriesScreen = () => {
 
     const dispatch = useDispatch()
-    const categories = useSelector(state => state.tasks.categories.categories)
+    const categories = useSelector(state => state.tasks.categories)
     const user = useSelector(state => state.auth.user)
 
     useFocusEffect(
         React.useCallback(() => {
             dispatch(listCategories(user))
-        }, [dispatch, listCategories, user])
+        }, [dispatch, user])
     )
 
     return (
@@ -27,29 +27,10 @@ export const CategoriesScreen = () => {
                 <List style={{ maxWidth: 300 }}>
                     {categories ? categories.map((item) => (
                         <ListItem
-                        text={item}
-                        icon={<Icon name={'local-movies'} size={24} />}
+                        text={item.name}
+                        icon={<Icon name={item.icon} size={24} />}
                         />
-                    )) : null}
-                        
-                        {/* <ListItem
-                        text={'Dining'}
-                        icon={<Icon name={'local-dining'} size={24} />}
-                        />
-                        <ListItem
-                        text={'Health'}
-                        icon={<Icon name={'favorite'} size={24} />}
-                        />
-                        <ListItem text={'Family'} icon={<Icon name={'group'} size={24} />} />
-                        <ListItem
-                        text={'Education'}
-                        icon={<Icon name={'edit'} size={24} />}
-                        />
-                        <ListItem
-                        text={'Office'}
-                        icon={<Icon name={'content-cut'} size={24} />}
-                        /> */}
-
+                    )): null}
                 </List>
             </View>
             

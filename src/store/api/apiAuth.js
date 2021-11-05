@@ -13,7 +13,8 @@ export const register = async({email, name, password}) => {
         const userProfile = {
             uid: user.uid,
             email: email,
-            name: name
+            name: name,
+            categories: []
         } 
 
         await usersCollection.doc(user.uid).set(userProfile);
@@ -68,7 +69,8 @@ export const loginFacebook = async() => {
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
-                name: res.user.displayName
+                name: res.user.displayName,
+                categories: []
             } 
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 
@@ -101,13 +103,13 @@ export const loginGoogle = async() => {
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
-                name: res.user.displayName
+                name: res.user.displayName,
+                categories: []
             } 
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 
             if(ActiveUser.exists) {
                 const data = ActiveUser.data();
-                alert(JSON.stringify(data))
                 return {isAuth: true, isVerified: true, user: data}
             } else {
                 await usersCollection.doc(res.user.uid).set(userProfile);
@@ -126,7 +128,6 @@ export const autoLogin = () => (
             if(user){
                 usersCollection.doc(user.uid).get().then( snapshot =>{
                     if(user.emailVerified) {
-                        
                         resolve({ isAuth: true, isVerified: true, user: snapshot.data() })
                     } else {
                         resolve({ isAuth: false, isVerified: false, user:[], error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.' })
