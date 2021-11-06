@@ -5,7 +5,7 @@ export const listCat = async(user) => {
         const userProfile = await usersCollection.doc(user.uid).get();
         const data = userProfile.data();
         let categoriesList = []
-        for (var i = 0; i < data.categories.length; i++) {
+        for (let i = 0; i < data.categories.length; i++) {
             if(data.categories) {
                 let userCategory = await data.categories[i].get()
                 categoriesList.push(userCategory.data())
@@ -15,14 +15,14 @@ export const listCat = async(user) => {
     } catch (error) {
         return {error: error.message}
     }
-    
+
 }
 
 export const listProj = async(categories) => {
     try {
         let projects = []
-        for (var i = 0; i < categories.length; i++) {
-            for (var j = 0; j < categories[i].projects.length; j++) {
+        for (let i = 0; i < categories.length; i++) {
+            for (let j = 0; j < categories[i].projects.length; j++) {
                 if(categories[i].projects) {
                     let categoryProject = await categories[i].projects[j].get()
                     projects.push(categoryProject.data())
@@ -30,17 +30,17 @@ export const listProj = async(categories) => {
             }
         }
         return {projects: projects}
-        
+
     } catch (error) {
         return {error: error.message}
-    }  
+    }
 }
 
 export const listTsk = async(projects) => {
     try {
         let tasks = []
-        for (var i = 0; i < projects.length; i++) {
-            for (var j = 0; j < projects[i].tasks.length; j++) {
+        for (let i = 0; i < projects.length; i++) {
+            for (let j = 0; j < projects[i].tasks.length; j++) {
                 if(projects[i].tasks) {
                     let projectTask = await projects[i].tasks[j].get()
                     tasks.push(projectTask.data())
@@ -48,17 +48,17 @@ export const listTsk = async(projects) => {
             }
         }
         return {tasks: tasks}
-        
+
     } catch (error) {
         return {error: error.message}
-    }  
+    }
 }
 
 
 export const addCat = async(name, icon, user) => {
     try {
         const newCategory = await categoriesCollection.doc()
-        
+
         const uid = user.uid
         if(newCategory) {
             newCategory.set({
@@ -72,6 +72,9 @@ export const addCat = async(name, icon, user) => {
                 categories: firebase.firestore.FieldValue.arrayUnion(ref)
             })
         }
+
+        return {status: 'category_added'}
+
     } catch (error) {
         return {error: error.message}
     }
@@ -80,9 +83,9 @@ export const addCat = async(name, icon, user) => {
 export const addProj = async(name, category) => {
     try {
         const categoryList = await categoriesCollection.where('name', '==', category).get()
-        for (var i = 0; i < categoryList.docs.length; i++) {
+        for (let i = 0; i < categoryList.docs.length; i++) {
             const cat = categoryList.docs[i].data()
-            
+
             const newProject = await projectsCollection.doc()
 
             if(newProject) {
@@ -98,7 +101,9 @@ export const addProj = async(name, category) => {
                 })
             }
         }
-        
+
+        return {status: 'project_added'}
+
     } catch (error) {
         return {error: error.message}
     }
@@ -107,9 +112,9 @@ export const addProj = async(name, category) => {
 export const addTsk = async(name, project) => {
     try {
         const projectList = await projectsCollection.where('name', '==', project).get()
-        for (var i = 0; i < projectList.docs.length; i++) {
+        for (let i = 0; i < projectList.docs.length; i++) {
             const proj = projectList.docs[i].data()
-            
+
             const newTask = await tasksCollection.doc()
 
             if(newTask) {
@@ -123,7 +128,9 @@ export const addTsk = async(name, project) => {
                 })
             }
         }
-        
+
+        return {status: 'task_added'}
+
     } catch (error) {
         return {error: error.message}
     }

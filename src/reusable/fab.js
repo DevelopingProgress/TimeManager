@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { Platform, View } from 'react-native'
-import { Colors } from './tools';
+import React, {useEffect, useState} from 'react'
+import { Colors} from './tools';
 import ModalForm from './modalForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCategory, addProject, addTask, listCategories, listProjects, listTasks } from '../store/actions/tasksActions';
@@ -10,6 +9,8 @@ export const AddFab = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false)
+
 
     const handlePress = (value) => {
         switch (value) {
@@ -37,38 +38,61 @@ export const AddFab = () => {
     const user = useSelector(state => state.auth.user)
     const categories = useSelector(state => state.tasks.categories)
     const projects = useSelector(state => state.tasks.projects)
+    const tasks = useSelector(state => state.tasks.tasks)
+    const status = useSelector(state => state.tasks.status)
 
 
     const handleSubmit = (values) => {
         if(modalType === 0) {
-            setModalVisible(false)
-            dispatch(addCategory(values.name, values.icon, user))
-            console.log(user)
-            dispatch(listCategories(user))
+            if(user) {
+                setLoading(true)
+                dispatch(addCategory(values.name, values.icon, user))
+                dispatch(listCategories(user))
+                dispatch(listProjects(categories))
+                dispatch(listTasks(projects))
+            }
         } else if(modalType === 1) {
-            setModalVisible(false)
-            dispatch(addProject(values.name, values.category))
-            console.log(categories)
-            dispatch(listProjects(categories))
+            if(categories) {
+                setLoading(true)
+                dispatch(addProject(values.name, values.category))
+                dispatch(listCategories(user))
+                dispatch(listProjects(categories))
+                dispatch(listTasks(projects))
+            }
         } else if(modalType === 2) {
-            setModalVisible(false)
-            dispatch(addTask(values.name, values.project))
-            console.log(projects)
-            dispatch(listTasks(projects))
-        } 
+            if(projects) {
+                setLoading(true)
+                dispatch(addTask(values.name, values.project))
+                dispatch(listCategories(user))
+                dispatch(listProjects(categories))
+                dispatch(listTasks(projects))
+                console.log(status)
+            }
+        }
     }
 
-    
+    useEffect(() => {
+        if(status) {
+            setLoading(false)
+            setModalVisible(false)
+        }
+    }, [status]);
+
+
+
 
     return (
         <>
-            <ModalForm 
-                modalVisible={modalVisible} 
-                hideModal={() => setModalVisible(!modalVisible)}
+            <ModalForm
+                modalVisible={modalVisible}
+                hideModal={() => {
+                    setModalVisible(!modalVisible)
+                }}
                 modalType={modalType}
                 handleSubmit={handleSubmit}
+                loading={loading}
             />
-            
+
             <Portal>
                 <FAB.Group
                 style={{marginBottom: 60}}
@@ -105,5 +129,4 @@ export const AddFab = () => {
         </>
     )
 }
-
 

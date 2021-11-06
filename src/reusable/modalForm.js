@@ -1,18 +1,17 @@
 import { Formik } from 'formik';
 import React from 'react';
-import { StyleSheet, Text, Pressable, View } from 'react-native';
+import { StyleSheet, Text} from 'react-native';
 import { Colors } from './tools';
 import * as Yup from "yup";
-import { Input } from 'react-native-elements';
-import { Button, Modal, Portal } from 'react-native-paper';
+import {Input, Button} from 'react-native-elements';
+import { Modal, Portal } from 'react-native-paper';
+import { Loading } from './loading';
+
 
 const ModalForm = (props) => {
-
     return (
         <Portal>
             <Modal
-            // animationType="slide"
-            // transparent={true}
             visible={props.modalVisible}
             onDismiss={props.hideModal}
             contentContainerStyle={styles.modalView}
@@ -62,11 +61,11 @@ const ModalForm = (props) => {
                 )}
             >
                     {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
-                        <>   
+                        <>
                         {props.modalType === 0 ? (
                             <>
-                            <Input 
-                                
+                            <Input
+
                                 placeholder='Nazwa kategorii'
                                 onChangeText={handleChange('name')}
                                 onBlur={handleBlur('name')}
@@ -78,8 +77,8 @@ const ModalForm = (props) => {
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                 inputStyle={{width: '100%'}}
                             />
-                            <Input 
-                                
+                            <Input
+
                                 placeholder='Ikona kategorii'
                                 onChangeText={handleChange('icon')}
                                 onBlur={handleBlur('icon')}
@@ -95,8 +94,8 @@ const ModalForm = (props) => {
                         ) :
                         props.modalType === 1 ? (
                             <>
-                            <Input 
-                                
+                            <Input
+
                                 placeholder='Nazwa projektu'
                                 onChangeText={handleChange('name')}
                                 onBlur={handleBlur('name')}
@@ -108,8 +107,8 @@ const ModalForm = (props) => {
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                 inputStyle={{width: '100%'}}
                             />
-                            <Input 
-                                
+                            <Input
+
                                 placeholder='Kategoria'
                                 onChangeText={handleChange('category')}
                                 onBlur={handleBlur('category')}
@@ -125,8 +124,8 @@ const ModalForm = (props) => {
                         ) :
                         props.modalType === 2 ? (
                             <>
-                            <Input 
-                                
+                            <Input
+
                                 placeholder='Nazwa zadania'
                                 onChangeText={handleChange('name')}
                                 onBlur={handleBlur('name')}
@@ -138,8 +137,8 @@ const ModalForm = (props) => {
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                 inputStyle={{width: '100%'}}
                             />
-                            <Input 
-                                
+                            <Input
+
                                 placeholder='Projekt'
                                 onChangeText={handleChange('project')}
                                 onBlur={handleBlur('project')}
@@ -153,28 +152,30 @@ const ModalForm = (props) => {
                             />
                             </>
                         ) : null }
-                            
-                            <Button
-                                style={[styles.button, styles.buttonOpen]}
-                                onPress={handleSubmit}
-                            >
-                                <Text style={styles.textStyle}>Dodaj {
-                                    props.modalType === 0 ? 'Kategorię' :
-                                    props.modalType === 1 ? 'Projekt' :
-                                    props.modalType === 2 ? 'Zadanie' : null
-                                }</Text>
-                            </Button>
+                            {props.loading ? <Loading circlesnail/> :
+                                <Button
+                                    containerStyle={[styles.button, styles.buttonOpen]}
+                                    buttonStyle={{backgroundColor: 'transparent'}}
+                                    onPress={handleSubmit}
+                                    title={`Dodaj ${
+                                        props.modalType === 0 ? 'Kategorię' :
+                                        props.modalType === 1 ? 'Projekt' :
+                                        props.modalType === 2 ? 'Zadanie' : null
+                                    }`}
+                                />
+                            }
                         </>
                     )}
                 </Formik>
                 <Button
-                style={[styles.button, styles.buttonClose]}
-                onPress={props.hideModal}>
-                <Text style={styles.textStyle}>Anuluj</Text>
-                </Button>
+                    containerStyle={[styles.button, styles.buttonClose]}
+                    buttonStyle={{backgroundColor: 'transparent'}}
+                    onPress={props.hideModal}
+                    title='Anuluj'
+                />
             </Modal>
         </Portal>
-        
+
     );
 };
 

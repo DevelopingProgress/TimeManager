@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { Menu } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,10 +24,9 @@ export const TaskScreen = () => {
             <View style={{margin: 10}}>
                 {tasks ? tasks.map((item) => (
                     <Menu.Item
-                        key={item.taskID}
-                        title={item.name}
-                        theme={{dark: true}}
-                        onPress={() => console.log('Zadanie nr ' + item.taskID)}
+                        key={item.taskID ? item.taskID : null}
+                        title={item.name ? item.name : null}
+                        onPress={() => console.log('Zadanie nr ' + item.taskID ? item.taskID : null)}
                     />
                 )) : null}
             </View>

@@ -10,3 +10,7 @@ export const Colors = {
     'lightgrey': '#f2f2f2',
     'darkgrey': '#878787'
 }
+
+export const sleep = time => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}

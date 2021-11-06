@@ -1,12 +1,11 @@
 import { useFocusEffect } from '@react-navigation/core'
 import React, { useEffect } from 'react'
-import { Text, View } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { List, Menu } from 'react-native-paper'
+import { Menu } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { AddFab } from '../../../../reusable/fab'
-import { listCategories } from '../../../../store/actions/tasksActions'
+import { listCategories, listTasks } from '../../../../store/actions/tasksActions'
 import { styles } from '../../../home/index'
 
 
@@ -15,6 +14,16 @@ export const CategoriesScreen = () => {
     const dispatch = useDispatch()
     const categories = useSelector(state => state.tasks.categories)
     const user = useSelector(state => state.auth.user)
+    const projects = useSelector(state => state.tasks.projects)
+
+     useEffect(() => {
+        if(categories) {
+            dispatch(listCategories(categories))
+        }
+        if(projects) {
+            dispatch(listTasks(projects))
+        }
+    }, [categories])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -27,14 +36,14 @@ export const CategoriesScreen = () => {
             <View style={{margin: 10}}>
                 {categories ? categories.map((item) => (
                     <Menu.Item
-                    key={item.catID}
-                    title={item.name}
-                    icon={item.icon}
-                    onPress={() => console.log('Kategoria nr ' + item.catID)}
+                        key={item.catID ? item.catID : null}
+                        title={item.name ? item.name : null}
+                        icon={item.icon ? item.icon : null}
+                        onPress={() => console.log('Kategoria nr ' + item.catID ? item.catID : null)}
                     />
                 )): null}
             </View>
-            
+
             <AddFab/>
         </ScrollView>
     )

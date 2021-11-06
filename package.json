@@ -44,7 +44,8 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@react-navigation/core": "^6.1.0"
   },
   "private": true
 }
