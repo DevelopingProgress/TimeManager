@@ -66,7 +66,6 @@ export const AddFab = () => {
                 dispatch(listCategories(user))
                 dispatch(listProjects(categories))
                 dispatch(listTasks(projects))
-                console.log(status)
             }
         }
     }
@@ -77,9 +76,6 @@ export const AddFab = () => {
             setModalVisible(false)
         }
     }, [status]);
-
-
-
 
     return (
         <>

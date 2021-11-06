@@ -9,30 +9,11 @@ import { CategoriesScreen } from './screens/categories'
 import { ProjectsScreen } from './screens/projects'
 import { TaskScreen } from './screens/tasks'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-// import { useDispatch, useSelector } from 'react-redux'
-// import { listCategories, listTasks } from '../../store/actions/tasksActions'
 
 const TopTab = createMaterialTopTabNavigator();
 
 export const TasksScreen = ({navigation}) => {
 
-    // const dispatch = useDispatch()
-    // const projects = useSelector(state => state.tasks.projects)
-    // const categories = useSelector(state => state.tasks.categories)
-    // const user = useSelector(state => state.auth.user)
-    
-
-    // useEffect(() => {
-    //     if(user) {
-    //         dispatch(listCategories(user))
-    //     }
-    //     if(categories) {
-    //         dispatch(listCategories(categories))
-    //     }
-    //     if(projects) {
-    //         dispatch(listTasks(projects))
-    //     }
-    // }, [])
 
     return(
         <>
@@ -40,8 +21,8 @@ export const TasksScreen = ({navigation}) => {
                 <GreetingText title='Twoje zadania'/>
                 <SettingsIcon navigation={navigation}/>
             </View>
-            
-            <TopTab.Navigator 
+
+            <TopTab.Navigator
                 initialRouteName="HomeScreen"
                 screenOptions={{
                     tabBarActiveTintColor: Colors.blue,
@@ -50,29 +31,29 @@ export const TasksScreen = ({navigation}) => {
                     tabBarIndicatorContainerStyle: {
                         backgroundColor: Colors.white,
                     },
-                    tabBarIndicatorStyle: { 
+                    tabBarIndicatorStyle: {
                         backgroundColor: Colors.blue
                     }
                 }}
             >
-                <TopTab.Screen 
-                    name="CategoriesScreen" 
+                <TopTab.Screen
+                    name="CategoriesScreen"
                     component={CategoriesScreen}
                     options={{
                         headerShown: false,
                         title: "Kategorie",
                     }}
                 />
-                <TopTab.Screen 
-                    name="ProjectsScreen" 
+                <TopTab.Screen
+                    name="ProjectsScreen"
                     component={ProjectsScreen}
                     options={{
                         headerShown: false,
                         title: "Projekty",
                     }}
                 />
-                <TopTab.Screen 
-                    name="TaskScreen" 
+                <TopTab.Screen
+                    name="TaskScreen"
                     component={TaskScreen}
                     options={{
                         headerShown: false,
@@ -82,4 +63,4 @@ export const TasksScreen = ({navigation}) => {
             </TopTab.Navigator>
         </>
     )
-} 
+}

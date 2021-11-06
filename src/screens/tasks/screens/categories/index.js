@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AddFab } from '../../../../reusable/fab'
 import { listCategories, listTasks } from '../../../../store/actions/tasksActions'
 import { styles } from '../../../home/index'
+import {Icon} from "react-native-elements";
 
 
 export const CategoriesScreen = () => {
@@ -33,12 +34,12 @@ export const CategoriesScreen = () => {
 
     return (
         <ScrollView style={styles.mainContainer}>
-            <View style={{margin: 10}}>
+            <View style={{margin: 10, flex: 1}}>
                 {categories ? categories.map((item) => (
                     <Menu.Item
                         key={item.catID ? item.catID : null}
                         title={item.name ? item.name : null}
-                        icon={item.icon ? item.icon : null}
+                        icon={() => <Icon name={item.icon  ? item.icon : null} type='antdesign' />}
                         onPress={() => console.log('Kategoria nr ' + item.catID ? item.catID : null)}
                     />
                 )): null}

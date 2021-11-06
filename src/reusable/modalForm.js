@@ -1,14 +1,20 @@
 import { Formik } from 'formik';
-import React from 'react';
-import { StyleSheet, Text} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import { Colors } from './tools';
 import * as Yup from "yup";
 import {Input, Button} from 'react-native-elements';
 import { Modal, Portal } from 'react-native-paper';
 import { Loading } from './loading';
+import {Picker} from "@react-native-picker/picker";
+import IconPicker from "react-native-icon-picker";
 
 
 const ModalForm = (props) => {
+
+    const [showIconPicker, setShowIconPicker] = useState(false);
+    const [icon, setIcon] = useState('');
+
     return (
         <Portal>
             <Modal
@@ -65,7 +71,6 @@ const ModalForm = (props) => {
                         {props.modalType === 0 ? (
                             <>
                             <Input
-
                                 placeholder='Nazwa kategorii'
                                 onChangeText={handleChange('name')}
                                 onBlur={handleBlur('name')}
@@ -77,18 +82,31 @@ const ModalForm = (props) => {
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                 inputStyle={{width: '100%'}}
                             />
-                            <Input
+                            <IconPicker
 
-                                placeholder='Ikona kategorii'
-                                onChangeText={handleChange('icon')}
-                                onBlur={handleBlur('icon')}
-                                value={values.icon}
-                                renderErrorMessage={errors.icon && touched.icon}
-                                errorMessage={errors.icon}
-                                errorStyle={{color: Colors.red, fontSize: 15}}
-                                maxLength={50}
-                                containerStyle={{paddingHorizontal: 35}}
-                                inputStyle={{width: '100%'}}
+                             iconDetails={[
+                                 {
+                                     family: "AntDesign",
+                                     color: Colors.blue,
+                                     icons: [
+                                         "wallet",
+                                         "user",
+                                         "addusergroup",
+                                         "deleteuser",
+                                         "deleteusergroup",
+                                         "adduser",
+                                     ],
+                                 },
+                             ]}
+                             headerTitle={'Wybierz ikonę kategorii'}
+                             onSelect={(icon) => {
+                                 handleChange(icon.icon)
+
+                                 setShowIconPicker(!showIconPicker)
+                                 console.log(values.icon)
+                             }}
+                             showIconPicker={showIconPicker}
+                             toggleIconPicker={() => setShowIconPicker(!showIconPicker)}
                             />
                             </>
                         ) :
@@ -125,7 +143,6 @@ const ModalForm = (props) => {
                         props.modalType === 2 ? (
                             <>
                             <Input
-
                                 placeholder='Nazwa zadania'
                                 onChangeText={handleChange('name')}
                                 onBlur={handleBlur('name')}
@@ -138,7 +155,6 @@ const ModalForm = (props) => {
                                 inputStyle={{width: '100%'}}
                             />
                             <Input
-
                                 placeholder='Projekt'
                                 onChangeText={handleChange('project')}
                                 onBlur={handleBlur('project')}
@@ -180,12 +196,12 @@ const ModalForm = (props) => {
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
+    centeredView: {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: Colors.white,
-  },
-  modalView: {
+    },
+    modalView: {
     margin: 60,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -199,29 +215,29 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  button: {
+    },
+    button: {
     borderRadius: 20,
     margin: 10,
     padding: 10,
     elevation: 2
-  },
-  buttonOpen: {
+    },
+    buttonOpen: {
     backgroundColor: Colors.blue,
-  },
-  buttonClose: {
+    },
+    buttonClose: {
     backgroundColor: Colors.red,
-  },
-  textStyle: {
+    },
+    textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 15
-  },
-  modalText: {
+    },
+    modalText: {
     marginBottom: 15,
     textAlign: 'center',
-  },
+    },
 });
 
 export default ModalForm;
