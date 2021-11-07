@@ -82,31 +82,17 @@ const ModalForm = (props) => {
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                 inputStyle={{width: '100%'}}
                             />
-                            <IconPicker
-
-                             iconDetails={[
-                                 {
-                                     family: "AntDesign",
-                                     color: Colors.blue,
-                                     icons: [
-                                         "wallet",
-                                         "user",
-                                         "addusergroup",
-                                         "deleteuser",
-                                         "deleteusergroup",
-                                         "adduser",
-                                     ],
-                                 },
-                             ]}
-                             headerTitle={'Wybierz ikonę kategorii'}
-                             onSelect={(icon) => {
-                                 handleChange(icon.icon)
-
-                                 setShowIconPicker(!showIconPicker)
-                                 console.log(values.icon)
-                             }}
-                             showIconPicker={showIconPicker}
-                             toggleIconPicker={() => setShowIconPicker(!showIconPicker)}
+                            <Input
+                                placeholder='Ikona Kategorii'
+                                onChangeText={handleChange('icon')}
+                                onBlur={handleBlur('icon')}
+                                value={values.icon}
+                                renderErrorMessage={errors.icon && touched.icon}
+                                errorMessage={errors.icon}
+                                errorStyle={{color: Colors.red, fontSize: 15}}
+                                maxLength={50}
+                                containerStyle={{paddingHorizontal: 35, marginTop: 20}}
+                                inputStyle={{width: '100%'}}
                             />
                             </>
                         ) :

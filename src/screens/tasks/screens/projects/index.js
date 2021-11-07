@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native'
 import { Menu } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { AddFab } from '../../../../reusable/fab'
-import { listProjects } from '../../../../store/actions/tasksActions'
+import {clearTasksError, listProjects} from '../../../../store/actions/tasksActions'
 import {styles} from '../../../home/index'
 import {Icon} from "react-native-elements";
 
@@ -12,12 +12,19 @@ export const ProjectsScreen = () => {
     const dispatch = useDispatch()
     const projects = useSelector(state => state.tasks.projects)
     const categories = useSelector(state => state.tasks.categories)
+    const error = useSelector(state => state.tasks.error)
 
 
     useFocusEffect(
         React.useCallback(() => {
-           dispatch(listProjects(categories))
-        }, [dispatch, categories])
+            if(categories) {
+                dispatch(listProjects(categories))
+            } else if(error) {
+                //ERROR COMPONENT TODO
+                alert(error)
+                dispatch(clearTasksError())
+            }
+        }, [dispatch, categories, error])
     )
 
     return (

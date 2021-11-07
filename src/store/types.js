@@ -14,6 +14,7 @@ export const LIST_PROJECTS = 'LIST_PROJECTS'
 export const CLEAR_PROJECTS = 'CLEAR_PROJECTS'
 export const LIST_TASKS = 'LIST_TASKS'
 export const CLEAR_TASKS = 'CLEAR_TASKS'
+export const CLEAR_TASKS_ERROR = 'CLEAR_TASKS_ERROR'
 
 //ADD
 export const ADD_CATEGORY = 'ADD_CATEGORY'

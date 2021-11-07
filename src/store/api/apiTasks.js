@@ -36,15 +36,15 @@ export const listProj = async(categories) => {
     }
 }
 
-export const listTsk = async(projects) => {
+export const listTsk = async(projectID) => {
     try {
+        const project = await projectsCollection.doc(projectID).get()
+        const data = project.data()
         let tasks = []
-        for (let i = 0; i < projects.length; i++) {
-            for (let j = 0; j < projects[i].tasks.length; j++) {
-                if(projects[i].tasks) {
-                    let projectTask = await projects[i].tasks[j].get()
-                    tasks.push(projectTask.data())
-                }
+        for (let i = 0; i < data.tasks.length; i++) {
+            if(data.tasks) {
+                let projectTask = await data.tasks[i].get()
+                tasks.push(projectTask.data())
             }
         }
         return {tasks: tasks}

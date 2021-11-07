@@ -9,11 +9,29 @@ import { CategoriesScreen } from './screens/categories'
 import { ProjectsScreen } from './screens/projects'
 import { TaskScreen } from './screens/tasks'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {useDispatch, useSelector} from "react-redux";
+import {listCategories, listTasks} from "../../store/actions/tasksActions";
 
 const TopTab = createMaterialTopTabNavigator();
 
 export const TasksScreen = ({navigation}) => {
+    // const dispatch = useDispatch()
+    // const projects = useSelector(state => state.tasks.projects)
+    // const categories = useSelector(state => state.tasks.categories)
+    // const user = useSelector(state => state.auth.user)
 
+
+    // useEffect(() => {
+    //     if(user) {
+    //         dispatch(listCategories(user))
+    //     }
+    //     if(categories) {
+    //         dispatch(listCategories(categories))
+    //     }
+    //     if(projects) {
+    //         dispatch(listTasks(projects))
+    //     }
+    // }, [])
 
     return(
         <>
