@@ -21,9 +21,9 @@ export const clearCategories = () => ({
     type: CLEAR_CATEGORIES,
 })
 
-export const listProjects = (categories) => ({
+export const listProjects = (user, category) => ({
     type: LIST_PROJECTS,
-    payload: listProj(categories)
+    payload: listProj(user, category)
 })
 
 export const clearProjects = () => ({

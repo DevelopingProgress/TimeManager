@@ -2,15 +2,14 @@ import { categoriesCollection, projectsCollection, usersCollection, firebase, ta
 
 export const listCat = async(user) => {
     try {
-        const userProfile = await usersCollection.doc(user.uid).get();
-        const data = userProfile.data();
+
         let categoriesList = []
-        for (let i = 0; i < data.categories.length; i++) {
-            if(data.categories) {
-                let userCategory = await data.categories[i].get()
-                categoriesList.push(userCategory.data())
-            }
-        }
+        const categories = await usersCollection.doc(user.uid).collection('categories').get()
+
+        categories.forEach(doc => {
+            categoriesList.push(doc.data()) 
+        })
+        
         return {categories: categoriesList}
     } catch (error) {
         return {error: error.message}
@@ -18,19 +17,20 @@ export const listCat = async(user) => {
 
 }
 
-export const listProj = async(categories) => {
+export const listProj = async(user, category) => {
     try {
-        let projects = []
-        for (let i = 0; i < categories.length; i++) {
-            for (let j = 0; j < categories[i].projects.length; j++) {
-                if(categories[i].projects) {
-                    let categoryProject = await categories[i].projects[j].get()
-                    projects.push(categoryProject.data())
-                }
-            }
-        }
-        return {projects: projects}
-
+        let projectsList = []
+        const projects = await usersCollection
+        .doc(user.uid)
+        .collection('categories')
+        .doc(category.id)
+        .collection('projects')
+        .get()
+        projects.forEach(doc => {
+            projectsList.push(doc.data())
+        })
+        
+        return {projects: projectsList}
     } catch (error) {
         return {error: error.message}
     }
@@ -62,9 +62,8 @@ export const addCat = async(name, icon, user) => {
         const uid = user.uid
         if(newCategory) {
             newCategory.set({
-                catID: newCategory.id,
+                id: newCategory.id,
                 name: name,
-                icon: icon,
                 projects: []
             })
             const ref = categoriesCollection.doc(newCategory.id)
@@ -90,13 +89,12 @@ export const addProj = async(name, category) => {
 
             if(newProject) {
                 newProject.set({
-                    projID: newProject.id,
+                    id: newProject.id,
                     name: name,
-                    icon: cat.icon,
                     tasks: []
                 })
                 const ref = projectsCollection.doc(newProject.id)
-                await categoriesCollection.doc(cat.catID).update({
+                await categoriesCollection.doc(cat.id).update({
                     projects: firebase.firestore.FieldValue.arrayUnion(ref)
                 })
             }
@@ -119,11 +117,11 @@ export const addTsk = async(name, project) => {
 
             if(newTask) {
                 newTask.set({
-                    taskID: newTask.id,
+                    id: newTask.id,
                     name: name,
                 })
                 const ref = tasksCollection.doc(newTask.id)
-                await projectsCollection.doc(proj.projID).update({
+                await projectsCollection.doc(proj.id).update({
                     tasks: firebase.firestore.FieldValue.arrayUnion(ref)
                 })
             }

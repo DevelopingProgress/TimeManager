@@ -45,9 +45,6 @@ const ModalForm = (props) => {
                         name: Yup
                         .string()
                         .required(),
-                        icon: Yup
-                        .string()
-                        .required(),
                     } : props.modalType === 1 ?
                     {
                         name: Yup
@@ -77,18 +74,6 @@ const ModalForm = (props) => {
                                 value={values.name}
                                 renderErrorMessage={errors.name && touched.name}
                                 errorMessage={errors.name}
-                                errorStyle={{color: Colors.red, fontSize: 15}}
-                                maxLength={50}
-                                containerStyle={{paddingHorizontal: 35, marginTop: 20}}
-                                inputStyle={{width: '100%'}}
-                            />
-                            <Input
-                                placeholder='Ikona Kategorii'
-                                onChangeText={handleChange('icon')}
-                                onBlur={handleBlur('icon')}
-                                value={values.icon}
-                                renderErrorMessage={errors.icon && touched.icon}
-                                errorMessage={errors.icon}
                                 errorStyle={{color: Colors.red, fontSize: 15}}
                                 maxLength={50}
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
