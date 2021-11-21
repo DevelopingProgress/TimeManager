@@ -30,9 +30,9 @@ export const clearProjects = () => ({
     type: CLEAR_PROJECTS,
 })
 
-export const listTasks = (project) => ({
+export const listTasks = (user, category, project) => ({
     type: LIST_TASKS,
-    payload: listTsk(project)
+    payload: listTsk(user, category, project)
 })
 
 export const clearTasks = () => ({

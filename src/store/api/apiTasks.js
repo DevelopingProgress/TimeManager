@@ -1,4 +1,4 @@
-import { categoriesCollection, projectsCollection, usersCollection, firebase, tasksCollection, } from "../../database/firebase";
+import { usersCollection, firebase } from "../../database/firebase";
 
 export const listCat = async(user) => {
     try {
@@ -36,18 +36,22 @@ export const listProj = async(user, category) => {
     }
 }
 
-export const listTsk = async(projectID) => {
+export const listTsk = async(user, category, project) => {
     try {
-        const project = await projectsCollection.doc(projectID).get()
-        const data = project.data()
-        let tasks = []
-        for (let i = 0; i < data.tasks.length; i++) {
-            if(data.tasks) {
-                let projectTask = await data.tasks[i].get()
-                tasks.push(projectTask.data())
-            }
-        }
-        return {tasks: tasks}
+        let tasksList = []
+        const tasks = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id)
+            .collection('tasks')
+            .get()
+        tasks.forEach(doc => {
+            tasksList.push(doc.data())
+        })
+
+        return {projects: tasksList}
 
     } catch (error) {
         return {error: error.message}

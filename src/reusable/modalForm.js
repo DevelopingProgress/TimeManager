@@ -6,8 +6,7 @@ import * as Yup from "yup";
 import {Input, Button} from 'react-native-elements';
 import { Modal, Portal } from 'react-native-paper';
 import { Loading } from './loading';
-import {Picker} from "@react-native-picker/picker";
-import IconPicker from "react-native-icon-picker";
+
 
 
 const ModalForm = (props) => {

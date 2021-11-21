@@ -1,30 +1,26 @@
-import { useFocusEffect } from '@react-navigation/core'
-import React, { useEffect } from 'react'
-import { ScrollView, View } from 'react-native'
-import { Menu } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
+import React, {useEffect} from 'react'
+import { ScrollView } from 'react-native'
 import { AddFab } from '../../../../reusable/fab'
-import {clearTasksError, listCategories, listProjects} from '../../../../store/actions/tasksActions'
 import {styles} from '../../../home/index'
-import {Icon} from "react-native-elements";
-import {MenuItems} from "../../../../reusable/MenuItems";
+import {useDispatch, useSelector} from "react-redux";
+import {listProjects} from "../../../../store/actions/tasksActions";
+import {Tiles} from "../../../../reusable/tiles";
+import {Text} from "react-native";
 
-export const ProjectsScreen = () => {
-    const dispatch = useDispatch()
+export const ProjectsScreen = (props) => {
+    const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user)
-    const categories = useSelector(state => state.tasks.categories)
-    const error = useSelector(state => state.tasks.error)
-
-
-    useFocusEffect(
-        React.useCallback(() => {
-            dispatch(listCategories(user))
-        }, [dispatch, user])
-    )
+    const category = props.route.params.item
+    const projects = useSelector(state => state.tasks.projects)
+    useEffect(() => {
+        dispatch(listProjects(user, category))
+    }, [dispatch, user, category])
 
     return (
         <ScrollView style={styles.mainContainer}>
-            <MenuItems array={categories} projects />
+            {projects.length > 0  ?  <Tiles array={projects} navigation={props.navigation} goToScreen='TaskScreen' category={category}/> :
+                <Text>Brak projektów dla wybranej kategorii</Text>
+            }
             <AddFab/>
         </ScrollView>
     )
