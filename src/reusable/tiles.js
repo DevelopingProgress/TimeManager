@@ -19,6 +19,7 @@ export const Tiles = (props) => {
                     navigation={props.navigation}
                     goToScreen={props.goToScreen}
                     category={props.category}
+                    type={props.type}
                     />) : null
             )}
             numColumns={2}

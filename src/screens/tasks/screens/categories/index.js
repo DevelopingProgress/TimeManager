@@ -16,14 +16,20 @@ export const CategoriesScreen = ({navigation}) => {
     }, [user])
 
     return (
-        <ScrollView style={styles.mainContainer}>
-            <StackHeader type='categories' navigation={navigation}/>
-            <Tiles
-                array={categories}
-                navigation={navigation}
-                goToScreen='ProjectsScreen'
-            />
-            <AddFab/>
-        </ScrollView>
+        <>
+            <ScrollView style={styles.mainContainer}>
+                <StackHeader type='categories' navigation={navigation}/>
+                {categories.length > 0  ?  <Tiles
+                        array={categories}
+                        navigation={navigation}
+                        goToScreen='ProjectsScreen'
+                        type='category'
+                    /> :
+                    <Text>Brak kategorii</Text>
+                }
+            </ScrollView>
+            <AddFab type={0}/>
+        </>
+
     )
 }

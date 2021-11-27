@@ -1,11 +1,11 @@
 import { Divider, Icon } from 'react-native-elements'
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Colors } from './tools'
 import React from 'react'
-import { listProjects } from '../store/actions/tasksActions'
+import {deleteCategory, deleteProject, listCategories, listProjects} from '../store/actions/tasksActions'
 
 export const ModalOptions = (props) => {
     const user = useSelector(state => state.auth.user)
@@ -67,7 +67,30 @@ export const ModalOptions = (props) => {
                     <Divider  orientation="horizontal" width={1}/>
                     <MenuOption
                         style={{flexDirection: 'row'}}
-                        onSelect={() => console.log('nic')}
+                        onSelect={() =>
+                        {
+                            const typeTitle = props.type === 'category' ? 'kategorii ' : 'projektu '
+                            const typeMessage = props.type === 'category' ? 'kategorię oraz wszystkie projekty i zadania z tej kategorii'
+                                : 'projekt oraz wszystkie zadania z tego projektu'
+                            Alert.alert(
+                                'Usuwanie ' +  typeTitle  +  props.item.name,
+                                'Czy chcesz usunąć ' + typeMessage +  '?' ,
+                                [
+                                    {
+                                        text: 'Anuluj',
+                                    },
+                                    {
+                                        text: 'Usuń',
+                                        onPress: () => {
+                                            props.type === 'category' ?
+                                                dispatch(deleteCategory(user, props.item)) &&
+                                                dispatch(listCategories(user)) :
+                                                dispatch(deleteProject(user, props.category, props.item)) &&
+                                                dispatch(listProjects(user, props.category))
+                                        }
+                                    }
+                                ], {cancelable: true})
+                        }}
                     >
                         <Icon
                             type='entypo'

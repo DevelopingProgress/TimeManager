@@ -1,14 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import { Colors} from './tools';
-import ModalForm from './modalForm';
+import ModalAdd from './modalAdd';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, addProject, addTask, listCategories, listProjects, listTasks } from '../store/actions/tasksActions';
-import { FAB, Portal } from 'react-native-paper';
+import {
+    addCategory,
+    addProject,
+    addTask,
+    clearStatus,
+    listCategories, listProjects, listTasks,
+} from '../store/actions/tasksActions';
+import {Button, Icon} from "react-native-elements";
 
-export const AddFab = () => {
+export const AddFab = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
-    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false)
 
 
@@ -16,17 +21,14 @@ export const AddFab = () => {
         switch (value) {
             case 0:
                 setModalVisible(true)
-                setOpen(false)
                 setModalType(value)
                 break;
             case 1:
                 setModalVisible(true)
-                setOpen(false)
                 setModalType(value)
                 break;
             case 2:
                 setModalVisible(true)
-                setOpen(false)
                 setModalType(value)
                 break;
             default:
@@ -44,44 +46,44 @@ export const AddFab = () => {
 
     const handleSubmit = (values) => {
         if(modalType === 0) {
-            if(user) {
-                setLoading(true)
-                dispatch(addCategory(values.name, values.icon, user))
-                dispatch(listCategories(user))
-                dispatch(listProjects(categories))
-                dispatch(listTasks(projects))
-            }
+            setLoading(true)
+            dispatch(addCategory(values.name, user))
         } else if(modalType === 1) {
-            if(categories) {
-                setLoading(true)
-                dispatch(addProject(values.name, values.category))
-                dispatch(listCategories(user))
-                dispatch(listProjects(categories))
-                dispatch(listTasks(projects))
-            }
+            setLoading(true)
+            dispatch(addProject(user, values.name, props.category))
         } else if(modalType === 2) {
-            if(projects) {
-                setLoading(true)
-                dispatch(addTask(values.name, values.project))
-                dispatch(listCategories(user))
-                dispatch(listProjects(categories))
-                dispatch(listTasks(projects))
-            }
+            setLoading(true)
+            dispatch(addTask(user, values.name, props.category, props.project))
         }
     }
 
     useEffect(() => {
-        if(status) {
+        if(status === 'category_added') {
+            dispatch(clearStatus())
             setLoading(false)
             setModalVisible(false)
+            dispatch(listCategories(user))
+        }
+        if(status === 'project_added') {
+            dispatch(clearStatus())
+            setLoading(false)
+            setModalVisible(false)
+            dispatch(listProjects(user, props.category))
+        }
+        if(status === 'task_added') {
+            dispatch(clearStatus())
+            setLoading(false)
+            setModalVisible(false)
+            dispatch(listTasks(user, props.category, props.project))
         }
     }, [status]);
 
     return (
         <>
-            <ModalForm
+            <ModalAdd
                 modalVisible={modalVisible}
                 hideModal={() => {
+                    setLoading(false)
                     setModalVisible(!modalVisible)
                 }}
                 modalType={modalType}
@@ -89,39 +91,26 @@ export const AddFab = () => {
                 loading={loading}
             />
 
-            <Portal>
-                <FAB.Group
-                style={{marginBottom: 60}}
-                open={open}
-                icon={open ? 'close' : 'plus'}
-                fabStyle={{backgroundColor: Colors.blue}}
-                color={Colors.black2}
-                actions={[
-                    {
-                        icon: 'plus',
-                        label: 'Dodaj Kategorię',
-                        onPress: () => handlePress(0),
-                        color: Colors.black2,
-                        labelTextColor: Colors.black2
-                    },
-                    {
-                        icon: 'plus',
-                        label: 'Dodaj Projekt',
-                        onPress: () => handlePress(1),
-                        color: Colors.black2,
-                        labelTextColor: Colors.black2
-                    },
-                    {
-                        icon: 'plus',
-                        label: 'Dodaj Zadanie',
-                        onPress: () => handlePress(2),
-                        color: Colors.black2,
-                        labelTextColor: Colors.black2
-                    },
-                ]}
-                onStateChange={() => setOpen(!open)}
-                />
-            </Portal>
+            <Button
+                icon={<Icon type='ionicons' name='add' size={25}/>}
+                onPress={() => {
+                    handlePress(props.type)
+                }}
+                buttonStyle={{
+                    backgroundColor: Colors.blue,
+                    borderRadius: 50,
+                    width: 55,
+                    height: 55,
+                    borderStyle: "solid",
+                    borderColor: Colors.lightgrey,
+                    borderWidth: 1
+                }}
+                containerStyle={{
+                    position: "absolute",
+                    right: 15,
+                    bottom: 20
+                }}
+            />
         </>
     )
 }

@@ -9,10 +9,8 @@ import { Loading } from './loading';
 
 
 
-const ModalForm = (props) => {
+const ModalAdd = (props) => {
 
-    const [showIconPicker, setShowIconPicker] = useState(false);
-    const [icon, setIcon] = useState('');
 
     return (
         <Portal>
@@ -26,15 +24,12 @@ const ModalForm = (props) => {
                     props.modalType === 0 ?
                     {
                         name: '',
-                        icon: '',
                     } : props.modalType === 1 ?
                     {
                         name: '',
-                        category: '',
                     } : props.modalType === 2 ?
                     {
                         name: '',
-                        project: '',
                     } : null
                 }
                 onSubmit={values => props.handleSubmit(values)}
@@ -49,14 +44,8 @@ const ModalForm = (props) => {
                         name: Yup
                         .string()
                         .required(),
-                        category: Yup
-                        .string()
-                        .required(),
                     } : props.modalType === 2 ? {
                         name: Yup
-                        .string()
-                        .required(),
-                        project: Yup
                         .string()
                         .required(),
                     } : null
@@ -95,19 +84,6 @@ const ModalForm = (props) => {
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                 inputStyle={{width: '100%'}}
                             />
-                            <Input
-
-                                placeholder='Kategoria'
-                                onChangeText={handleChange('category')}
-                                onBlur={handleBlur('category')}
-                                value={values.category}
-                                renderErrorMessage={errors.category && touched.category}
-                                errorMessage={errors.category}
-                                errorStyle={{color: Colors.red, fontSize: 15}}
-                                maxLength={50}
-                                containerStyle={{paddingHorizontal: 35}}
-                                inputStyle={{width: '100%'}}
-                            />
                             </>
                         ) :
                         props.modalType === 2 ? (
@@ -122,18 +98,6 @@ const ModalForm = (props) => {
                                 errorStyle={{color: Colors.red, fontSize: 15}}
                                 maxLength={50}
                                 containerStyle={{paddingHorizontal: 35, marginTop: 20}}
-                                inputStyle={{width: '100%'}}
-                            />
-                            <Input
-                                placeholder='Projekt'
-                                onChangeText={handleChange('project')}
-                                onBlur={handleBlur('project')}
-                                value={values.project}
-                                renderErrorMessage={errors.project && touched.project}
-                                errorMessage={errors.project}
-                                errorStyle={{color: Colors.red, fontSize: 15}}
-                                maxLength={50}
-                                containerStyle={{paddingHorizontal: 35}}
                                 inputStyle={{width: '100%'}}
                             />
                             </>
@@ -210,4 +174,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ModalForm;
+export default ModalAdd;

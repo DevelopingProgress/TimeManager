@@ -1,5 +1,6 @@
 import { firebase, usersCollection } from "../../database/firebase";
 
+//LIST
 export const listCat = async(user) => {
     try {
 
@@ -60,82 +61,107 @@ export const listTsk = async(user, category, project) => {
     }
 }
 
-
-export const addCat = async(name, icon, user) => {
+//ADD
+export const addCat = async(name, user) => {
     try {
-        const newCategory = await categoriesCollection.doc()
-
-        const uid = user.uid
+        const newCategory  = await usersCollection.doc(user.uid).collection('categories').doc()
         if(newCategory) {
             newCategory.set({
                 id: newCategory.id,
                 name: name,
                 projects: []
             })
-            const ref = categoriesCollection.doc(newCategory.id)
-            await usersCollection.doc(uid).update({
-                categories: firebase.firestore.FieldValue.arrayUnion(ref)
+        }
+        return {status: 'category_added'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}
+
+export const addProj = async(user, name, category) => {
+    try {
+        const newProject = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc()
+
+        if(newProject) {
+            newProject.set({
+                id: newProject.id,
+                name: name,
+                tasks: []
             })
         }
-
-        return {status: 'category_added'}
-
-    } catch (error) {
-        return {error: error.message}
-    }
-}
-
-export const addProj = async(name, category) => {
-    try {
-        const categoryList = await categoriesCollection.where('name', '==', category).get()
-        for (let i = 0; i < categoryList.docs.length; i++) {
-            const cat = categoryList.docs[i].data()
-
-            const newProject = await projectsCollection.doc()
-
-            if(newProject) {
-                newProject.set({
-                    id: newProject.id,
-                    name: name,
-                    tasks: []
-                })
-                const ref = projectsCollection.doc(newProject.id)
-                await categoriesCollection.doc(cat.id).update({
-                    projects: firebase.firestore.FieldValue.arrayUnion(ref)
-                })
-            }
-        }
-
         return {status: 'project_added'}
-
     } catch (error) {
         return {error: error.message}
     }
 }
 
-export const addTsk = async(name, project) => {
+export const addTsk = async(user, name, category, project) => {
     try {
-        const projectList = await projectsCollection.where('name', '==', project).get()
-        for (let i = 0; i < projectList.docs.length; i++) {
-            const proj = projectList.docs[i].data()
+        const newTask  = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id)
+            .collection('tasks')
+            .doc()
 
-            const newTask = await tasksCollection.doc()
-
-            if(newTask) {
-                newTask.set({
-                    id: newTask.id,
-                    name: name,
-                })
-                const ref = tasksCollection.doc(newTask.id)
-                await projectsCollection.doc(proj.id).update({
-                    tasks: firebase.firestore.FieldValue.arrayUnion(ref)
-                })
-            }
+        if(newTask) {
+            newTask.set({
+                id: newTask.id,
+                name: name,
+            })
         }
-
         return {status: 'task_added'}
-
     } catch (error) {
         return {error: error.message}
     }
 }
+
+//DELETE
+export const delCat = async (user, category) => {
+    try {
+        await usersCollection.doc(user.uid).collection('categories').doc(category.id).delete()
+        return {status: 'category_deleted'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}
+
+export const delProj= async (user, category, project) => {
+    try {
+        await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id).delete()
+        return {status: 'project_deleted'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}
+
+export const delTsk= async (user, category, project, task) => {
+    try {
+        await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id)
+            .collection('tasks')
+            .doc(task.id)
+            .delete()
+        return {status: 'task_deleted'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}
+
+//UPDATE

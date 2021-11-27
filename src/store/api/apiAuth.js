@@ -65,7 +65,7 @@ export const loginFacebook = async() => {
 
             const credential = firebase.auth.FacebookAuthProvider.credential(token)
             const res = await firebase.auth().signInWithCredential(credential)
-            firebase.auth().updateCurrentUser(res.user)
+            await firebase.auth().updateCurrentUser(res.user)
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,

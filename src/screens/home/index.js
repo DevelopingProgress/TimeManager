@@ -48,13 +48,6 @@ export const HomeScreen = ({navigation}) => {
                 image={TasksImage}
             />
             <Pane 
-                title='Mierz czas' 
-                sub='Mierz czas swoich aktywności na bieżąco'
-                navigation={navigation} 
-                navigate='TimeMeasurementScreen'
-                image={TimeImage}
-            />
-            <Pane 
                 title='Sprawdzaj statystyki' 
                 sub='Sprawdzaj swoje statystyki'
                 navigation={navigation} 

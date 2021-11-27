@@ -14,12 +14,20 @@ export const ProjectsScreen = (props) => {
     const projects = useSelector(state => state.tasks.projects)
     
     return (
-        <ScrollView style={styles.mainContainer}>
-            <StackHeader type='projects' navigation={props.navigation}/>
-            {projects.length > 0  ?  <Tiles array={projects} navigation={props.navigation} goToScreen='TaskScreen' category={category}/> :
-                <Text>Brak projektów dla wybranej kategorii</Text>
-            }
-            <AddFab/>
-        </ScrollView>
+        <>
+            <ScrollView style={styles.mainContainer}>
+                <StackHeader type='projects' navigation={props.navigation}/>
+                {projects.length > 0  ?  <Tiles
+                        array={projects}
+                        navigation={props.navigation}
+                        goToScreen='TaskScreen'
+                        category={category}
+                        type='project'/> :
+                    <Text>Brak projektów dla wybranej kategorii</Text>
+                }
+            </ScrollView>
+            <AddFab type={1} category={category}/>
+        </>
+
     )
 }

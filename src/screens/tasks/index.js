@@ -22,7 +22,7 @@ export const TasksScreen = ({navigation}) => {
             <Stack.Navigator
                 initialRouteName="CategoriesScreen"
                 screenOptions={{
-                    //
+
                 }}
             >
                 <Stack.Screen

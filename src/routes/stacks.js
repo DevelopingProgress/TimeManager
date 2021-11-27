@@ -2,7 +2,6 @@ import React from 'react'
 import { HomeScreen } from '../screens/home'
 import { Colors } from '../reusable/tools'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TimeMeasurementScreen } from '../screens/timemeasurement';
 import { AnalyticsScreen } from '../screens/analytics';
 import { CalendarScreen } from '../screens/calendar';
 import { Icon } from 'react-native-elements';
@@ -59,23 +58,6 @@ export const HomeStack = () => (
                         <Icon 
                             type='feather' 
                             name='list'
-                            color={focused ? Colors.blue : Colors.grey }  
-                            size={45}
-                        />
-                        )
-                    },
-                }}
-            />
-            <Tab.Screen 
-                name="TimeMeasurementScreen" 
-                component={TimeMeasurementScreen}
-                options={{
-                    ...tabOptions,
-                    tabBarIcon: ({focused}) => {
-                        return ( 
-                        <Icon 
-                            type='materialcommunityicons' 
-                            name='timer'
                             color={focused ? Colors.blue : Colors.grey }  
                             size={45}
                         />
