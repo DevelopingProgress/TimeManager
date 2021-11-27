@@ -1,12 +1,13 @@
-import React from 'react'
-import { View } from 'react-native'
-import { GreetingText } from '../../reusable/greetingText'
-import { SettingsIcon } from '../../reusable/settingsIcon'
-import { styles } from '../home'
+import { Button, Icon } from 'react-native-elements'
 import { CategoriesScreen } from './screens/categories'
+import { GreetingText } from '../../reusable/greetingText'
 import { ProjectsScreen } from './screens/projects'
+import React from 'react'
+import { SettingsIcon } from '../../reusable/settingsIcon'
 import { TaskScreen } from './screens/tasks'
+import { View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { styles } from '../home'
 
 const Stack = createStackNavigator();
 
@@ -28,7 +29,7 @@ export const TasksScreen = ({navigation}) => {
                     name="CategoriesScreen"
                     component={CategoriesScreen}
                     options={{
-                        headerShown: true,
+                        headerShown: false,
                         title: "Kategorie",
                     }}
                 />
@@ -36,7 +37,7 @@ export const TasksScreen = ({navigation}) => {
                     name="ProjectsScreen"
                     component={ProjectsScreen}
                     options={{
-                        headerShown: true,
+                        headerShown: false,
                         title: "Projekty",
                     }}
                 />
@@ -44,7 +45,7 @@ export const TasksScreen = ({navigation}) => {
                     name="TaskScreen"
                     component={TaskScreen}
                     options={{
-                        headerShown: true,
+                        headerShown: false,
                         title: "Zadania",
                     }}
                 />

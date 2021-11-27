@@ -1,16 +1,18 @@
+import {Button, Icon, ListItem} from "react-native-elements";
 import React, {useEffect} from 'react'
-import {ScrollView} from 'react-native'
-import { AddFab } from '../../../../reusable/fab'
-import {styles} from '../../../home/index'
 import {useDispatch, useSelector} from "react-redux";
-import {listTasks} from "../../../../store/actions/tasksActions";
-import {ListItem, Button, Icon} from "react-native-elements";
+
+import { AddFab } from '../../../../reusable/fab'
 import {Colors} from "../../../../reusable/tools";
+import {ScrollView} from 'react-native'
+import {listTasks} from "../../../../store/actions/tasksActions";
+import {styles} from '../../../home/index'
+import {StackHeader} from "../../../../reusable/stackHeader";
 
 export const TaskScreen = (props) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user)
-    const project  = props.route.params.item.id
+    const project  = props.route.params.item
     const category = props.route.params.category
     const tasks  = useSelector(state => state.tasks.tasks)
 
@@ -20,8 +22,8 @@ export const TaskScreen = (props) => {
 
     return (
         <ScrollView style={styles.mainContainer}>
+            <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category}/>
         {tasks.map((item) => (
-
             <ListItem.Swipeable
                 leftContent={
                     <Button

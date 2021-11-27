@@ -1,4 +1,4 @@
-import { usersCollection, firebase } from "../../database/firebase";
+import { firebase, usersCollection } from "../../database/firebase";
 
 export const listCat = async(user) => {
     try {
@@ -51,7 +51,9 @@ export const listTsk = async(user, category, project) => {
             tasksList.push(doc.data())
         })
 
-        return {projects: tasksList}
+        
+
+        return {tasks: tasksList}
 
     } catch (error) {
         return {error: error.message}

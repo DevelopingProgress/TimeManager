@@ -5,6 +5,7 @@ import { styles } from '../../../home/index'
 import {Tiles} from "../../../../reusable/tiles";
 import {useDispatch, useSelector} from "react-redux";
 import {listCategories} from "../../../../store/actions/tasksActions";
+import {StackHeader} from "../../../../reusable/stackHeader";
 
 export const CategoriesScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export const CategoriesScreen = ({navigation}) => {
 
     return (
         <ScrollView style={styles.mainContainer}>
+            <StackHeader type='categories' navigation={navigation}/>
             <Tiles
                 array={categories}
                 navigation={navigation}

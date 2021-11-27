@@ -1,10 +1,16 @@
-import React from 'react'
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import { Colors } from './tools'
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
 import { Divider, Icon } from 'react-native-elements'
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { Colors } from './tools'
+import React from 'react'
+import { listProjects } from '../store/actions/tasksActions'
 
 export const ModalOptions = (props) => {
+    const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
+    
     return (
         <>
             <View>
@@ -19,10 +25,13 @@ export const ModalOptions = (props) => {
                 <MenuOptions customStyles={{optionsContainer: styles.optionsContainer}}>
                     <MenuOption 
                         style={{flexDirection: 'row'}}
-                        onSelect={() => props.navigation.navigate(props.goToScreen, {
-                            item: props.item,
-                            category: props.category
-                        })}
+                        onSelect={() => {
+                            dispatch(listProjects(user, props.item))
+                            props.navigation.navigate(props.goToScreen, {
+                                item: props.item,
+                                category: props.category
+                            })
+                        }}
                     >
                         <Text style={styles.option}>
                             {props.goToScreen === 'ProjectsScreen' ? 'Projekty' : 'Zadania'}
