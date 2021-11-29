@@ -115,6 +115,7 @@ export const addTsk = async(user, name, category, project) => {
             newTask.set({
                 id: newTask.id,
                 name: name,
+                done: false
             })
         }
         return {status: 'task_added'}

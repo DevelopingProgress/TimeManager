@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import { AddFab } from '../../../../reusable/fab'
 import {Colors} from "../../../../reusable/tools";
-import {Alert, ScrollView} from 'react-native'
+import {Alert, ScrollView, Text, View} from 'react-native'
 import {
     deleteCategory,
     deleteProject,
@@ -30,7 +30,7 @@ export const TaskScreen = (props) => {
         <>
             <ScrollView style={styles.mainContainer}>
                 <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category}/>
-                {tasks.map((item) => (
+                {tasks.length > 0 ? tasks.map((item) => (
                     <ListItem.Swipeable
                         leftContent={
                             <Button
@@ -71,7 +71,11 @@ export const TaskScreen = (props) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem.Swipeable>
-                ))}
+                )) : (
+                    <View>
+                        <Text>Brak zadań dla wybranego projektu</Text>
+                    </View>
+                )}
             </ScrollView>
             <AddFab type={2} category={category} project={project}/>
         </>
