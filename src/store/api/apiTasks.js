@@ -68,11 +68,11 @@ export const addCat = async(name, user) => {
     try {
         const newCategory  = await usersCollection.doc(user.uid).collection('categories').doc()
         if(newCategory) {
-            newCategory.set({
+            await newCategory.set({
                 id: newCategory.id,
                 name: name,
                 color: randDarkColor(),
-                projects: []
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             })
         }
         return {status: 'category_added'}
@@ -91,10 +91,10 @@ export const addProj = async(user, name, category) => {
             .doc()
 
         if(newProject) {
-            newProject.set({
+            await newProject.set({
                 id: newProject.id,
                 name: name,
-                tasks: []
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             })
         }
         return {status: 'project_added'}
@@ -115,10 +115,13 @@ export const addTsk = async(user, name, category, project) => {
             .doc()
 
         if(newTask) {
-            newTask.set({
+            await newTask.set({
                 id: newTask.id,
                 name: name,
-                done: false
+                dueDate: firebase.firestore.FieldValue.serverTimestamp(), //do zmiany na datę z formularza
+                done: false,
+                color: randDarkColor(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             })
         }
         return {status: 'task_added'}

@@ -80,8 +80,8 @@ export const AddFab = (props) => {
             <ModalAdd
                 modalVisible={modalVisible}
                 hideModal={() => {
-                    setLoading(false)
                     setModalVisible(!modalVisible)
+                    setLoading(false)
                 }}
                 modalType={modalType}
                 handleSubmit={handleSubmit}

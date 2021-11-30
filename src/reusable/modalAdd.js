@@ -3,8 +3,7 @@ import React from 'react';
 import {StyleSheet, Modal, Text, View} from 'react-native';
 import { Colors } from './tools';
 import * as Yup from "yup";
-import {Input, Button} from 'react-native-elements';
-import { Loading } from './loading';
+import {Button} from 'react-native-elements';
 import CategoryForm from "./forms/categoryForm";
 import ProjectForm from "./forms/projectForm";
 import TaskForm from "./forms/taskForm";
@@ -15,10 +14,11 @@ const ModalAdd = (props) => {
     return (
             <Modal
             visible={props.modalVisible}
-            onDismiss={props.hideModal}
+            onDismiss={() => props.hideModal}
+            onRequestClose={() => props.hideModal}
             contentContainerStyle={styles.modalView}
             animationType={'slide'}
-            presentationStyle={'formSheet'}
+            collapsable={true}
             statusBarTranslucent={true}
             >
                 <View style={styles.centeredView}>

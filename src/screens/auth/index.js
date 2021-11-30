@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView} from 'react-native'
+import {View, StyleSheet, ScrollView, Platform} from 'react-native'
 import { AuthForm } from './components/authForm'
 import { Logo } from '../../reusable/logo'
 import { Colors } from '../../reusable/tools'
@@ -8,7 +8,7 @@ export const AuthScreen = () => {
     return (
         <ScrollView style={styles.mainContainer}>
             <View style={styles.container}>
-                <Logo/>
+                <Logo style={{width: Platform.OS === 'android' ?  250 : 150, height: Platform.OS === 'android' ?  250 : 150}}/>
                 <AuthForm/>
             </View>
         </ScrollView>

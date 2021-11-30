@@ -16,7 +16,7 @@ export const ModalOptions = (props) => {
                 <TouchableOpacity
                     onPress={() => console.log('nic')}
                 >
-                    <Icon type='ionicons' name='settings' size={35} style={{marginTop: 16,}} color={'green'}/>
+                    <Icon type='ionicons' name='edit' size={35} style={{marginTop: 16,}} color={Colors.black2}/>
                 </TouchableOpacity>
             </View>
             <View style={{flex: 0.8}}>

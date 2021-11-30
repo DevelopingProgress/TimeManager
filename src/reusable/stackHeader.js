@@ -44,7 +44,10 @@ export const StackHeader = (props) => {
                             />
                         </View>
                         <View style={styles.textWrapper}>
-                            <Text style={styles.text}>Projekty</Text>
+                            <Text style={styles.text}>
+                                Projekty
+                                <Text style={{color: Colors.black2, fontSize: 16}}> w kategorii {props.category.name}</Text>
+                            </Text>
                         </View>
                     </View>
                 ) : props.type === 'tasks' ? (
@@ -64,7 +67,10 @@ export const StackHeader = (props) => {
                             />
                         </View>
                         <View style={styles.textWrapper}>
-                            <Text style={styles.text}>Zadania</Text>
+                            <Text style={styles.text}>
+                                Zadania
+                                <Text style={{color: Colors.black2, fontSize: 16}}> w projekcie {props.project.name}</Text>
+                            </Text>
                         </View>
                     </View>
                 ) : null
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     textWrapper: {
-        flex: 0.65
+        flex: 0.75
     },
     icon: {
 

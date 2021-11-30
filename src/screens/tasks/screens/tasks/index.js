@@ -1,5 +1,5 @@
-import {Button, ListItem} from "react-native-elements";
-import React, {useEffect} from 'react'
+import {Button, Divider, Icon, ListItem} from "react-native-elements";
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import { AddFab } from '../../../../reusable/fab'
@@ -7,6 +7,9 @@ import {Alert, ScrollView, Text, View} from 'react-native'
 import {deleteTask, listTasks} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
+import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/tools";
+import TasksItems from "./tasksItems";
+import moment from "moment";
 
 export const TaskScreen = (props) => {
     const dispatch = useDispatch();
@@ -14,61 +17,71 @@ export const TaskScreen = (props) => {
     const project  = props.route.params.item
     const category = props.route.params.category
     const tasks  = useSelector(state => state.tasks.tasks)
+    const [todayExpanded, setTodayExpanded] = useState(false)
+    const [overdueExpanded, setOverdueExpanded] = useState(false);
+    const [nextExpanded, setNextExpanded] = useState(false)
+
 
     useEffect(() => {
-        dispatch(listTasks(user, category, project))
+        if(tasks) {
+            dispatch(listTasks(user, category, project))
+        }
     }, [dispatch, project])
 
     return (
         <>
             <ScrollView style={styles.mainContainer}>
-                <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category}/>
-                {tasks.length > 0 ? tasks.map((item) => (
-                    <ListItem.Swipeable
-                        leftContent={
-                            <Button
-                                title="Info"
-                                icon={{ name: 'info', color: 'white' }}
-                                buttonStyle={{ minHeight: '100%' }}
-                            />
-                        }
-                        rightContent={
-                            <Button
-                                title="Usuń"
-                                icon={{ name: 'delete', color: 'white' }}
-                                buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category} project={project}/>
+                <View style={{margin: 20}}>
+                    {tasks.length > 0 ?  (
+                        <>
+                            <ListItem.Accordion
+                                content={
+                                    <>
+                                        <ListItem.Content>
+                                            <ListItem.Title h4>
+                                                Dzisiaj ({
+                                                    tasks.filter((item) =>
+                                                        moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()).length
+                                                })
+                                            </ListItem.Title>
+                                        </ListItem.Content>
+                                    </>
+                                }
+                                isExpanded={todayExpanded}
                                 onPress={() => {
-                                    Alert.alert(
-                                        'Usuwanie zadania '  +  item.name,
-                                        'Czy chcesz usunąć zadanie?' ,
-                                        [
-                                            {
-                                                text: 'Anuluj',
-                                            },
-                                            {
-                                                text: 'Usuń',
-                                                onPress: () => {
-                                                    dispatch(deleteTask(user, category, project, item))
-                                                    dispatch(listTasks(user, category, project))
-                                                }
-                                            }
-                                        ], {cancelable: true})
+                                    setTodayExpanded(!todayExpanded);
+                                }}
+                            >
+                                <TasksItems tasks={tasks} filter='today'/>
+                            </ListItem.Accordion>
+                            <Divider />
+                            <ListItem.Accordion
+                                content={
+                                    <>
+                                        <ListItem.Content>
+                                            <ListItem.Title h4>Zaległe ({
+                                                tasks.filter((item) =>
+                                                    moment(item.dueDate.toDate()).format("YYYY-MM-DD") <  getTodayDate()).length
+                                            })</ListItem.Title>
+                                        </ListItem.Content>
+                                    </>
+                                }
+                                isExpanded={overdueExpanded}
+                                onPress={() => {
+                                    setOverdueExpanded(!overdueExpanded);
+                                }}
+                            >
+                                <TasksItems tasks={tasks} filter='overdue'/>
+                            </ListItem.Accordion>
+                        </>
 
-                                }
-                                }
-                            />
-                        }
-                    >
-                        <ListItem.Content>
-                            <ListItem.Title>{item.name}</ListItem.Title>
-                        </ListItem.Content>
-                        <ListItem.Chevron />
-                    </ListItem.Swipeable>
-                )) : (
-                    <View>
-                        <Text>Brak zadań dla wybranego projektu</Text>
-                    </View>
-                )}
+                    )   : (
+                        <View style={{alignContent: 'center', alignItems: 'center'}}>
+                            <Text style={{fontSize: 20, color: Colors.red}}>Brak zadań dla wybranego projektu</Text>
+                        </View>
+                    )}
+                </View>
             </ScrollView>
             <AddFab type={2} category={category} project={project}/>
         </>

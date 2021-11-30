@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const Colors = {
     'white':'#ffffff',
     'black':'#131418',
@@ -80,4 +82,37 @@ export const randDarkColor = () => {
 
 export const sleep = time => {
     return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+export const polishShortMonths = (month) => {
+    switch (month) {
+        case 1:
+            return 'Sty'
+        case 2:
+            return  'Lut'
+        case 3:
+            return 'Mar'
+        case 4:
+            return  'Kwi'
+        case 5:
+            return 'Maj'
+        case 6:
+            return  'Cze'
+        case 7:
+            return 'Lip'
+        case 8:
+            return  'Sie'
+        case 9:
+            return 'Wrz'
+        case 10:
+            return  'Paź'
+        case 11:
+            return 'Lis'
+        case 12:
+            return  'Gru'
+    }
+}
+
+export const getTodayDate = () => {
+    return moment().format("YYYY-MM-DD")
 }

@@ -1,11 +1,12 @@
 import { AddFab } from '../../../../reusable/fab'
 import React, {useEffect} from 'react'
-import { ScrollView, Text } from 'react-native'
+import {ScrollView, Text, View} from 'react-native'
 import { styles } from '../../../home/index'
 import {Tiles} from "../../../../reusable/tiles";
 import {useDispatch, useSelector} from "react-redux";
 import {listCategories} from "../../../../store/actions/tasksActions";
 import {StackHeader} from "../../../../reusable/stackHeader";
+import {Colors} from "../../../../reusable/tools";
 
 export const CategoriesScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -25,7 +26,9 @@ export const CategoriesScreen = ({navigation}) => {
                         goToScreen='ProjectsScreen'
                         type='category'
                     /> :
-                    <Text>Brak kategorii</Text>
+                    <View style={{alignContent: 'center', alignItems: 'center'}}>
+                        <Text style={{fontSize: 20, color: Colors.red}}>Brak kategorii</Text>
+                    </View>
                 }
             </ScrollView>
             <AddFab type={0}/>

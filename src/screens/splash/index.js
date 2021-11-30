@@ -1,12 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import {Platform, StyleSheet, Text, View} from 'react-native'
 import { Loading } from '../../reusable/loading'
 import { Logo } from '../../reusable/logo'
 
 export const SplashScreen = () => {
     return (
         <View style={styles.container}>
-            <Logo style={{width: 150, height: 150}}/>
+            <Logo style={{width: 150, height: Platform.OS === 'Android' ?  150 : 100}}/>
             <Text style={{fontWeight: 'bold', fontSize: 18}}>
                 Ładowanie
             </Text>
