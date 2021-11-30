@@ -18,7 +18,7 @@ const tabOptions = {
 export const HomeStack = () => (
     <>
         <Tab.Navigator 
-            initialRouteName="TasksScreen"
+            initialRouteName="HomeScreen"
             screenOptions={{
                 headerBackTitleVisible: false,
                 headerShown: false,

@@ -12,14 +12,14 @@ export const ModalOptions = (props) => {
     
     return (
         <View style={{marginHorizontal: 20, alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-            <View style={{marginRight: 10}}>
+            <View style={{flex: 0.15}}>
                 <TouchableOpacity
                     onPress={() => console.log('nic')}
                 >
                     <Icon type='ionicons' name='settings' size={35} style={{marginTop: 16,}} color={'green'}/>
                 </TouchableOpacity>
             </View>
-            <View>
+            <View style={{flex: 0.8}}>
                 <Button
                     title={<Text numberOfLines={1} style={{
                         textAlign: 'center',
@@ -32,7 +32,7 @@ export const ModalOptions = (props) => {
                         marginTop: 20,
                         padding: 20,
                         backgroundColor: props.goToScreen === 'ProjectsScreen' ? props.item.color :  props.category.color,
-                        width: 230,
+                        width: '100%',
                         borderRadius: 100,}}
                     onPress={() => {
                         dispatch(listProjects(user, props.item))
@@ -43,7 +43,7 @@ export const ModalOptions = (props) => {
                     }}
                 />
             </View>
-            <View style={{margin: 10}}>
+            <View style={{marginLeft: 10, flex: 0.1}}>
                 <TouchableOpacity
                     onPress={() =>
                     {
