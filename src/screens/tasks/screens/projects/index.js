@@ -1,11 +1,9 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from "react-redux";
-
+import React from 'react'
+import {useSelector} from "react-redux";
 import { AddFab } from '../../../../reusable/fab'
 import { ScrollView } from 'react-native'
 import {Text} from "react-native";
 import {Tiles} from "../../../../reusable/tiles";
-import {listProjects} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 

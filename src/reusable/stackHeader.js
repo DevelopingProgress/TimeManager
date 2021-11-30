@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     iconWrapper: {
-        flex: 0.15
+        flex: 0.15,
+        marginTop: 5
     },
     textWrapper: {
         flex: 0.65
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        fontSize: 23,
+        fontSize: 30,
         textAlign: "center",
         color: Colors.blue,
         fontWeight: "700"

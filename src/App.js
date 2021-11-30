@@ -1,14 +1,13 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { Colors } from './reusable/tools';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HomeStack } from './routes/stacks';
 import { AuthScreen } from './screens/auth';
 import { SplashScreen } from './screens/splash';
 import { autoLoginUser } from './store/actions/authActions';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { SettingsScreen } from './screens/settings';
 
 const Stack = createStackNavigator()

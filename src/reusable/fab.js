@@ -38,9 +38,6 @@ export const AddFab = (props) => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
-    const categories = useSelector(state => state.tasks.categories)
-    const projects = useSelector(state => state.tasks.projects)
-    const tasks = useSelector(state => state.tasks.tasks)
     const status = useSelector(state => state.tasks.status)
 
 

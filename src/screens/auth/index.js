@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, ScrollView, Button } from 'react-native'
+import { View, StyleSheet, ScrollView} from 'react-native'
 import { AuthForm } from './components/authForm'
 import { Logo } from '../../reusable/logo'
 import { Colors } from '../../reusable/tools'

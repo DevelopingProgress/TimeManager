@@ -1,17 +1,10 @@
-import {Button, Icon, ListItem} from "react-native-elements";
+import {Button, ListItem} from "react-native-elements";
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import { AddFab } from '../../../../reusable/fab'
-import {Colors} from "../../../../reusable/tools";
 import {Alert, ScrollView, Text, View} from 'react-native'
-import {
-    deleteCategory,
-    deleteProject,
-    deleteTask,
-    listCategories, listProjects,
-    listTasks
-} from "../../../../store/actions/tasksActions";
+import {deleteTask, listTasks} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 

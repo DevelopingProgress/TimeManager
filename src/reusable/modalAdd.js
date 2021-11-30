@@ -1,130 +1,132 @@
 import { Formik } from 'formik';
-import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, Modal, Text, View} from 'react-native';
 import { Colors } from './tools';
 import * as Yup from "yup";
 import {Input, Button} from 'react-native-elements';
-import { Modal, Portal } from 'react-native-paper';
 import { Loading } from './loading';
+import CategoryForm from "./forms/categoryForm";
+import ProjectForm from "./forms/projectForm";
+import TaskForm from "./forms/taskForm";
 
 
 
 const ModalAdd = (props) => {
-
-
     return (
-        <Portal>
             <Modal
             visible={props.modalVisible}
             onDismiss={props.hideModal}
             contentContainerStyle={styles.modalView}
-        >
-            <Formik
-                initialValues={
-                    props.modalType === 0 ?
-                    {
-                        name: '',
-                    } : props.modalType === 1 ?
-                    {
-                        name: '',
-                    } : props.modalType === 2 ?
-                    {
-                        name: '',
-                    } : null
-                }
-                onSubmit={values => props.handleSubmit(values)}
-                validationSchema={Yup.object(
-                    props.modalType === 0 ?
-                    {
-                        name: Yup
-                        .string()
-                        .required(),
-                    } : props.modalType === 1 ?
-                    {
-                        name: Yup
-                        .string()
-                        .required(),
-                    } : props.modalType === 2 ? {
-                        name: Yup
-                        .string()
-                        .required(),
-                    } : null
-                )}
+            animationType={'slide'}
+            presentationStyle={'formSheet'}
+            statusBarTranslucent={true}
             >
-                    {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
-                        <>
-                        {props.modalType === 0 ? (
-                            <>
-                            <Input
-                                placeholder='Nazwa kategorii'
-                                onChangeText={handleChange('name')}
-                                onBlur={handleBlur('name')}
-                                value={values.name}
-                                renderErrorMessage={errors.name && touched.name}
-                                errorMessage={errors.name}
-                                errorStyle={{color: Colors.red, fontSize: 15}}
-                                maxLength={50}
-                                containerStyle={{paddingHorizontal: 35, marginTop: 20}}
-                                inputStyle={{width: '100%'}}
-                            />
-                            </>
-                        ) :
-                        props.modalType === 1 ? (
-                            <>
-                            <Input
-
-                                placeholder='Nazwa projektu'
-                                onChangeText={handleChange('name')}
-                                onBlur={handleBlur('name')}
-                                value={values.name}
-                                renderErrorMessage={errors.name && touched.name}
-                                errorMessage={errors.name}
-                                errorStyle={{color: Colors.red, fontSize: 15}}
-                                maxLength={50}
-                                containerStyle={{paddingHorizontal: 35, marginTop: 20}}
-                                inputStyle={{width: '100%'}}
-                            />
-                            </>
-                        ) :
-                        props.modalType === 2 ? (
-                            <>
-                            <Input
-                                placeholder='Nazwa zadania'
-                                onChangeText={handleChange('name')}
-                                onBlur={handleBlur('name')}
-                                value={values.name}
-                                renderErrorMessage={errors.name && touched.name}
-                                errorMessage={errors.name}
-                                errorStyle={{color: Colors.red, fontSize: 15}}
-                                maxLength={50}
-                                containerStyle={{paddingHorizontal: 35, marginTop: 20}}
-                                inputStyle={{width: '100%'}}
-                            />
-                            </>
-                        ) : null }
-                            {props.loading ? <Loading circlesnail/> :
-                                <Button
-                                    containerStyle={[styles.button, styles.buttonOpen]}
-                                    buttonStyle={{backgroundColor: 'transparent'}}
-                                    onPress={handleSubmit}
-                                    title={`Dodaj ${
-                                        props.modalType === 0 ? 'Kategorię' :
-                                        props.modalType === 1 ? 'Projekt' :
-                                        props.modalType === 2 ? 'Zadanie' : null
-                                    }`}
-                                />
-                            }
-                        </>
-                    )}
-                </Formik>
-                <Button
-                    containerStyle={[styles.button, styles.buttonClose]}
-                    buttonStyle={{backgroundColor: 'transparent'}}
-                    onPress={props.hideModal}
-                    title='Anuluj'
-                />
+                <View style={styles.centeredView}>
+                    {
+                        props.modalType === 0 ?
+                            <Text style={styles.modalText}>Dodaj Kategorię</Text> :
+                            props.modalType === 1 ?
+                                <Text style={styles.modalText}>Dodaj Projekt</Text>:
+                                props.modalType === 2 ?
+                                    <Text style={styles.modalText}>Dodaj zadanie</Text>:
+                                    null
+                    }
+                    <Formik
+                        initialValues={
+                            props.modalType === 0 ?
+                            {
+                                name: ''
+                            } : props.modalType === 1 ?
+                            {
+                                name: '',
+                            } : props.modalType === 2 ?
+                            {
+                                name: '',
+                            } : null
+                        }
+                        onSubmit={values => props.handleSubmit(values)}
+                        validationSchema={Yup.object(
+                            props.modalType === 0 ?
+                            {
+                                name: Yup
+                                    .string()
+                                    .required(),
+                            } : props.modalType === 1 ?
+                            {
+                                name: Yup
+                                .string()
+                                .required(),
+                            } : props.modalType === 2 ? {
+                                name: Yup
+                                .string()
+                                .required(),
+                            } : null
+                        )}
+                    >
+                            {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
+                                <>
+                                {props.modalType === 0 ? (
+                                    <CategoryForm
+                                        handleChange={(item) => handleChange(item)}
+                                        handleBlur={(item) => handleBlur(item)}
+                                        values={values}
+                                        errors={errors}
+                                        touched={touched}
+                                        errorStyle={{color: Colors.red, fontSize: 15}}
+                                        maxLength={50}
+                                        containerStyle={{paddingHorizontal: 35, marginTop: 20}}
+                                        inputStyle={{width: '100%'}}
+                                    />
+                                ) :
+                                props.modalType === 1 ? (
+                                    <ProjectForm
+                                        handleChange={(item) => handleChange(item)}
+                                        handleBlur={(item) => handleBlur(item)}
+                                        values={values}
+                                        errors={errors}
+                                        touched={touched}
+                                        errorStyle={{color: Colors.red, fontSize: 15}}
+                                        maxLength={50}
+                                        containerStyle={{paddingHorizontal: 35, marginTop: 20}}
+                                        inputStyle={{width: '100%'}}
+                                    />
+                                ) :
+                                props.modalType === 2 ? (
+                                    <TaskForm
+                                        handleChange={(item) => handleChange(item)}
+                                        handleBlur={(item) => handleBlur(item)}
+                                        values={values}
+                                        errors={errors}
+                                        touched={touched}
+                                        errorStyle={{color: Colors.red, fontSize: 15}}
+                                        maxLength={50}
+                                        containerStyle={{paddingHorizontal: 35, marginTop: 20}}
+                                        inputStyle={{width: '100%'}}
+                                    />
+                                ) : null }
+                                    <Button
+                                        containerStyle={[styles.button, styles.buttonOpen]}
+                                        buttonStyle={{backgroundColor: 'transparent'}}
+                                        onPress={handleSubmit}
+                                        title={`Dodaj ${
+                                            props.modalType === 0 ? 'Kategorię' :
+                                            props.modalType === 1 ? 'Projekt' :
+                                            props.modalType === 2 ? 'Zadanie' : null
+                                        }`}
+                                        loading={props.loading}
+                                    />
+                                </>
+                            )}
+                    </Formik>
+                    <Button
+                        containerStyle={[styles.button, styles.buttonClose]}
+                        buttonStyle={{backgroundColor: 'transparent'}}
+                        onPress={props.hideModal}
+                        title='Anuluj'
+                    />
+                </View>
             </Modal>
-        </Portal>
+
 
     );
 };
@@ -151,10 +153,11 @@ const styles = StyleSheet.create({
     elevation: 5,
     },
     button: {
-    borderRadius: 20,
-    margin: 10,
-    padding: 10,
-    elevation: 2
+        borderRadius: 20,
+        margin: 10,
+        marginHorizontal: 40,
+        padding: 5,
+        elevation: 2
     },
     buttonOpen: {
     backgroundColor: Colors.blue,
@@ -162,15 +165,10 @@ const styles = StyleSheet.create({
     buttonClose: {
     backgroundColor: Colors.red,
     },
-    textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 15
-    },
     modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
+        marginBottom: 25,
+        textAlign: 'center',
+        fontSize: 40
     },
 });
 

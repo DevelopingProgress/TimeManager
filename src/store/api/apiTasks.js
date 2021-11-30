@@ -1,4 +1,6 @@
 import { firebase, usersCollection } from "../../database/firebase";
+import {randDarkColor} from "../../reusable/tools";
+
 
 //LIST
 export const listCat = async(user) => {
@@ -69,6 +71,7 @@ export const addCat = async(name, user) => {
             newCategory.set({
                 id: newCategory.id,
                 name: name,
+                color: randDarkColor(),
                 projects: []
             })
         }

@@ -4,8 +4,7 @@ import {
     ADD_TASK,
     CLEAR_CATEGORIES, CLEAR_ERROR,
     CLEAR_PROJECTS, CLEAR_STATUS,
-    CLEAR_TASKS,
-    CLEAR_TASKS_ERROR,
+    CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK,
     LIST_CATEGORIES,
     LIST_PROJECTS,
     LIST_TASKS
@@ -37,7 +36,12 @@ export default function (state=INITIAL_STATE,action) {
             return {...state, ...action.payload}
 
         //DELETE
-
+        case DELETE_CATEGORY:
+            return {...state, ...action.payload}
+        case  DELETE_PROJECT:
+            return {...state, ...action.payload}
+        case DELETE_TASK:
+            return {...state, ...action.payload}
 
         //UPDATE
 

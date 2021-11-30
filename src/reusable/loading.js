@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import * as Progress from 'react-native-progress'
 import { Colors } from './tools'
 
