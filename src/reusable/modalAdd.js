@@ -43,6 +43,10 @@ const ModalAdd = (props) => {
                             } : props.modalType === 2 ?
                             {
                                 name: '',
+                                date: new Date(Date.now()),
+                                hours: '1',
+                                minutes: '0',
+                                seconds: '0'
                             } : null
                         }
                         onSubmit={values => props.handleSubmit(values)}
@@ -64,9 +68,15 @@ const ModalAdd = (props) => {
                                 date: Yup
                                     .date()
                                     .required(),
-                                timer: Yup
+                                hours: Yup
                                     .string()
-                                    .required()
+                                    .required(),
+                                minutes: Yup
+                                    .string()
+                                    .required(),
+                                seconds: Yup
+                                    .string()
+                                    .required(),
                             } : null
                         )}
                     >

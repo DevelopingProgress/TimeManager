@@ -12,9 +12,6 @@ const TaskForm  = (props) => {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [timerPicker, setTimerPicker] = useState(false);
-    const [hours, setHours] = useState('1');
-    const [minutes, setMinutes] = useState('0');
-    const [seconds, setSeconds] = useState('0');
 
     const showMode = (currentMode) => {
         setShow(true);
@@ -35,15 +32,12 @@ const TaskForm  = (props) => {
 
     const confirmChanges = () => {
         setTimerPicker(false)
-        setFieldValue('timer',  hours + ':'+minutes+':'+seconds)
     }
 
     const hideTimerPicker = () => {
         setTimerPicker(false)
-        setHours('1')
-        setMinutes('0')
-        setSeconds('0')
     }
+
 
 
     return(
@@ -90,12 +84,17 @@ const TaskForm  = (props) => {
                 <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
                     <Text style={{color: Colors.grey, flex: 0.23}}>Czas</Text>
                     <Text  style={{color: Colors.grey, fontSize: 25, marginBottom: 5, flex: 1, textAlign: 'center'}}>
-                        {hours + ':'+minutes+':'+seconds}
+                        {values.hours + ':'+values.minutes+':'+values.seconds}
                     </Text>
                     <Icon type='fontisto' name='stopwatch' color={Colors.black} size={27}/>
                 </View>
                 <Divider color={Colors.black2} style={{borderWidth: 0.3}}/>
             </TouchableOpacity>
+            {/*{errors.hours &&  <Text style={[errorStyle, {textAlign: 'center'}]}>{errors.hours}</Text>}*/}
+            {/*{errors.minutes &&  <Text style={[errorStyle, {textAlign: 'center'}]}>{errors.minutes}</Text>}*/}
+            {/*{errors.seconds &&  <Text style={[errorStyle, {textAlign: 'center'}]}>{errors.seconds}</Text>}*/}
+
+
 
             <Modal
                 animationType='slide'
@@ -111,11 +110,11 @@ const TaskForm  = (props) => {
                                 Godziny
                             </Text>
                             <TextInput
-                                value={hours.toString() || null}
+                                value={values.hours}
                                 textAlign='center'
                                 style={{fontSize: 50}}
                                 keyboardType="numeric"
-                                onChangeText={setHours}
+                                onChangeText={handleChange('hours')}
                                 maxLength={2}
                             />
                         </View>
@@ -124,11 +123,11 @@ const TaskForm  = (props) => {
                                 Minuty
                             </Text>
                             <TextInput
-                                value={minutes.toString() || null}
+                                value={values.minutes}
                                 textAlign='center'
                                 style={{fontSize: 50 }}
                                 keyboardType="numeric"
-                                onChangeText={setMinutes}
+                                onChangeText={handleChange('minutes')}
                                 maxLength={2}
                             />
                         </View>
@@ -137,11 +136,11 @@ const TaskForm  = (props) => {
                                 Sekundy
                             </Text>
                             <TextInput
-                                value={seconds.toString() || null}
+                                value={values.seconds}
                                 textAlign='center'
                                 style={{fontSize: 50}}
                                 keyboardType="numeric"
-                                onChangeText={setSeconds}
+                                onChangeText={handleChange('seconds')}
                                 maxLength={2}
                             />
                         </View>
