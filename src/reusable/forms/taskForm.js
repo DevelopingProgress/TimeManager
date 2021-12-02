@@ -162,6 +162,7 @@ const TaskForm  = (props) => {
             <View>
                 {show && (
                     <DateTimePicker
+                        minimumDate={new Date(Date.now())}
                         value={values.date || new Date()}
                         mode={mode}
                         is24Hour={true}
