@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-native-community/datetimepicker": "3.5.2",
     "@react-native-picker/picker": "2.1.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/material-top-tabs": "^6.0.6",
@@ -16,6 +17,7 @@
     "@react-navigation/stack": "^6.0.11",
     "axios": "^0.24.0",
     "expo": "~43.0.0",
+    "expo-dev-client": "~0.6.3",
     "expo-facebook": "~12.0.3",
     "expo-google-app-auth": "~9.0.0",
     "expo-google-sign-in": "~10.0.3",
@@ -29,6 +31,7 @@
     "react-moment": "^1.1.1",
     "react-native": "0.64.3",
     "react-native-color-picker": "^0.6.0",
+    "react-native-date-picker": "^4.1.2",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-icon-picker": "^1.0.6",

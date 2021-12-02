@@ -6,7 +6,7 @@ import { Logo } from '../../reusable/logo'
 export const SplashScreen = () => {
     return (
         <View style={styles.container}>
-            <Logo style={{width: 150, height: Platform.OS === 'Android' ?  150 : 100}}/>
+            <Logo style={{width: 150, height: 150}}/>
             <Text style={{fontWeight: 'bold', fontSize: 18}}>
                 Ładowanie
             </Text>

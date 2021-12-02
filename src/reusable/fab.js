@@ -50,7 +50,7 @@ export const AddFab = (props) => {
             dispatch(addProject(user, values.name, props.category))
         } else if(modalType === 2) {
             setLoading(true)
-            dispatch(addTask(user, values.name, props.category, props.project))
+            dispatch(addTask(user, values.name, props.category, props.project, values.date, values.timer))
         }
     }
 

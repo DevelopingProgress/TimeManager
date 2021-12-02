@@ -103,7 +103,7 @@ export const addProj = async(user, name, category) => {
     }
 }
 
-export const addTsk = async(user, name, category, project) => {
+export const addTsk = async(user, name, category, project, dueDate, timer) => {
     try {
         const newTask  = await usersCollection
             .doc(user.uid)
@@ -118,7 +118,8 @@ export const addTsk = async(user, name, category, project) => {
             await newTask.set({
                 id: newTask.id,
                 name: name,
-                dueDate: firebase.firestore.FieldValue.serverTimestamp(), //do zmiany na datę z formularza
+                dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
+                timer: timer,
                 done: false,
                 color: randDarkColor(),
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()

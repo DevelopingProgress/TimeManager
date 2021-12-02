@@ -7,6 +7,7 @@ import {Button} from 'react-native-elements';
 import CategoryForm from "./forms/categoryForm";
 import ProjectForm from "./forms/projectForm";
 import TaskForm from "./forms/taskForm";
+import moment from "moment";
 
 
 
@@ -54,16 +55,30 @@ const ModalAdd = (props) => {
                             } : props.modalType === 1 ?
                             {
                                 name: Yup
-                                .string()
-                                .required(),
+                                    .string()
+                                    .required(),
                             } : props.modalType === 2 ? {
                                 name: Yup
-                                .string()
-                                .required(),
+                                    .string()
+                                    .required(),
+                                date: Yup
+                                    .date()
+                                    .required(),
+                                timer: Yup
+                                    .string()
+                                    .required()
                             } : null
                         )}
                     >
-                            {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
+                            {({
+                                  handleChange,
+                                  handleBlur,
+                                  handleSubmit,
+                                  values,
+                                  errors,
+                                  touched,
+                                  setFieldValue
+                            }) => (
                                 <>
                                 {props.modalType === 0 ? (
                                     <CategoryForm
@@ -102,6 +117,7 @@ const ModalAdd = (props) => {
                                         maxLength={50}
                                         containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                         inputStyle={{width: '100%'}}
+                                        setFieldValue={(item, value) => setFieldValue(item, value)}
                                     />
                                 ) : null }
                                     <Button

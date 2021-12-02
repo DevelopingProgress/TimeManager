@@ -1,70 +1,178 @@
-import React from "react";
-import {Input} from "react-native-elements";
+import React, {useState} from "react";
+import {Button, Divider, Icon, Input} from "react-native-elements";
+import {Modal, Text, TextInput, TouchableOpacity, View} from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 import {Colors} from "../tools";
-import {Picker} from "@react-native-picker/picker";
-import {View} from "react-native";
+
+
 
 const TaskForm  = (props) => {
-    // const cities = [
-    //     {name:"Los Angeles", id: 1},
-    //     {name:"Philadelphia", id: 2},
-    //     {name:"Chicago", id: 3},
-    //     {name:"Washington DC", id: 4},
-    //     {name:"New York", id: 5},
-    //     {name:"San Diego", id: 6},
-    //     {name:"Fort Worth", id: 7},
-    //     {name:"Houston", id: 8},
-    //     {name:"Cleveland", id: 9},
-    //     {name:"Pittsburg", id: 10},
-    //     {name:"Detroit", id: 11},
-    //     {name:"Jacksonville", id: 12},
-    //     {name:"Denver", id: 13},
-    //     {name:"Columbus", id: 14},
-    //     {name:"El Paso", id: 15},
-    //     {name:"New Orleans", id: 16},
-    //     {name:"Cincinnati", id: 17},
-    //     {name:"Nashville", id: 18},
-    //     {name:"Miami", id: 19},
-    //     {name:"Tampa", id: 20},
-    //     {name:"Bakersfield", id: 22},
-    //     {name:"Tuscon", id: 23},
-    //     {name:"Baltimore", id: 25},
-    //     {name:"St Louis", id: 26},
-    //     {name:"Las Vegas", id: 27},
-    //     {name:"Memphis", id: 28},
-    //     {name:"Seatle", id: 29},
-    //     {name:"San Fransisco", id: 30},
-    // ]
+    const {handleChange, handleBlur, values, containerStyle, setFieldValue, errors, errorStyle, inputStyle, maxLength, touched} = props
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+    const [timerPicker, setTimerPicker] = useState(false);
+    const [hours, setHours] = useState('1');
+    const [minutes, setMinutes] = useState('0');
+    const [seconds, setSeconds] = useState('0');
+
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+
+    const showDatePicker = () => {
+        showMode('date');
+    };
+
+    const showTimePicker = () => {
+        showMode('time');
+    };
+
+    const showTimerPicker = () => {
+        setTimerPicker(true)
+    };
+
+    const confirmChanges = () => {
+        setTimerPicker(false)
+        setFieldValue('timer',  hours + ':'+minutes+':'+seconds)
+    }
+
+    const hideTimerPicker = () => {
+        setTimerPicker(false)
+        setHours('1')
+        setMinutes('0')
+        setSeconds('0')
+    }
+
+
     return(
         <>
-            <Input
-                placeholder='Nazwa zadania'
-                onChangeText={props.handleChange('name')}
-                onBlur={props.handleBlur('name')}
-                value={props.values.name}
-                renderErrorMessage={props.errors.name && props.touched.name}
-                errorMessage={props.errors.name}
-                errorStyle={props.errorStyle}
-                maxLength={props.maxLength}
-                containerStyle={props.containerStyle}
-                inputStyle={props.inputStyle}
-            />
-            {/*<View style={{marginHorizontal: 50}}>*/}
-            {/*    <Picker*/}
-            {/*        enabled={true}*/}
-            {/*        mode="dropdown"*/}
-            {/*        placeholder="Select City"*/}
-            {/*        onValueChange={props.handleChange('city_name')}*/}
-            {/*        selectedValue={props.values.city_name}*/}
-            {/*    >*/}
-            {/*        {cities.map((item) => (*/}
-            {/*            <Picker.Item*/}
-            {/*                label={item.name.toString()}*/}
-            {/*                value={item.name.toString()}*/}
-            {/*                key={item.id.toString()} />*/}
-            {/*        ))}*/}
-            {/*    </Picker>*/}
-            {/*</View>*/}
+            <View style={{marginHorizontal: 5}}>
+                <Input
+                    placeholder='Nazwa zadania'
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                    renderErrorMessage={errors.name && touched.name}
+                    errorMessage={errors.name}
+                    errorStyle={[errorStyle, {textAlign: 'center'}]}
+                    maxLength={maxLength}
+                    containerStyle={containerStyle}
+                    inputStyle={[inputStyle, {fontSize: 25}]}
+                    placeholderTextColor={Colors.grey}
+                    selectionColor={Colors.grey}
+                />
+            </View>
+            <TouchableOpacity style={{marginHorizontal: 40}} onPress={showDatePicker}>
+                <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
+                    <Text style={{color: Colors.grey}}>Data</Text>
+                    <Text  style={{color: Colors.grey, fontSize: 25, marginBottom: 5, flex: 1, textAlign: 'center'}}>
+                        {moment(values.date).format('DD-MM-YYYY')}
+                    </Text>
+                    <Icon type='antdesign' name='calendar' color={Colors.black}/>
+                </View>
+                <Divider color={Colors.black2} style={{borderWidth: 0.3}}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{marginHorizontal: 40, marginTop: 30}} onPress={showTimePicker}>
+                <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
+                    <Text style={{color: Colors.grey}}>Godzina</Text>
+                    <Text  style={{color: Colors.grey, fontSize: 25, marginBottom: 5, flex: 1, textAlign: 'center'}}>
+                        {moment(values.date).format('HH:mm')}
+                    </Text>
+                    <Icon type='antdesign' name='clockcircleo' color={Colors.black}/>
+                </View>
+                <Divider color={Colors.black2} style={{borderWidth: 0.3}}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{marginHorizontal: 40, marginVertical: 30, marginBottom: 40}} onPress={showTimerPicker}>
+                <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
+                    <Text style={{color: Colors.grey, flex: 0.23}}>Czas</Text>
+                    <Text  style={{color: Colors.grey, fontSize: 25, marginBottom: 5, flex: 1, textAlign: 'center'}}>
+                        {hours + ':'+minutes+':'+seconds}
+                    </Text>
+                    <Icon type='fontisto' name='stopwatch' color={Colors.black} size={27}/>
+                </View>
+                <Divider color={Colors.black2} style={{borderWidth: 0.3}}/>
+            </TouchableOpacity>
+
+            <Modal
+                animationType='slide'
+                visible={timerPicker}
+                style={{}}
+                collapsable={true}
+                onRequestClose={hideTimerPicker}
+            >
+                <View style={{flex: 1, marginHorizontal: 50, alignContent: 'center', justifyContent: 'center',}}>
+                    <View style={{flexDirection: 'row', marginVertical: 50}}>
+                        <View style={{flex: 0.33, flexDirection: 'column'}}>
+                            <Text style={{textAlign: 'center'}}>
+                                Godziny
+                            </Text>
+                            <TextInput
+                                value={hours.toString() || null}
+                                textAlign='center'
+                                style={{fontSize: 50}}
+                                keyboardType="numeric"
+                                onChangeText={setHours}
+                                maxLength={2}
+                            />
+                        </View>
+                        <View style={{flex: 0.33, flexDirection: 'column'}}>
+                            <Text style={{textAlign: 'center'}}>
+                                Minuty
+                            </Text>
+                            <TextInput
+                                value={minutes.toString() || null}
+                                textAlign='center'
+                                style={{fontSize: 50 }}
+                                keyboardType="numeric"
+                                onChangeText={setMinutes}
+                                maxLength={2}
+                            />
+                        </View>
+                        <View style={{flex: 0.33, flexDirection: 'column'}}>
+                            <Text style={{textAlign: 'center'}}>
+                                Sekundy
+                            </Text>
+                            <TextInput
+                                value={seconds.toString() || null}
+                                textAlign='center'
+                                style={{fontSize: 50}}
+                                keyboardType="numeric"
+                                onChangeText={setSeconds}
+                                maxLength={2}
+                            />
+                        </View>
+                    </View>
+                    <Button
+                        onPress={confirmChanges}
+                        buttonStyle={{backgroundColor: Colors.blue, borderRadius: 20, margin: 10}}
+                        title='Zatwierdź'
+                    />
+                    <Button
+                        onPress={hideTimerPicker}
+                        buttonStyle={{backgroundColor: Colors.red, borderRadius: 20, margin: 10}}
+                        title='Anuluj'
+                    />
+                </View>
+            </Modal>
+
+            <View>
+                {show && (
+                    <DateTimePicker
+                        value={values.date || new Date()}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={(e, date) => {
+                            setShow(false)
+                            setFieldValue('date', date)
+                        }}
+                    />
+                )}
+            </View>
         </>
     )
 }

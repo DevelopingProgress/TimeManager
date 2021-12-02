@@ -34,9 +34,9 @@ export const addProject = (user, name, category) => ({
     type: ADD_PROJECT,
     payload: addProj(user, name, category)
 })
-export const addTask = (user, name, category, project) => ({
+export const addTask = (user, name, category, project, dueDate, timer) => ({
     type: ADD_TASK,
-    payload: addTsk(user, name, category, project)
+    payload: addTsk(user, name, category, project, dueDate, timer)
 })
 
 //DELETE

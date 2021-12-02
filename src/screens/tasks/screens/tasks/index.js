@@ -20,6 +20,7 @@ export const TaskScreen = (props) => {
     const [todayExpanded, setTodayExpanded] = useState(false)
     const [overdueExpanded, setOverdueExpanded] = useState(false);
     const [nextExpanded, setNextExpanded] = useState(false)
+    const [noDateExpanded, setNoDateExpanded] = useState(false);
 
 
     useEffect(() => {
@@ -55,7 +56,9 @@ export const TaskScreen = (props) => {
                             >
                                 <TasksItems tasks={tasks} filter='today'/>
                             </ListItem.Accordion>
+
                             <Divider />
+
                             <ListItem.Accordion
                                 content={
                                     <>
@@ -73,6 +76,48 @@ export const TaskScreen = (props) => {
                                 }}
                             >
                                 <TasksItems tasks={tasks} filter='overdue'/>
+                            </ListItem.Accordion>
+
+                            <Divider />
+
+                            <ListItem.Accordion
+                                content={
+                                    <>
+                                        <ListItem.Content>
+                                            <ListItem.Title h4>Następne ({
+                                                tasks.filter((item) =>
+                                                    moment(item.dueDate.toDate()).format("YYYY-MM-DD") >  getTodayDate()).length
+                                            })</ListItem.Title>
+                                        </ListItem.Content>
+                                    </>
+                                }
+                                isExpanded={nextExpanded}
+                                onPress={() => {
+                                    setNextExpanded(!nextExpanded);
+                                }}
+                            >
+                                <TasksItems tasks={tasks} filter='next'/>
+                            </ListItem.Accordion>
+
+                            <Divider />
+
+                            <ListItem.Accordion
+                                content={
+                                    <>
+                                        <ListItem.Content>
+                                            <ListItem.Title h4>Bez daty ({
+                                                tasks.filter((item) =>
+                                                    item.dueDate === null).length
+                                            })</ListItem.Title>
+                                        </ListItem.Content>
+                                    </>
+                                }
+                                isExpanded={noDateExpanded}
+                                onPress={() => {
+                                    setNoDateExpanded(!noDateExpanded);
+                                }}
+                            >
+                                {/*<TasksItems tasks={tasks} filter='nodate'/>*/}
                             </ListItem.Accordion>
                         </>
 

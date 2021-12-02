@@ -20,6 +20,10 @@ const TasksItems = (props) => {
             return moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()
         if(props.filter === 'overdue')
             return moment(item.dueDate.toDate()).format("YYYY-MM-DD") < getTodayDate()
+        if(props.filter === 'next')
+            return moment(item.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()
+        // if(props.filter === 'nodate')
+        //     return item.dueDate === null
     }
 
     return (
