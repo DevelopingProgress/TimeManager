@@ -3,13 +3,14 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import { AddFab } from '../../../../reusable/fab'
-import {Alert, ScrollView, Text, View} from 'react-native'
-import {deleteTask, listTasks} from "../../../../store/actions/tasksActions";
+import {Alert, BackHandler, ScrollView, Text, View} from 'react-native'
+import {clearTasks, deleteTask, listProjects, listTasks} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/tools";
 import TasksItems from "./tasksItems";
 import moment from "moment";
+import {useFocusEffect} from "@react-navigation/core";
 
 export const TaskScreen = (props) => {
     const dispatch = useDispatch();
@@ -22,12 +23,11 @@ export const TaskScreen = (props) => {
     const [nextExpanded, setNextExpanded] = useState(false)
     const [noDateExpanded, setNoDateExpanded] = useState(false);
 
-
-    useEffect(() => {
-        if(tasks) {
+    useFocusEffect (
+        React.useCallback(() => {
             dispatch(listTasks(user, category, project))
-        }
-    }, [dispatch, project])
+        }, [dispatch, category, project])
+    );
 
     return (
         <>
@@ -54,7 +54,7 @@ export const TaskScreen = (props) => {
                                     setTodayExpanded(!todayExpanded);
                                 }}
                             >
-                                <TasksItems tasks={tasks} filter='today'/>
+                                <TasksItems tasks={tasks} user={user} category={category} project={project} filter='today' navigation={props.navigation} />
                             </ListItem.Accordion>
 
                             <Divider />
@@ -75,7 +75,7 @@ export const TaskScreen = (props) => {
                                     setOverdueExpanded(!overdueExpanded);
                                 }}
                             >
-                                <TasksItems tasks={tasks} filter='overdue'/>
+                                <TasksItems tasks={tasks} user={user} category={category} project={project} filter='overdue' navigation={props.navigation} />
                             </ListItem.Accordion>
 
                             <Divider />
@@ -96,7 +96,7 @@ export const TaskScreen = (props) => {
                                     setNextExpanded(!nextExpanded);
                                 }}
                             >
-                                <TasksItems tasks={tasks} filter='next'/>
+                                <TasksItems tasks={tasks} user={user} category={category} project={project} filter='next' navigation={props.navigation} />
                             </ListItem.Accordion>
 
                             <Divider />

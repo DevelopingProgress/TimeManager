@@ -33,7 +33,14 @@ const TasksItems = (props) => {
                         .map((item) => (
                         <View key={item.id}>
                             <Divider style={{width: '100%', borderWidth: 1, borderColor: Colors.grey}}/>
-                            <ListItem onPress={() => console.log('go to task Screen')}>
+                            <ListItem onPress={() => {
+                                props.navigation.navigate('TaskDetailsScreen', {
+                                    task: item,
+                                    user: props.user,
+                                    category: props.category,
+                                    project: props.project,
+                                })
+                            }}>
                                 <ListItem.Title style={{color: item.color, fontWeight: 'bold'}}>{item.name}</ListItem.Title>
                                 <ListItem.Content><Text style={{alignSelf: 'flex-end'}}>{getPolishMonths(item)}</Text></ListItem.Content>
                                 <ListItem.Chevron color={Colors.black2} iconStyle={{alignSelf: 'flex-end'}}/>

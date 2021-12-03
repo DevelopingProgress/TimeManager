@@ -1,5 +1,5 @@
-import React from 'react'
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react'
+import {useDispatch, useSelector} from "react-redux";
 import { AddFab } from '../../../../reusable/fab'
 import {ScrollView, View} from 'react-native'
 import {Text} from "react-native";
@@ -7,11 +7,21 @@ import {Tiles} from "../../../../reusable/tiles";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors} from "../../../../reusable/tools";
+import {listProjects, listTasks} from "../../../../store/actions/tasksActions";
+import {useFocusEffect} from "@react-navigation/core";
 
 export const ProjectsScreen = (props) => {
+    const dispatch = useDispatch();
     const category = props.route.params.item
     const projects = useSelector(state => state.tasks.projects)
-    
+    const user = useSelector(state => state.auth.user)
+
+    useFocusEffect (
+        React.useCallback(() => {
+            dispatch(listProjects(user, category))
+        }, [user, category])
+    );
+
     return (
         <>
             <ScrollView style={styles.mainContainer}>

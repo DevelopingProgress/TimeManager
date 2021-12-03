@@ -12,6 +12,7 @@ export const CategoriesScreen = ({navigation}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user)
     const categories = useSelector(state => state.tasks.categories)
+
     useEffect(() => {
         dispatch(listCategories(user))
     }, [user])

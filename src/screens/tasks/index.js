@@ -7,10 +7,11 @@ import { TaskScreen } from './screens/tasks'
 import { View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { styles } from '../home'
+import TaskDetailsScreen from "./screens/task details";
 
 const Stack = createStackNavigator();
 
-export const TasksScreen = ({navigation}) => {
+export const TasksScreen = ({navigation, route}) => {
     return(
         <>
             <View style={styles.container}>
@@ -38,6 +39,7 @@ export const TasksScreen = ({navigation}) => {
                     options={{
                         headerShown: false,
                         title: "Projekty",
+
                     }}
                 />
                 <Stack.Screen
@@ -46,6 +48,16 @@ export const TasksScreen = ({navigation}) => {
                     options={{
                         headerShown: false,
                         title: "Zadania",
+                        gestureEnabled: false
+                    }}
+                />
+                <Stack.Screen
+                    name="TaskDetailsScreen"
+                    component={TaskDetailsScreen}
+                    options={{
+                        headerShown: false,
+                        title: route.params && route.params.task ? route.params.task.name : '',
+                        gestureEnabled: false
                     }}
                 />
             </Stack.Navigator>
