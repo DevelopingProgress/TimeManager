@@ -90,7 +90,7 @@ export const StackHeader = (props) => {
                     </View>
 
                     <View style={styles.textWrapper}>
-                        <Text style={[styles.text, {fontSize: 22}]}>
+                        <Text style={[styles.text, {color: props.task.color}]}>
                             {props.task.name}
                         </Text>
                     </View>

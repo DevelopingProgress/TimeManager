@@ -7,7 +7,7 @@ import { TaskScreen } from './screens/tasks'
 import { View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { styles } from '../home'
-import TaskDetailsScreen from "./screens/task details";
+import {TaskDetailsScreen} from "./screens/task details";
 
 const Stack = createStackNavigator();
 
