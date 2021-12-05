@@ -11,8 +11,12 @@ export const TaskDetailsScreen = (props) => {
     const user = props.route.params.user
     const category = props.route.params.category
     const project = props.route.params.project
-    const [isPlaying, setIsPlaying] = useState(false);
-
+    const [isPlaying, setIsPlaying] = useState(
+        props.route.params.isPlaying &&
+        props.route.params.isPlaying ?
+            props.route.params.isPlaying :
+            false
+    );
 
     const getHours = () => {
         const separatedTime = task.timer.split(':')
@@ -42,7 +46,7 @@ export const TaskDetailsScreen = (props) => {
     return (
         <>
             <ScrollView style={styles.mainContainer}>
-                <StackHeader type='task' navigation={props.navigation}  user={user} category={category} project={project} task={task}/>
+                <StackHeader type='task' navigation={props.navigation}  user={user} category={category} project={project} task={task} isPlaying={isPlaying}/>
                 <View style={stylesTask.taskContainer}>
                     <Text h4 style={{flex: 1}}>
                         Status

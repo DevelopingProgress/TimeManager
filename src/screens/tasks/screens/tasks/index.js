@@ -54,7 +54,14 @@ export const TaskScreen = (props) => {
                                     setTodayExpanded(!todayExpanded);
                                 }}
                             >
-                                <TasksItems tasks={tasks} user={user} category={category} project={project} filter='today' navigation={props.navigation} />
+                                <TasksItems
+                                    tasks={tasks}
+                                    user={user}
+                                    category={category}
+                                    project={project}
+                                    filter='today'
+                                    navigation={props.navigation}
+                                />
                             </ListItem.Accordion>
 
                             <Divider />
@@ -75,7 +82,14 @@ export const TaskScreen = (props) => {
                                     setOverdueExpanded(!overdueExpanded);
                                 }}
                             >
-                                <TasksItems tasks={tasks} user={user} category={category} project={project} filter='overdue' navigation={props.navigation} />
+                                <TasksItems
+                                    tasks={tasks}
+                                    user={user}
+                                    category={category}
+                                    project={project}
+                                    filter='overdue'
+                                    navigation={props.navigation}
+                                />
                             </ListItem.Accordion>
 
                             <Divider />
@@ -96,7 +110,14 @@ export const TaskScreen = (props) => {
                                     setNextExpanded(!nextExpanded);
                                 }}
                             >
-                                <TasksItems tasks={tasks} user={user} category={category} project={project} filter='next' navigation={props.navigation} />
+                                <TasksItems
+                                    tasks={tasks}
+                                    user={user}
+                                    category={category}
+                                    project={project}
+                                    filter='next'
+                                    navigation={props.navigation}
+                                />
                             </ListItem.Accordion>
 
                             <Divider />

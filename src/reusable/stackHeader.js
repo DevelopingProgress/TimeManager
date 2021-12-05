@@ -84,7 +84,7 @@ export const StackHeader = (props) => {
                         color={Colors.black}
                         size={30}
                         onPress={() => {
-                            props.navigation.goBack()
+                                props.navigation.goBack()
                         }}
                         />
                     </View>
