@@ -5,6 +5,8 @@ import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
 import {Colors} from "../../../../reusable/tools";
 import CountDown from "react-native-countdown-component";
+import {Timer} from "../../../../reusable/timer";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 export const TaskDetailsScreen = (props) => {
     const task = props.route.params.task
@@ -41,6 +43,7 @@ export const TaskDetailsScreen = (props) => {
     }
 
     const [overallTime, setOverallTime] = useState(parseInt(getHours()) * 60 * 60 + parseInt(getMinutes()) * 60 + parseInt(getSeconds()));
+    const [showAlert, setShowAlert] = useState(false);
 
 
     return (
@@ -63,6 +66,7 @@ export const TaskDetailsScreen = (props) => {
                         Czas
                     </Text>
                     <View style={{flexDirection: 'row', marginRight: 13}}>
+                        {/*<Timer secondsLeft={overallTime} />*/}
                         <CountDown
                             size={25}
                             until={overallTime}
@@ -72,8 +76,9 @@ export const TaskDetailsScreen = (props) => {
                             timeLabelStyle={{fontSize: 20, color: Colors.black}}
                             digitStyle={{borderWidth: 1}}
                             onFinish={() => {
-                                alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')
-                                setOverallTime(100)
+                                // alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')
+                                setShowAlert(true)
+                                setIsPlaying(false)
                             }}
                             running={isPlaying}
                         />
@@ -128,6 +133,27 @@ export const TaskDetailsScreen = (props) => {
                     bottom: 20
                 }}
                 onPress={() => console.log('edit')}
+            />
+            <AwesomeAlert
+                show={showAlert}
+                showProgress={false}
+                title="Czas się skończył"
+                message="Czy chcesz ukończyć zadanie?"
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={true}
+                showConfirmButton={true}
+                cancelText="Nie, Potrzebuję więcej czasu"
+                confirmText="Tak, Ukończ zadanie"
+                confirmButtonColor={Colors.lightgreen}
+                actionContainerStyle={{flexDirection: 'column', alignItems: 'center'}}
+                onCancelPressed={() => {
+                    console.log('cancel')
+                }}
+                onConfirmPressed={() => {
+                    console.log('confirm')
+                    //dispatch(endTask(task))
+                }}
             />
         </>
 
