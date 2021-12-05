@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
@@ -13,6 +13,32 @@ export const TaskDetailsScreen = (props) => {
     const project = props.route.params.project
     const [isPlaying, setIsPlaying] = useState(false);
 
+
+    const getHours = () => {
+        const separatedTime = task.timer.split(':')
+        const digits = separatedTime[0].split()
+        if(digits[0] === '0' || digits.length === 1)
+            return '0' + separatedTime[0]
+        else return separatedTime[0]
+    }
+    const getMinutes = () => {
+        const separatedTime = task.timer.split(':')
+        const digits = separatedTime[1].split()
+        if(digits[0] === '0')
+        return '0' + separatedTime[1]
+        else return separatedTime[1]
+    }
+    const getSeconds= () => {
+        const separatedTime = task.timer.split(':')
+        const digits = separatedTime[2].split()
+        if(digits[0] === '0')
+            return '0' + separatedTime[2]
+        else return separatedTime[2]
+    }
+
+    const [overallTime, setOverallTime] = useState(parseInt(getHours()) * 60 * 60 + parseInt(getMinutes()) * 60 + parseInt(getSeconds()));
+
+
     return (
         <>
             <ScrollView style={styles.mainContainer}>
@@ -23,10 +49,9 @@ export const TaskDetailsScreen = (props) => {
                     </Text>
                     <Button
                         style={{flex: 0.1}}
-                        type='outline'
                         title='Do zrobienia'
                         buttonStyle={stylesTask.statusButtonStyle}
-                        titleStyle={{color: Colors.blue}}
+                        onPress={() => console.log('Change status')}
                     />
                 </View>
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
@@ -34,44 +59,20 @@ export const TaskDetailsScreen = (props) => {
                         Czas
                     </Text>
                     <View style={{flexDirection: 'row', marginRight: 13}}>
-                        {isPlaying ?
-                            <View>
-                                <CountDown
-                                    size={25}
-                                    until={10}
-                                    timeToShow={['H', 'M', 'S']}
-                                    timeLabels={{h: 'Godz', m: 'Min', s: 'Sek'}}
-                                    digitTxtStyle={{fontSize: 25, color: Colors.black}}
-                                    timeLabelStyle={{fontSize: 20, color: Colors.black}}
-                                    digitStyle={{borderWidth: 1}}
-                                    onFinish={() => {
-                                        alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')
-                                        setIsPlaying(false)
-                                    }}
-                                    />
-                            </View>:
-                            <View style={{flexDirection: 'row', marginRight: 5}}>
-                                <View style={{ marginRight: 5}}>
-                                    <View style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                                        <Text style={{fontSize: 25, fontWeight: 'bold'}}>00</Text>
-                                    </View>
-                                    <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Godz</Text>
-                                </View>
-                                <View style={{ marginRight: 5}}>
-                                    <View  style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                                        <Text style={{fontSize: 25, fontWeight: 'bold'}}>00</Text>
-                                    </View>
-                                    <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Min</Text>
-                                </View>
-                                <View>
-                                    <View  style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                                        <Text style={{fontSize: 25, fontWeight: 'bold'}}>10</Text>
-                                    </View>
-                                    <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Sek</Text>
-                                </View>
-                            </View>
-                        }
-
+                        <CountDown
+                            size={25}
+                            until={overallTime}
+                            timeToShow={['H', 'M', 'S']}
+                            timeLabels={{h: 'Godz', m: 'Min', s: 'Sek'}}
+                            digitTxtStyle={{fontSize: 25, color: Colors.black}}
+                            timeLabelStyle={{fontSize: 20, color: Colors.black}}
+                            digitStyle={{borderWidth: 1}}
+                            onFinish={() => {
+                                alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')
+                                setOverallTime(100)
+                            }}
+                            running={isPlaying}
+                        />
                         {!isPlaying ?
                         <Icon
                             name='play-circle-outline'
@@ -94,9 +95,14 @@ export const TaskDetailsScreen = (props) => {
                     <Text h4>
                         Opis
                     </Text>
+                    {task && task.description ?
                     <Text style={{fontSize: 18}}>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab cupiditate delectus deserunt, distinctio dolor dolores exercitationem expedita ipsum laboriosam natus odio perferendis quam quibusdam reiciendis reprehenderit, sed, vero voluptas!
+                        {task.description}
+                    </Text>:
+                    <Text style={{fontSize: 18}}>
+                        Brak opisu
                     </Text>
+                    }
                 </View>
             </ScrollView>
             <Button
@@ -133,7 +139,10 @@ const stylesTask = StyleSheet.create({
         flexDirection: 'row'
     },
     statusButtonStyle: {
-        borderColor: Colors.black, alignSelf: 'flex-end'
+        borderColor: Colors.black,
+        borderWidth: 0.5,
+        alignSelf: 'flex-end',
+        backgroundColor: Colors.blue
     }
 })
 
