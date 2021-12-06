@@ -12,7 +12,6 @@ const TaskForm  = (props) => {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [timerPicker, setTimerPicker] = useState(false);
-    console.log(values)
 
     const showMode = (currentMode) => {
         setShow(true);
