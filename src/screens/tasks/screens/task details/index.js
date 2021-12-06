@@ -5,20 +5,15 @@ import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
 import {Colors} from "../../../../reusable/tools";
 import CountDown from "react-native-countdown-component";
-import BackgroundFetchScreen from "../../../../reusable/timer";
-import AwesomeAlert from "react-native-awesome-alerts";
+import Timer from "../../../../reusable/timer";
 
 export const TaskDetailsScreen = (props) => {
     const task = props.route.params.task
     const user = props.route.params.user
     const category = props.route.params.category
     const project = props.route.params.project
-    const [isPlaying, setIsPlaying] = useState(
-        props.route.params.isPlaying &&
-        props.route.params.isPlaying ?
-            props.route.params.isPlaying :
-            false
-    );
+    const [isPlaying, setIsPlaying] = useState(false);
+
 
     const getHours = () => {
         const separatedTime = task.timer.split(':')
@@ -43,13 +38,12 @@ export const TaskDetailsScreen = (props) => {
     }
 
     const [overallTime, setOverallTime] = useState(parseInt(getHours()) * 60 * 60 + parseInt(getMinutes()) * 60 + parseInt(getSeconds()));
-    const [showAlert, setShowAlert] = useState(false);
 
 
     return (
         <>
             <ScrollView style={styles.mainContainer}>
-                <StackHeader type='task' navigation={props.navigation}  user={user} category={category} project={project} task={task} isPlaying={isPlaying}/>
+                <StackHeader type='task' navigation={props.navigation}  user={user} category={category} project={project} task={task}/>
                 <View style={stylesTask.taskContainer}>
                     <Text h4 style={{flex: 1}}>
                         Status
@@ -66,7 +60,7 @@ export const TaskDetailsScreen = (props) => {
                         Czas
                     </Text>
                     <View style={{flexDirection: 'row', marginRight: 13}}>
-                        <BackgroundFetchScreen />
+                       <Timer count={overallTime}/>
                         {/*<CountDown*/}
                         {/*    size={25}*/}
                         {/*    until={overallTime}*/}
@@ -76,28 +70,27 @@ export const TaskDetailsScreen = (props) => {
                         {/*    timeLabelStyle={{fontSize: 20, color: Colors.black}}*/}
                         {/*    digitStyle={{borderWidth: 1}}*/}
                         {/*    onFinish={() => {*/}
-                        {/*        // alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')*/}
-                        {/*        setShowAlert(true)*/}
-                        {/*        setIsPlaying(false)*/}
+                        {/*        alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')*/}
+                        {/*        setOverallTime(100)*/}
                         {/*    }}*/}
                         {/*    running={isPlaying}*/}
                         {/*/>*/}
-                        {!isPlaying ?
-                        <Icon
-                            name='play-circle-outline'
-                            type='iconicon'
-                            onPress={() => setIsPlaying(true)}
-                            size={60}
-                            containerStyle={{marginHorizontal: 10}}
-                        /> :
-                        <Icon
-                            name='stop-circle-outline'
-                            type='ionicon'
-                            onPress={() => setIsPlaying(false)}
-                            size={60}
-                            containerStyle={{marginHorizontal: 10}}
-                        />
-                        }
+                        {/*{!isPlaying ?*/}
+                        {/*<Icon*/}
+                        {/*    name='play-circle-outline'*/}
+                        {/*    type='iconicon'*/}
+                        {/*    onPress={() => setIsPlaying(true)}*/}
+                        {/*    size={60}*/}
+                        {/*    containerStyle={{marginHorizontal: 10}}*/}
+                        {/*/> :*/}
+                        {/*<Icon*/}
+                        {/*    name='stop-circle-outline'*/}
+                        {/*    type='ionicon'*/}
+                        {/*    onPress={() => setIsPlaying(false)}*/}
+                        {/*    size={60}*/}
+                        {/*    containerStyle={{marginHorizontal: 10}}*/}
+                        {/*/>*/}
+                        {/*}*/}
                     </View>
                 </View>
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
@@ -133,27 +126,6 @@ export const TaskDetailsScreen = (props) => {
                     bottom: 20
                 }}
                 onPress={() => console.log('edit')}
-            />
-            <AwesomeAlert
-                show={showAlert}
-                showProgress={false}
-                title="Czas się skończył"
-                message="Czy chcesz ukończyć zadanie?"
-                closeOnTouchOutside={true}
-                closeOnHardwareBackPress={false}
-                showCancelButton={true}
-                showConfirmButton={true}
-                cancelText="Nie, Potrzebuję więcej czasu"
-                confirmText="Tak, Ukończ zadanie"
-                confirmButtonColor={Colors.lightgreen}
-                actionContainerStyle={{flexDirection: 'column', alignItems: 'center'}}
-                onCancelPressed={() => {
-                    setShowAlert(false)
-                }}
-                onConfirmPressed={() => {
-                    console.log('confirm')
-                    //dispatch(endTask(task))
-                }}
             />
         </>
 

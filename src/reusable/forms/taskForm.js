@@ -89,10 +89,10 @@ const TaskForm  = (props) => {
                     <Icon type='fontisto' name='stopwatch' color={Colors.black} size={27}/>
                 </View>
                 <Divider color={Colors.black2} style={{borderWidth: 0.3}}/>
+                {errors.hours && <Text style={{color: Colors.red, marginTop: 5, textAlign: 'center'}}>Nieprawidłowy czas - godziny</Text>}
+                {errors.minutes && <Text style={{color: Colors.red, marginTop: 5, textAlign: 'center'}}>Nieprawidłowy czas - minuty</Text>}
+                {errors.seconds && <Text style={{color: Colors.red, marginTop: 5, textAlign: 'center'}}>Nieprawidłowy czas - sekundy</Text>}
             </TouchableOpacity>
-            {/*{errors.hours &&  <Text style={[errorStyle, {textAlign: 'center'}]}>{errors.hours}</Text>}*/}
-            {/*{errors.minutes &&  <Text style={[errorStyle, {textAlign: 'center'}]}>{errors.minutes}</Text>}*/}
-            {/*{errors.seconds &&  <Text style={[errorStyle, {textAlign: 'center'}]}>{errors.seconds}</Text>}*/}
 
 
 
@@ -109,39 +109,48 @@ const TaskForm  = (props) => {
                             <Text style={{textAlign: 'center'}}>
                                 Godziny
                             </Text>
-                            <TextInput
+                            <Input
                                 value={values.hours}
                                 textAlign='center'
                                 style={{fontSize: 50}}
                                 keyboardType="numeric"
                                 onChangeText={handleChange('hours')}
                                 maxLength={2}
+                                renderErrorMessage={errors.hours && touched.hours}
+                                errorMessage={errors.hours}
+                                errorStyle={[errorStyle, {textAlign: 'center'}]}
                             />
                         </View>
                         <View style={{flex: 0.33, flexDirection: 'column'}}>
                             <Text style={{textAlign: 'center'}}>
                                 Minuty
                             </Text>
-                            <TextInput
+                            <Input
                                 value={values.minutes}
                                 textAlign='center'
                                 style={{fontSize: 50 }}
                                 keyboardType="numeric"
                                 onChangeText={handleChange('minutes')}
                                 maxLength={2}
+                                renderErrorMessage={errors.minutes && touched.minutes}
+                                errorMessage={errors.minutes}
+                                errorStyle={[errorStyle, {textAlign: 'center'}]}
                             />
                         </View>
                         <View style={{flex: 0.33, flexDirection: 'column'}}>
                             <Text style={{textAlign: 'center'}}>
                                 Sekundy
                             </Text>
-                            <TextInput
+                            <Input
                                 value={values.seconds}
                                 textAlign='center'
                                 style={{fontSize: 50}}
                                 keyboardType="numeric"
                                 onChangeText={handleChange('seconds')}
                                 maxLength={2}
+                                renderErrorMessage={errors.seconds && touched.seconds}
+                                errorMessage={errors.seconds}
+                                errorStyle={[errorStyle, {textAlign: 'center'}]}
                             />
                         </View>
                     </View>
@@ -149,11 +158,6 @@ const TaskForm  = (props) => {
                         onPress={confirmChanges}
                         buttonStyle={{backgroundColor: Colors.blue, borderRadius: 20, margin: 10}}
                         title='Zatwierdź'
-                    />
-                    <Button
-                        onPress={hideTimerPicker}
-                        buttonStyle={{backgroundColor: Colors.red, borderRadius: 20, margin: 10}}
-                        title='Anuluj'
                     />
                 </View>
             </Modal>

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
+import {Colors} from "./tools";
 
 const Timer = (props) => {
 
