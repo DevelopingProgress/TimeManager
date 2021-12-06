@@ -116,3 +116,25 @@ export const polishShortMonths = (month) => {
 export const getTodayDate = () => {
     return moment().format("YYYY-MM-DD")
 }
+
+export const getHours = (item) => {
+    const separatedTime = item.timer.split(':')
+    const digits = separatedTime[0].split()
+    if(digits[0] === '0' || digits.length === 1)
+        return '0' + separatedTime[0]
+    else return separatedTime[0]
+}
+export const getMinutes = (item) => {
+    const separatedTime = item.timer.split(':')
+    const digits = separatedTime[1].split()
+    if(digits[0] === '0')
+        return '0' + separatedTime[1]
+    else return separatedTime[1]
+}
+export const getSeconds= (item) => {
+    const separatedTime = item.timer.split(':')
+    const digits = separatedTime[2].split()
+    if(digits[0] === '0')
+        return '0' + separatedTime[2]
+    else return separatedTime[2]
+}

@@ -1,12 +1,12 @@
 import React from 'react'
 import {FlatList} from "react-native";
-import {ModalOptions} from "./modalOptions";
+import {ItemOptions} from "./itemOptions";
 
 export const Tiles = (props) => {
     return (
         <>
             {props.array ? props.array.map((item) => (
-                <ModalOptions
+                <ItemOptions
                     key={item.id}
                     item={item}
                     navigation={props.navigation}

@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import React from 'react';
 import {StyleSheet, Modal, Text, View} from 'react-native';
-import { Colors } from './tools';
+import {Colors, getHours, getMinutes, getSeconds} from './tools';
 import * as Yup from "yup";
 import {Button} from 'react-native-elements';
 import CategoryForm from "./forms/categoryForm";
@@ -14,6 +14,7 @@ import moment from "moment";
 const ModalAdd = (props) => {
     const hoursRegex = /^(((0|1)[0-9])|2[0-3])$/
     const minsecsRegex = /\b([0-5]){1}([0-9]){1}/gm
+
     return (
             <Modal
             visible={props.modalVisible}
@@ -32,38 +33,52 @@ const ModalAdd = (props) => {
                                 <Text style={styles.modalText}>Dodaj Projekt</Text>:
                                 props.modalType === 2 ?
                                     <Text style={styles.modalText}>Dodaj zadanie</Text>:
-                                    null
+                                    props.modalType === 'category' ?
+                                        <Text style={styles.modalText}>Edytuj Kategorię</Text> :
+                                        props.modalType === 'project' ?
+                                            <Text style={styles.modalText}>Edytuj Projekt</Text>:
+                                            props.modalType === 'task' ?
+                                                <Text style={styles.modalText}>Edytuj zadanie</Text>: null
                     }
                     <Formik
                         initialValues={
-                            props.modalType === 0 ?
+                            props.modalType === 0 || props.modalType === 'category' ?
                             {
-                                name: ''
-                            } : props.modalType === 1 ?
+                                name: !props.edit ? '' : props.item && props.item.name
+                            } : props.modalType === 1 || props.modalType === 'project' ?
                             {
-                                name: '',
-                            } : props.modalType === 2 ?
+                                name: !props.edit ? '' : props.item && props.item.name,
+                            } : props.modalType === 2 || props.modalType === 'task' ?
                             {
-                                name: '',
-                                date: new Date(Date.now()),
-                                hours: '01',
-                                minutes: '00',
-                                seconds: '00'
+                                name: !props.edit ? '' : props.item && props.item.name,
+                                date: !props.edit ? new Date(Date.now()) : props.item && props.item.dueDate.toDate(),
+                                hours: !props.edit ? '01' : props.item &&
+                                    parseInt(getHours(props.item)) < 10
+                                    ? `0${parseInt(getHours(props.item)).toString()}`
+                                    : parseInt(getHours(props.item)).toString(),
+                                minutes: !props.edit ? '00' : props.item &&
+                                    parseInt(getMinutes(props.item)) < 10
+                                    ? `0${parseInt(getMinutes(props.item)).toString()}`
+                                    : parseInt(getMinutes(props.item)).toString(),
+                                seconds: !props.edit ? '00' : props.item &&
+                                    parseInt(getSeconds(props.item))< 10
+                                    ? `0${parseInt(getSeconds(props.item)).toString()}`
+                                    : parseInt(getSeconds(props.item)).toString()
                             } : null
                         }
                         onSubmit={values => props.handleSubmit(values)}
                         validationSchema={Yup.object(
-                            props.modalType === 0 ?
+                            props.modalType === 0 || props.modalType === 'category' ?
                             {
                                 name: Yup
                                     .string()
                                     .required(),
-                            } : props.modalType === 1 ?
+                            } : props.modalType === 1 || props.modalType === 'project' ?
                             {
                                 name: Yup
                                     .string()
                                     .required(),
-                            } : props.modalType === 2 ? {
+                            } : props.modalType === 2 || props.modalType === 'task' ? {
                                 name: Yup
                                     .string()
                                     .required(),
@@ -95,7 +110,7 @@ const ModalAdd = (props) => {
                                   setFieldValue
                             }) => (
                                 <>
-                                {props.modalType === 0 ? (
+                                {props.modalType === 0  || props.modalType === 'category' ? (
                                     <CategoryForm
                                         handleChange={(item) => handleChange(item)}
                                         handleBlur={(item) => handleBlur(item)}
@@ -108,7 +123,7 @@ const ModalAdd = (props) => {
                                         inputStyle={{width: '100%'}}
                                     />
                                 ) :
-                                props.modalType === 1 ? (
+                                props.modalType === 1 || props.modalType === 'project' ? (
                                     <ProjectForm
                                         handleChange={(item) => handleChange(item)}
                                         handleBlur={(item) => handleBlur(item)}
@@ -121,7 +136,7 @@ const ModalAdd = (props) => {
                                         inputStyle={{width: '100%'}}
                                     />
                                 ) :
-                                props.modalType === 2 ? (
+                                props.modalType === 2 || props.modalType === 'task' ? (
                                     <TaskForm
                                         handleChange={(item) => handleChange(item)}
                                         handleBlur={(item) => handleBlur(item)}
@@ -139,11 +154,17 @@ const ModalAdd = (props) => {
                                         containerStyle={[styles.button, styles.buttonOpen]}
                                         buttonStyle={{backgroundColor: 'transparent'}}
                                         onPress={handleSubmit}
-                                        title={`Dodaj ${
+                                        title={!props.edit ? `Dodaj ${
                                             props.modalType === 0 ? 'Kategorię' :
                                             props.modalType === 1 ? 'Projekt' :
                                             props.modalType === 2 ? 'Zadanie' : null
-                                        }`}
+                                        }`:
+                                            `Edytuj ${
+                                                props.modalType === 'category' ? 'Kategorię' :
+                                                    props.modalType === 'project' ? 'Projekt' :
+                                                        props.modalType === 'task' ? 'Zadanie' : null
+                                            }`
+                                        }
                                         loading={props.loading}
                                     />
                                 </>

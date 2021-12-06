@@ -173,3 +173,51 @@ export const delTsk= async (user, category, project, task) => {
 }
 
 //UPDATE
+export const updateCat = async (name, user, category) => {
+    try {
+        await usersCollection.doc(user.uid).collection('categories').doc(category.id).update({
+            name: name
+        })
+        return {status: 'category_updated'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}
+
+export const updateProj= async (user, name, category, project) => {
+    try {
+        await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id)
+            .update({
+                name: name
+            })
+        return {status: 'project_updated'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}
+
+export const updateTsk= async (user, name, category, project, task, dueDate, timer) => {
+    try {
+        await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id)
+            .collection('tasks')
+            .doc(task.id)
+            .update({
+                name: name,
+                dueDate: dueDate,
+                timer: timer
+            })
+        return {status: 'task_updated'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}

@@ -3,45 +3,71 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
-import {Colors} from "../../../../reusable/tools";
+import {Colors, getHours, getMinutes, getSeconds} from "../../../../reusable/tools";
 import CountDown from "react-native-countdown-component";
 import Timer from "../../../../reusable/timer";
+import ModalAdd from "../../../../reusable/modalAdd";
+import {clearStatus, listTasks, updateTask} from "../../../../store/actions/tasksActions";
+import {useDispatch, useSelector} from "react-redux";
+import {StackActions} from "@react-navigation/native";
 
 export const TaskDetailsScreen = (props) => {
     const task = props.route.params.task
     const user = props.route.params.user
     const category = props.route.params.category
     const project = props.route.params.project
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalType, setModalType] = useState('');
+    const [loading, setLoading] = useState(false)
+    const status = useSelector(state => state.tasks.status)
+    const dispatch = useDispatch()
 
-
-    const getHours = () => {
-        const separatedTime = task.timer.split(':')
-        const digits = separatedTime[0].split()
-        if(digits[0] === '0' || digits.length === 1)
-            return '0' + separatedTime[0]
-        else return separatedTime[0]
+    const handlePress = (value) => {
+        switch (value) {
+            case 'task':
+                setModalVisible(true)
+                setModalType(value)
+                break;
+            default:
+                break;
+        }
     }
-    const getMinutes = () => {
-        const separatedTime = task.timer.split(':')
-        const digits = separatedTime[1].split()
-        if(digits[0] === '0')
-        return '0' + separatedTime[1]
-        else return separatedTime[1]
-    }
-    const getSeconds= () => {
-        const separatedTime = task.timer.split(':')
-        const digits = separatedTime[2].split()
-        if(digits[0] === '0')
-            return '0' + separatedTime[2]
-        else return separatedTime[2]
+    const handleSubmit = (values) => {
+       if(modalType === 'task') {
+            setLoading(true)
+           dispatch(updateTask(user, values.name, category, project, task, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
+        }
     }
 
-    const [overallTime, setOverallTime] = useState(parseInt(getHours()) * 60 * 60 + parseInt(getMinutes()) * 60 + parseInt(getSeconds()));
+    useEffect(() => {
+        if(status === 'task_updated') {
+            dispatch(clearStatus())
+            setLoading(false)
+            setModalVisible(false)
+            props.navigation.goBack()
+        }
+    }, [status]);
+
+
+
+    const [overallTime, setOverallTime] = useState(
+        parseInt(getHours(task)) * 60 * 60 + parseInt(getMinutes(task)) * 60 + parseInt(getSeconds(task)));
 
 
     return (
         <>
+            <ModalAdd
+                modalVisible={modalVisible}
+                hideModal={() => {
+                    setModalVisible(!modalVisible)
+                    setLoading(false)
+                }}
+                modalType={modalType}
+                handleSubmit={handleSubmit}
+                loading={loading}
+                item={task}
+                edit
+            />
             <ScrollView style={styles.mainContainer}>
                 <StackHeader type='task' navigation={props.navigation}  user={user} category={category} project={project} task={task}/>
                 <View style={stylesTask.taskContainer}>
@@ -61,36 +87,6 @@ export const TaskDetailsScreen = (props) => {
                     </Text>
                     <View style={{flexDirection: 'row', marginRight: 13}}>
                        <Timer count={overallTime}/>
-                        {/*<CountDown*/}
-                        {/*    size={25}*/}
-                        {/*    until={overallTime}*/}
-                        {/*    timeToShow={['H', 'M', 'S']}*/}
-                        {/*    timeLabels={{h: 'Godz', m: 'Min', s: 'Sek'}}*/}
-                        {/*    digitTxtStyle={{fontSize: 25, color: Colors.black}}*/}
-                        {/*    timeLabelStyle={{fontSize: 20, color: Colors.black}}*/}
-                        {/*    digitStyle={{borderWidth: 1}}*/}
-                        {/*    onFinish={() => {*/}
-                        {/*        alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')*/}
-                        {/*        setOverallTime(100)*/}
-                        {/*    }}*/}
-                        {/*    running={isPlaying}*/}
-                        {/*/>*/}
-                        {/*{!isPlaying ?*/}
-                        {/*<Icon*/}
-                        {/*    name='play-circle-outline'*/}
-                        {/*    type='iconicon'*/}
-                        {/*    onPress={() => setIsPlaying(true)}*/}
-                        {/*    size={60}*/}
-                        {/*    containerStyle={{marginHorizontal: 10}}*/}
-                        {/*/> :*/}
-                        {/*<Icon*/}
-                        {/*    name='stop-circle-outline'*/}
-                        {/*    type='ionicon'*/}
-                        {/*    onPress={() => setIsPlaying(false)}*/}
-                        {/*    size={60}*/}
-                        {/*    containerStyle={{marginHorizontal: 10}}*/}
-                        {/*/>*/}
-                        {/*}*/}
                     </View>
                 </View>
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
@@ -125,7 +121,7 @@ export const TaskDetailsScreen = (props) => {
                     right: 15,
                     bottom: 20
                 }}
-                onPress={() => console.log('edit')}
+                onPress={() => handlePress('task')}
             />
         </>
 

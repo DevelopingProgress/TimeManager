@@ -7,7 +7,7 @@ import {
     CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK,
     LIST_CATEGORIES,
     LIST_PROJECTS,
-    LIST_TASKS
+    LIST_TASKS, UPDATE_CATEGORY, UPDATE_PROJECT, UPDATE_TASK
 } from "../types";
 
 const INITIAL_STATE = {
@@ -44,7 +44,12 @@ export default function (state=INITIAL_STATE,action) {
             return {...state, ...action.payload}
 
         //UPDATE
-
+        case UPDATE_CATEGORY:
+            return {...state, ...action.payload}
+        case  UPDATE_PROJECT:
+            return {...state, ...action.payload}
+        case UPDATE_TASK:
+            return {...state, ...action.payload}
 
         //CLEAR
         case CLEAR_CATEGORIES:

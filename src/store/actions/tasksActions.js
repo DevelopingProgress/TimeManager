@@ -1,4 +1,16 @@
-import {addCat, addProj, addTsk, listCat, listProj, listTsk, delCat, delProj, delTsk} from "../api/apiTasks";
+import {
+    addCat,
+    addProj,
+    addTsk,
+    listCat,
+    listProj,
+    listTsk,
+    delCat,
+    delProj,
+    delTsk,
+    updateCat,
+    updateProj, updateTsk
+} from "../api/apiTasks";
 import {
     ADD_CATEGORY,
     ADD_PROJECT,
@@ -8,7 +20,7 @@ import {
     CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK,
     LIST_CATEGORIES,
     LIST_PROJECTS,
-    LIST_TASKS
+    LIST_TASKS, UPDATE_CATEGORY, UPDATE_PROJECT, UPDATE_TASK
 } from "../types";
 
 //LIST
@@ -52,6 +64,21 @@ export const deleteTask = (user, category, project, task) => ({
     type: DELETE_TASK,
     payload: delTsk(user, category, project, task)
 })
+
+//UPDATE
+export const updateCategory = (name, user, category) => ({
+    type: UPDATE_CATEGORY,
+    payload: updateCat(name, user, category)
+})
+export const updateProject = (user, name, category, project) => ({
+    type: UPDATE_PROJECT,
+    payload: updateProj(user, name, category, project)
+})
+export const updateTask = (user, name, category, project, task, dueDate, timer) => ({
+    type: UPDATE_TASK,
+    payload: updateTsk(user, name, category, project, task, dueDate, timer)
+})
+
 //CLEAR
 export const clearCategories = () => ({
     type: CLEAR_CATEGORIES,

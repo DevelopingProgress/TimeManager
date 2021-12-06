@@ -52,6 +52,9 @@ export const TaskScreen = (props) => {
                                 isExpanded={todayExpanded}
                                 onPress={() => {
                                     setTodayExpanded(!todayExpanded);
+                                    setNoDateExpanded(false)
+                                    setNextExpanded(false)
+                                    setOverdueExpanded(false)
                                 }}
                             >
                                 <TasksItems
@@ -80,6 +83,9 @@ export const TaskScreen = (props) => {
                                 isExpanded={overdueExpanded}
                                 onPress={() => {
                                     setOverdueExpanded(!overdueExpanded);
+                                    setTodayExpanded(false);
+                                    setNoDateExpanded(false)
+                                    setNextExpanded(false)
                                 }}
                             >
                                 <TasksItems
@@ -108,6 +114,9 @@ export const TaskScreen = (props) => {
                                 isExpanded={nextExpanded}
                                 onPress={() => {
                                     setNextExpanded(!nextExpanded);
+                                    setOverdueExpanded(false);
+                                    setTodayExpanded(false);
+                                    setNoDateExpanded(false)
                                 }}
                             >
                                 <TasksItems
@@ -136,6 +145,9 @@ export const TaskScreen = (props) => {
                                 isExpanded={noDateExpanded}
                                 onPress={() => {
                                     setNoDateExpanded(!noDateExpanded);
+                                    setNextExpanded(false);
+                                    setOverdueExpanded(false);
+                                    setTodayExpanded(false);
                                 }}
                             >
                                 {/*<TasksItems tasks={tasks} filter='nodate'/>*/}

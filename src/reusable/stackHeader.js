@@ -47,33 +47,35 @@ export const StackHeader = (props) => {
                         <View style={styles.textWrapper}>
                             <Text style={styles.text}>
                                 Projekty
-                                <Text style={{color: Colors.black2, fontSize: 16}}> w kategorii {props.category.name}</Text>
                             </Text>
+                            <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w kategorii {props.category.name}</Text>
                         </View>
                     </View>
                 ) : props.type === 'tasks' ? (
-                    <View style={styles.container}>
-                        <View style={styles.iconWrapper}>
-                            <Icon
-                                type='antdesign'
-                                name='back'
-                                style={styles.icon}
-                                color={Colors.black}
-                                size={30}
-                                onPress={() => {
-                                    props.navigation.goBack()
-                                    dispatch(listProjects(props.user, props.category))
-                                    dispatch(clearTasks());
-                                }}
-                            />
+                    <>
+                        <View style={styles.container}>
+                            <View style={styles.iconWrapper}>
+                                <Icon
+                                    type='antdesign'
+                                    name='back'
+                                    style={styles.icon}
+                                    color={Colors.black}
+                                    size={30}
+                                    onPress={() => {
+                                        props.navigation.goBack()
+                                        dispatch(listProjects(props.user, props.category))
+                                        dispatch(clearTasks());
+                                    }}
+                                />
+                            </View>
+                            <View style={styles.textWrapper}>
+                                <Text style={styles.text}>
+                                    Zadania
+                                </Text>
+                            </View>
                         </View>
-                        <View style={styles.textWrapper}>
-                            <Text style={styles.text}>
-                                Zadania
-                                <Text style={{color: Colors.black2, fontSize: 16}}> w projekcie {props.project.name}</Text>
-                            </Text>
-                        </View>
-                    </View>
+                        <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w projekcie {props.project.name}</Text>
+                    </>
                 ) : props.type === 'task' ? (
                 <View style={styles.container}>
                     <View style={styles.iconWrapper}>
@@ -84,7 +86,7 @@ export const StackHeader = (props) => {
                         color={Colors.black}
                         size={30}
                         onPress={() => {
-                                props.navigation.goBack()
+                            props.navigation.goBack()
                         }}
                         />
                     </View>
