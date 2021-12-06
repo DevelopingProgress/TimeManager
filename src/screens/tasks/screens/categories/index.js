@@ -1,4 +1,4 @@
-import { AddFab } from '../../../../reusable/fab'
+import { AddFab } from '../../../../reusable/addFab'
 import React, {useEffect} from 'react'
 import {ScrollView, Text, View} from 'react-native'
 import { styles } from '../../../home/index'

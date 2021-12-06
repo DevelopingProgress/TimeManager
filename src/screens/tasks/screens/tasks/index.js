@@ -2,7 +2,7 @@ import {Button, Divider, Icon, ListItem} from "react-native-elements";
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
-import { AddFab } from '../../../../reusable/fab'
+import { AddFab } from '../../../../reusable/addFab'
 import {Alert, BackHandler, ScrollView, Text, View} from 'react-native'
 import {clearTasks, deleteTask, listProjects, listTasks} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'

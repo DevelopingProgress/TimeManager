@@ -5,7 +5,7 @@ import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
 import {Colors} from "../../../../reusable/tools";
 import CountDown from "react-native-countdown-component";
-import {Timer} from "../../../../reusable/timer";
+import BackgroundFetchScreen from "../../../../reusable/timer";
 import AwesomeAlert from "react-native-awesome-alerts";
 
 export const TaskDetailsScreen = (props) => {
@@ -66,22 +66,22 @@ export const TaskDetailsScreen = (props) => {
                         Czas
                     </Text>
                     <View style={{flexDirection: 'row', marginRight: 13}}>
-                        {/*<Timer secondsLeft={overallTime} />*/}
-                        <CountDown
-                            size={25}
-                            until={overallTime}
-                            timeToShow={['H', 'M', 'S']}
-                            timeLabels={{h: 'Godz', m: 'Min', s: 'Sek'}}
-                            digitTxtStyle={{fontSize: 25, color: Colors.black}}
-                            timeLabelStyle={{fontSize: 20, color: Colors.black}}
-                            digitStyle={{borderWidth: 1}}
-                            onFinish={() => {
-                                // alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')
-                                setShowAlert(true)
-                                setIsPlaying(false)
-                            }}
-                            running={isPlaying}
-                        />
+                        <BackgroundFetchScreen />
+                        {/*<CountDown*/}
+                        {/*    size={25}*/}
+                        {/*    until={overallTime}*/}
+                        {/*    timeToShow={['H', 'M', 'S']}*/}
+                        {/*    timeLabels={{h: 'Godz', m: 'Min', s: 'Sek'}}*/}
+                        {/*    digitTxtStyle={{fontSize: 25, color: Colors.black}}*/}
+                        {/*    timeLabelStyle={{fontSize: 20, color: Colors.black}}*/}
+                        {/*    digitStyle={{borderWidth: 1}}*/}
+                        {/*    onFinish={() => {*/}
+                        {/*        // alert('Czas przenaczony na zadanie "' + task.name + '" upłynął')*/}
+                        {/*        setShowAlert(true)*/}
+                        {/*        setIsPlaying(false)*/}
+                        {/*    }}*/}
+                        {/*    running={isPlaying}*/}
+                        {/*/>*/}
                         {!isPlaying ?
                         <Icon
                             name='play-circle-outline'
@@ -148,7 +148,7 @@ export const TaskDetailsScreen = (props) => {
                 confirmButtonColor={Colors.lightgreen}
                 actionContainerStyle={{flexDirection: 'column', alignItems: 'center'}}
                 onCancelPressed={() => {
-                    console.log('cancel')
+                    setShowAlert(false)
                 }}
                 onConfirmPressed={() => {
                     console.log('confirm')

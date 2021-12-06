@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import { AddFab } from '../../../../reusable/fab'
+import { AddFab } from '../../../../reusable/addFab'
 import {ScrollView, View} from 'react-native'
 import {Text} from "react-native";
 import {Tiles} from "../../../../reusable/tiles";
