@@ -12,6 +12,8 @@ import moment from "moment";
 
 
 const ModalAdd = (props) => {
+    const hoursRegex = /^(((0|1)[0-9])|2[0-3])$/
+    const minsecsRegex = /\b([0-5]){1}([0-9]){1}/gm
     return (
             <Modal
             visible={props.modalVisible}
@@ -44,9 +46,9 @@ const ModalAdd = (props) => {
                             {
                                 name: '',
                                 date: new Date(Date.now()),
-                                hours: '1',
-                                minutes: '0',
-                                seconds: '0'
+                                hours: '01',
+                                minutes: '00',
+                                seconds: '00'
                             } : null
                         }
                         onSubmit={values => props.handleSubmit(values)}
@@ -70,13 +72,16 @@ const ModalAdd = (props) => {
                                     .required(),
                                 hours: Yup
                                     .string()
-                                    .required(),
+                                    .matches(hoursRegex, 'Nieprawidłowe')
+                                    .required('Wymagane'),
                                 minutes: Yup
                                     .string()
-                                    .required(),
+                                    .matches(minsecsRegex, 'Nieprawidłowe')
+                                    .required('Wymagane'),
                                 seconds: Yup
                                     .string()
-                                    .required(),
+                                    .matches(minsecsRegex, 'Nieprawidłowe')
+                                    .required('Wymagane'),
                             } : null
                         )}
                     >
