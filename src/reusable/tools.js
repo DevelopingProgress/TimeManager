@@ -118,6 +118,7 @@ export const getTodayDate = () => {
 }
 
 export const getHours = (item) => {
+    if(!item.timer) return
     const separatedTime = item.timer.split(':')
     const digits = separatedTime[0].split()
     if(digits[0] === '0' || digits.length === 1)
@@ -125,6 +126,7 @@ export const getHours = (item) => {
     else return separatedTime[0]
 }
 export const getMinutes = (item) => {
+    if(!item.timer) return
     const separatedTime = item.timer.split(':')
     const digits = separatedTime[1].split()
     if(digits[0] === '0')
@@ -132,6 +134,7 @@ export const getMinutes = (item) => {
     else return separatedTime[1]
 }
 export const getSeconds= (item) => {
+    if(!item.timer) return
     const separatedTime = item.timer.split(':')
     const digits = separatedTime[2].split()
     if(digits[0] === '0')

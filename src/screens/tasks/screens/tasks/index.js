@@ -43,6 +43,7 @@ export const TaskScreen = (props) => {
                                             <ListItem.Title h4>
                                                 Dzisiaj ({
                                                     tasks.filter((item) =>
+                                                        item.dueDate &&
                                                         moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()).length
                                                 })
                                             </ListItem.Title>
@@ -75,6 +76,7 @@ export const TaskScreen = (props) => {
                                         <ListItem.Content>
                                             <ListItem.Title h4>Zaległe ({
                                                 tasks.filter((item) =>
+                                                    item.dueDate &&
                                                     moment(item.dueDate.toDate()).format("YYYY-MM-DD") <  getTodayDate()).length
                                             })</ListItem.Title>
                                         </ListItem.Content>
@@ -106,6 +108,7 @@ export const TaskScreen = (props) => {
                                         <ListItem.Content>
                                             <ListItem.Title h4>Następne ({
                                                 tasks.filter((item) =>
+                                                    item.dueDate &&
                                                     moment(item.dueDate.toDate()).format("YYYY-MM-DD") >  getTodayDate()).length
                                             })</ListItem.Title>
                                         </ListItem.Content>
@@ -137,7 +140,7 @@ export const TaskScreen = (props) => {
                                         <ListItem.Content>
                                             <ListItem.Title h4>Bez daty ({
                                                 tasks.filter((item) =>
-                                                    item.dueDate === null).length
+                                                    !item.dueDate).length
                                             })</ListItem.Title>
                                         </ListItem.Content>
                                     </>
@@ -150,7 +153,14 @@ export const TaskScreen = (props) => {
                                     setTodayExpanded(false);
                                 }}
                             >
-                                {/*<TasksItems tasks={tasks} filter='nodate'/>*/}
+                                <TasksItems
+                                    tasks={tasks}
+                                    filter='nodate'
+                                    user={user}
+                                    category={category}
+                                    project={project}
+                                    navigation={props.navigation}
+                                />
                             </ListItem.Accordion>
                         </>
 

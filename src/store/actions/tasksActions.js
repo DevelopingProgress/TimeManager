@@ -47,9 +47,10 @@ export const addProject = (user, name, category) => ({
     payload: addProj(user, name, category)
 })
 export const addTask = (user, name, category, project, dueDate, timer) => ({
-    type: ADD_TASK,
-    payload: addTsk(user, name, category, project, dueDate, timer)
-})
+        type: ADD_TASK,
+        payload: arguments.length !== 6 ? addTsk(user, name, category, project, dueDate = null, timer = null) :
+            addTsk(user, name, category, project, dueDate, timer)
+    })
 
 //DELETE
 export const deleteCategory = (user, category) => ({

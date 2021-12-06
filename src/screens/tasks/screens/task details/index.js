@@ -4,12 +4,11 @@ import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
 import {Colors, getHours, getMinutes, getSeconds} from "../../../../reusable/tools";
-import CountDown from "react-native-countdown-component";
 import Timer from "../../../../reusable/timer";
 import ModalAdd from "../../../../reusable/modalAdd";
-import {clearStatus, listTasks, updateTask} from "../../../../store/actions/tasksActions";
+import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";
-import {StackActions} from "@react-navigation/native";
+import Stopwatch from "../../../../reusable/stopwatch";
 
 export const TaskDetailsScreen = (props) => {
     const task = props.route.params.task
@@ -35,7 +34,9 @@ export const TaskDetailsScreen = (props) => {
     const handleSubmit = (values) => {
        if(modalType === 'task') {
             setLoading(true)
-           dispatch(updateTask(user, values.name, category, project, task, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
+           if(values.withoutDate)
+               dispatch(updateTask(user, values.name, category, project, task, null, null))
+           else dispatch(updateTask(user, values.name, category, project, task, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
         }
     }
 
@@ -85,9 +86,16 @@ export const TaskDetailsScreen = (props) => {
                     <Text h4 style={{flex: 1}}>
                         Czas
                     </Text>
-                    <View style={{flexDirection: 'row', marginRight: 13}}>
-                       <Timer count={overallTime}/>
-                    </View>
+                    {task.dueDate ?
+                        <View style={{flexDirection: 'row', marginRight: 13}}>
+                            <Timer count={overallTime}/>
+                        </View>
+                        :
+                        <View style={{flexDirection: 'row', marginRight: 13}}>
+                            <Stopwatch />
+                        </View>
+                    }
+
                 </View>
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
                     <Text h4>

@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Modal, Text, View} from 'react-native';
 import {Colors, getHours, getMinutes, getSeconds} from './tools';
 import * as Yup from "yup";
@@ -7,13 +7,13 @@ import {Button} from 'react-native-elements';
 import CategoryForm from "./forms/categoryForm";
 import ProjectForm from "./forms/projectForm";
 import TaskForm from "./forms/taskForm";
-import moment from "moment";
-
 
 
 const ModalAdd = (props) => {
     const hoursRegex = /^(((0|1)[0-9])|2[0-3])$/
     const minsecsRegex = /\b([0-5]){1}([0-9]){1}/gm
+    const [withoutDate, setWithoutDate] = useState(false );
+
 
     return (
             <Modal
@@ -51,19 +51,20 @@ const ModalAdd = (props) => {
                             } : props.modalType === 2 || props.modalType === 'task' ?
                             {
                                 name: !props.edit ? '' : props.item && props.item.name,
-                                date: !props.edit ? new Date(Date.now()) : props.item && props.item.dueDate.toDate(),
-                                hours: !props.edit ? '01' : props.item &&
-                                    parseInt(getHours(props.item)) < 10
+                                date: !props.edit  ? new Date(Date.now()) : props.item &&  props.item.dueDate ? props.item.dueDate.toDate() : new Date(Date.now()),
+                                hours: !props.edit ? '01' : props.item && props.item.timer ?
+                                parseInt(getHours(props.item)) < 10
                                     ? `0${parseInt(getHours(props.item)).toString()}`
-                                    : parseInt(getHours(props.item)).toString(),
-                                minutes: !props.edit ? '00' : props.item &&
-                                    parseInt(getMinutes(props.item)) < 10
+                                    : parseInt(getHours(props.item)).toString() : '01',
+                                minutes: !props.edit ? '00' : props.item && props.item.timer ?
+                                parseInt(getMinutes(props.item)) < 10
                                     ? `0${parseInt(getMinutes(props.item)).toString()}`
-                                    : parseInt(getMinutes(props.item)).toString(),
-                                seconds: !props.edit ? '00' : props.item &&
-                                    parseInt(getSeconds(props.item))< 10
+                                    : parseInt(getMinutes(props.item)).toString() : '00',
+                                seconds: !props.edit ? '00' : props.item && props.item.timer ?
+                                parseInt(getSeconds(props.item))< 10
                                     ? `0${parseInt(getSeconds(props.item)).toString()}`
-                                    : parseInt(getSeconds(props.item)).toString()
+                                    : parseInt(getSeconds(props.item)).toString() : '00',
+                                withoutDate: withoutDate
                             } : null
                         }
                         onSubmit={values => props.handleSubmit(values)}
@@ -84,7 +85,7 @@ const ModalAdd = (props) => {
                                     .required(),
                                 date: Yup
                                     .date()
-                                    .required(),
+                                    .required('Wymagane'),
                                 hours: Yup
                                     .string()
                                     .matches(hoursRegex, 'Nieprawidłowe')
@@ -97,6 +98,7 @@ const ModalAdd = (props) => {
                                     .string()
                                     .matches(minsecsRegex, 'Nieprawidłowe')
                                     .required('Wymagane'),
+                                withoutDate: Yup.boolean().required()
                             } : null
                         )}
                     >
@@ -148,6 +150,8 @@ const ModalAdd = (props) => {
                                         containerStyle={{paddingHorizontal: 35, marginTop: 20}}
                                         inputStyle={{width: '100%'}}
                                         setFieldValue={(item, value) => setFieldValue(item, value)}
+                                        withoutDate={withoutDate}
+                                        setWithoutDate={(item) => setWithoutDate(item)}
                                     />
                                 ) : null }
                                     <Button

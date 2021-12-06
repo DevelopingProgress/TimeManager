@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {Text, View} from 'react-native';
 import {Divider, ListItem} from "react-native-elements";
@@ -11,19 +11,19 @@ import moment from "moment";
 const TasksItems = (props) => {
 
     const getPolishMonths = (item) => {
-        return item.dueDate ? item.dueDate.toDate().getDate().toString()
-            + ' ' + polishShortMonths(item.dueDate.toDate().getUTCMonth() + 1) : 'brak'
+        return item.dueDate && item.dueDate ? item.dueDate.toDate().getDate().toString()
+            + ' ' + polishShortMonths(item.dueDate && item.dueDate.toDate().getUTCMonth() + 1) : 'brak'
     }
 
     const compareDates = (item) => {
         if(props.filter === 'today')
-            return moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()
+            return item.dueDate && moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()
         if(props.filter === 'overdue')
-            return moment(item.dueDate.toDate()).format("YYYY-MM-DD") < getTodayDate()
+            return item.dueDate && moment(item.dueDate.toDate()).format("YYYY-MM-DD") < getTodayDate()
         if(props.filter === 'next')
-            return moment(item.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()
-        // if(props.filter === 'nodate')
-        //     return item.dueDate === null
+            return item.dueDate && moment(item.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()
+        if(props.filter === 'nodate')
+            return !item.dueDate
     }
 
     return (
@@ -42,7 +42,7 @@ const TasksItems = (props) => {
                                 })
                             }}>
                                 <ListItem.Title style={{color: item.color, fontWeight: 'bold', flex: 5}}>{item.name}</ListItem.Title>
-                                <ListItem.Content><Text style={{alignSelf: 'flex-end'}}>{getPolishMonths(item)}</Text></ListItem.Content>
+                                <ListItem.Content><Text style={{alignSelf: 'flex-end'}}>{item.dueDate && getPolishMonths(item)}</Text></ListItem.Content>
                                 <ListItem.Chevron color={Colors.black2} iconStyle={{alignSelf: 'flex-end'}}/>
                             </ListItem>
                         </View>

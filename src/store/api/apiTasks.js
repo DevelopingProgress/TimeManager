@@ -115,15 +115,24 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
             .doc()
 
         if(newTask) {
-            await newTask.set({
-                id: newTask.id,
-                name: name,
-                dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
-                timer: timer,
-                done: false,
-                color: randDarkColor(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            })
+            await newTask.set(
+                dueDate === null && timer === null ? {
+                        id: newTask.id,
+                        name: name,
+                        done: false,
+                        color: randDarkColor(),
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    } :
+                    {
+                        id: newTask.id,
+                        name: name,
+                        dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
+                        timer: timer,
+                        done: false,
+                        color: randDarkColor(),
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }
+            )
         }
         return {status: 'task_added'}
     } catch (error) {
@@ -203,7 +212,7 @@ export const updateProj= async (user, name, category, project) => {
 
 export const updateTsk= async (user, name, category, project, task, dueDate, timer) => {
     try {
-        await usersCollection
+        const updateTask = await usersCollection
             .doc(user.uid)
             .collection('categories')
             .doc(category.id)
@@ -211,11 +220,23 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
             .doc(project.id)
             .collection('tasks')
             .doc(task.id)
-            .update({
-                name: name,
-                dueDate: dueDate,
-                timer: timer
-            })
+        if(updateTask) {
+            if(dueDate === null && timer === null) {
+                await updateTask.set({
+                    id: task.id,
+                    name: name,
+                    done: false,
+                    color: randDarkColor(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                })
+            } else {
+                await updateTask.update({
+                    name: name,
+                    dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
+                    timer: timer,
+                })
+            }
+        }
         return {status: 'task_updated'}
     } catch (error) {
         return {error: error.message}
