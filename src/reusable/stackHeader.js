@@ -1,7 +1,7 @@
 import React from 'react'
 import {Alert, StyleSheet, Text, View} from "react-native";
 import {Icon} from "react-native-elements";
-import {Colors} from "./tools";
+import {Colors, sleep} from "./tools";
 import {useDispatch} from "react-redux";
 import {clearProjects, clearTasks, deleteTask, listProjects} from "../store/actions/tasksActions";
 
@@ -21,7 +21,7 @@ export const StackHeader = (props) => {
                                 color={Colors.black}
                                 size={30}
                                 onPress={() => {
-                                    props.navigation.goBack()
+                                    sleep(1000).then(props.navigation.goBack())
                                 }}
                             />
                         </View>
@@ -39,7 +39,7 @@ export const StackHeader = (props) => {
                                 color={Colors.black}
                                 size={30}
                                 onPress={() => {
-                                    props.navigation.goBack()
+                                    sleep(1000).then(props.navigation.goBack())
                                     dispatch(clearProjects());
                                 }}
                             />
@@ -62,7 +62,7 @@ export const StackHeader = (props) => {
                                     color={Colors.black}
                                     size={30}
                                     onPress={() => {
-                                        props.navigation.goBack()
+                                        sleep(1000).then(props.navigation.goBack())
                                         dispatch(listProjects(props.user, props.category))
                                         dispatch(clearTasks());
                                     }}
@@ -86,7 +86,7 @@ export const StackHeader = (props) => {
                         color={Colors.black}
                         size={30}
                         onPress={() => {
-                            props.navigation.goBack()
+                            sleep(1000).then(props.navigation.goBack())
                         }}
                         />
                     </View>
@@ -116,7 +116,7 @@ export const StackHeader = (props) => {
                                             text: 'Usuń',
                                             onPress: () => {
                                                 dispatch(deleteTask(props.user, props.category, props.project, props.task))
-                                                props.navigation.goBack()
+                                                sleep(1000).then(props.navigation.goBack())
                                             }
                                         }
                                     ], {cancelable: true})

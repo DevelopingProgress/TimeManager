@@ -2,13 +2,17 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
-import {Colors} from "./tools";
+import {Colors, sleep} from "./tools";
+import {useDispatch} from "react-redux";
+import {endTask, listTasks} from "../store/actions/tasksActions";
 
 const Timer = (props) => {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [counter, setCounter] = useState(props.count);
     const [showAlert, setShowAlert] = useState(false);
+    const {user, category, project, task} = props.data
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if(isPlaying) startTimer();
@@ -101,8 +105,15 @@ const Timer = (props) => {
                     console.log('cancel')
                 }}
                 onConfirmPressed={() => {
-                    console.log('confirm')
-                    //dispatch(endTask(task))
+                    setShowAlert(false)
+                    dispatch(endTask(user, category, project, task, new Date(Date.now())))
+                    dispatch(listTasks(user, category, project))
+                    sleep(1000).then(
+                        props.navigation.navigate('DoneTasksScreen', {
+                            item: project,
+                            category: category
+                        })
+                    )
                 }}
             />
         </>

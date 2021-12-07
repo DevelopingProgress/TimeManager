@@ -242,3 +242,24 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
         return {error: error.message}
     }
 }
+
+//END TASK
+export const endTsk = async (user, category, project, task, endDate) => {
+    try {
+        const endTask = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id)
+            .collection('tasks')
+            .doc(task.id)
+        if(endTask) {
+            await endTask.update('done', true)
+            await endTask.set({endDate: firebase.firestore.Timestamp.fromDate(endDate)}, {merge: true})
+        }
+        return {status: 'task_ended'}
+    } catch (error) {
+        return {error: error.message}
+    }
+}

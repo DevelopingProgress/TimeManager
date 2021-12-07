@@ -13,8 +13,7 @@ export const register = async({email, name, password}) => {
         const userProfile = {
             uid: user.uid,
             email: email,
-            name: name,
-            categories: []
+            name: name
         } 
 
         await usersCollection.doc(user.uid).set(userProfile);
@@ -69,8 +68,7 @@ export const loginFacebook = async() => {
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
-                name: res.user.displayName,
-                categories: []
+                name: res.user.displayName
             } 
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 
@@ -103,8 +101,7 @@ export const loginGoogle = async() => {
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
-                name: res.user.displayName,
-                categories: []
+                name: res.user.displayName
             } 
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 

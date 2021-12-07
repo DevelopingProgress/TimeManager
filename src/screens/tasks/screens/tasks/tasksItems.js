@@ -17,13 +17,13 @@ const TasksItems = (props) => {
 
     const compareDates = (item) => {
         if(props.filter === 'today')
-            return item.dueDate && moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()
+            return item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()
         if(props.filter === 'overdue')
-            return item.dueDate && moment(item.dueDate.toDate()).format("YYYY-MM-DD") < getTodayDate()
+            return item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") < getTodayDate()
         if(props.filter === 'next')
-            return item.dueDate && moment(item.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()
+            return item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()
         if(props.filter === 'nodate')
-            return !item.dueDate
+            return !item.done && !item.dueDate
     }
 
     return (

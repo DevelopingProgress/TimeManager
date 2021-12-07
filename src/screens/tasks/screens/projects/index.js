@@ -29,7 +29,7 @@ export const ProjectsScreen = (props) => {
                 {projects.length > 0  ?  <Tiles
                         array={projects}
                         navigation={props.navigation}
-                        goToScreen='TaskScreen'
+                        goToScreen='TaskStack'
                         category={category}
                         type='project'/> :
                     <View style={{alignContent: 'center', alignItems: 'center'}}>

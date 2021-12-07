@@ -8,6 +8,7 @@ import { View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { styles } from '../home'
 import {TaskDetailsScreen} from "./screens/task details";
+import {TaskStack} from "../../stacks/taskStack";
 
 const Stack = createStackNavigator();
 
@@ -43,8 +44,8 @@ export const TasksScreen = ({navigation, route}) => {
                     }}
                 />
                 <Stack.Screen
-                    name="TaskScreen"
-                    component={TaskScreen}
+                    name="TaskStack"
+                    component={TaskStack}
                     options={{
                         headerShown: false,
                         title: "Zadania",

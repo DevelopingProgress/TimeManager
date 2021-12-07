@@ -1,11 +1,13 @@
-import React from 'react'
-import { HomeScreen } from '../screens/home'
-import { Colors } from '../reusable/tools'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AnalyticsScreen } from '../screens/analytics';
-import { CalendarScreen } from '../screens/calendar';
-import { Icon } from 'react-native-elements';
-import { TasksScreen } from '../screens/tasks';
+import React from "react";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {Colors} from "../reusable/tools";
+import {HomeScreen} from "../screens/home";
+import {TaskStack} from "./taskStack";
+import {AnalyticsScreen} from "../screens/analytics";
+import {CalendarScreen} from "../screens/calendar";
+import {Icon} from "react-native-elements";
+import {TasksScreen} from "../screens/tasks";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -49,16 +51,16 @@ export const HomeStack = () => (
                 }}
             />
             <Tab.Screen 
-                name="TasksScreen" 
+                name="TasksScreen"
                 component={TasksScreen}
                 options={{
                     ...tabOptions,
                     tabBarIcon: ({focused}) => {
-                        return ( 
-                        <Icon 
-                            type='feather' 
+                        return (
+                        <Icon
+                            type='feather'
                             name='list'
-                            color={focused ? Colors.blue : Colors.grey }  
+                            color={focused ? Colors.blue : Colors.grey }
                             size={45}
                         />
                         )
@@ -101,5 +103,6 @@ export const HomeStack = () => (
             />
         </Tab.Navigator>
     </>
-    
 )
+
+

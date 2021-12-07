@@ -1,5 +1,5 @@
 import {Button, Divider, Icon, ListItem} from "react-native-elements";
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import { AddFab } from '../../../../reusable/addFab'
@@ -15,25 +15,30 @@ import {useFocusEffect} from "@react-navigation/core";
 export const TaskScreen = (props) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user)
-    const project  = props.route.params.item
-    const category = props.route.params.category
+    const project  = props.route.params.route.params.item
+    const category = props.route.params.route.params.category
     const tasks  = useSelector(state => state.tasks.tasks)
     const [todayExpanded, setTodayExpanded] = useState(false)
     const [overdueExpanded, setOverdueExpanded] = useState(false);
     const [nextExpanded, setNextExpanded] = useState(false)
     const [noDateExpanded, setNoDateExpanded] = useState(false);
+    const scrollRef = useRef();
 
     useFocusEffect (
         React.useCallback(() => {
             dispatch(listTasks(user, category, project))
+            scrollRef.current?.scrollTo({
+                y: 0,
+                animated: true,
+            })
         }, [dispatch, category, project])
     );
 
+
     return (
         <>
-            <ScrollView style={styles.mainContainer}>
-                <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category} project={project}/>
-                <View style={{margin: 20}}>
+            <ScrollView style={styles.mainContainer} ref={scrollRef}>
+                <View style={{margin: 20, marginTop: 10}}>
                     {tasks.length > 0 ?  (
                         <>
                             <ListItem.Accordion
@@ -44,6 +49,7 @@ export const TaskScreen = (props) => {
                                                 Dzisiaj ({
                                                     tasks.filter((item) =>
                                                         item.dueDate &&
+                                                        !item.done &&
                                                         moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()).length
                                                 })
                                             </ListItem.Title>
@@ -77,6 +83,7 @@ export const TaskScreen = (props) => {
                                             <ListItem.Title h4>Zaległe ({
                                                 tasks.filter((item) =>
                                                     item.dueDate &&
+                                                    !item.done &&
                                                     moment(item.dueDate.toDate()).format("YYYY-MM-DD") <  getTodayDate()).length
                                             })</ListItem.Title>
                                         </ListItem.Content>
@@ -109,6 +116,7 @@ export const TaskScreen = (props) => {
                                             <ListItem.Title h4>Następne ({
                                                 tasks.filter((item) =>
                                                     item.dueDate &&
+                                                    !item.done &&
                                                     moment(item.dueDate.toDate()).format("YYYY-MM-DD") >  getTodayDate()).length
                                             })</ListItem.Title>
                                         </ListItem.Content>
@@ -140,6 +148,7 @@ export const TaskScreen = (props) => {
                                         <ListItem.Content>
                                             <ListItem.Title h4>Bez daty ({
                                                 tasks.filter((item) =>
+                                                    !item.done &&
                                                     !item.dueDate).length
                                             })</ListItem.Title>
                                         </ListItem.Content>

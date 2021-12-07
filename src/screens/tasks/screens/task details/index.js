@@ -9,6 +9,7 @@ import ModalAdd from "../../../../reusable/modalAdd";
 import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";
 import Stopwatch from "../../../../reusable/stopwatch";
+import moment from "moment";
 
 export const TaskDetailsScreen = (props) => {
     const task = props.route.params.task
@@ -83,20 +84,34 @@ export const TaskDetailsScreen = (props) => {
                     />
                 </View>
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
-                    <Text h4 style={{flex: 1}}>
-                        Czas
+                    <Text h4>
+                        Data i godzina
                     </Text>
-                    {task.dueDate ?
-                        <View style={{flexDirection: 'row', marginRight: 13}}>
-                            <Timer count={overallTime}/>
-                        </View>
-                        :
-                        <View style={{flexDirection: 'row', marginRight: 13}}>
-                            <Stopwatch />
-                        </View>
+                    {task && task.dueDate ?
+                        <Text style={{fontSize: 18}}>
+                            {moment(task.dueDate.toDate()).format('LLL')}
+                        </Text>:
+                        <Text style={{fontSize: 18}}>
+                            Zadanie bez daty
+                        </Text>
                     }
-
                 </View>
+                {!task.done &&
+                    <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
+                        <Text h4 style={{flex: 1}}>
+                            Czas
+                        </Text>
+                        {task.dueDate ?
+                            <View style={{flexDirection: 'row', marginRight: 13}}>
+                                <Timer count={overallTime} data={{user, category, project, task}} navigation={props.navigation}/>
+                            </View>
+                            :
+                            <View style={{flexDirection: 'row', marginRight: 13}}>
+                                <Stopwatch/>
+                            </View>
+                        }
+                    </View>
+                }
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
                     <Text h4>
                         Opis
@@ -130,6 +145,7 @@ export const TaskDetailsScreen = (props) => {
                     bottom: 20
                 }}
                 onPress={() => handlePress('task')}
+                disabled={task.done}
             />
         </>
 
