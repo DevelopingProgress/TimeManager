@@ -51,28 +51,28 @@ export const AddFab = (props) => {
         } else if(modalType === 2) {
             setLoading(true)
             if(values.withoutDate)
-                dispatch(addTask(user, values.name, props.category, props.project))
+                dispatch(addTask(user, values.name, props.category, props.project, null, null))
             else dispatch(addTask(user, values.name, props.category, props.project, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
         }
     }
 
     useEffect(() => {
         if(status === 'category_added') {
+            setModalVisible(false)
             dispatch(clearStatus())
             setLoading(false)
-            setModalVisible(false)
             dispatch(listCategories(user))
         }
         if(status === 'project_added') {
+            setModalVisible(false)
             dispatch(clearStatus())
             setLoading(false)
-            setModalVisible(false)
             dispatch(listProjects(user, props.category))
         }
         if(status === 'task_added') {
+            setModalVisible(false)
             dispatch(clearStatus())
             setLoading(false)
-            setModalVisible(false)
             dispatch(listTasks(user, props.category, props.project))
         }
     }, [status]);

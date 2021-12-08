@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Modal, Text, View} from 'react-native';
 import {Colors, getHours, getMinutes, getSeconds} from './tools';
 import * as Yup from "yup";
@@ -13,6 +13,10 @@ const ModalAdd = (props) => {
     const hoursRegex = /^(((0|1)[0-9])|2[0-3])$/
     const minsecsRegex = /\b([0-5]){1}([0-9]){1}/gm
     const [withoutDate, setWithoutDate] = useState(false );
+
+    useEffect(() => {
+        if(props.hideModal) setWithoutDate(false)
+    }, [props.hideModal]);
 
 
     return (
@@ -64,7 +68,7 @@ const ModalAdd = (props) => {
                                 parseInt(getSeconds(props.item))< 10
                                     ? `0${parseInt(getSeconds(props.item)).toString()}`
                                     : parseInt(getSeconds(props.item)).toString() : '00',
-                                withoutDate: withoutDate
+                                withoutDate: false
                             } : null
                         }
                         onSubmit={values => props.handleSubmit(values)}
