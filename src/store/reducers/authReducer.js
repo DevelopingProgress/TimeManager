@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     user: [],
     isAuth: false,
     isVerified: false,
-    error: null
+    error: null,
+    message: null
 } 
 
 export default function (state=INITIAL_STATE,action) {

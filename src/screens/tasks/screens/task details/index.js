@@ -8,7 +8,7 @@ import Timer from "../../../../reusable/timer";
 import ModalAdd from "../../../../reusable/modalAdd";
 import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";
-import Stopwatch from "../../../../reusable/stopwatch";
+import StopWatch from "../../../../reusable/stopwatch";
 import moment from "moment";
 
 export const TaskDetailsScreen = (props) => {
@@ -107,7 +107,7 @@ export const TaskDetailsScreen = (props) => {
                             </View>
                             :
                             <View style={{flexDirection: 'row', marginRight: 13}}>
-                                <Stopwatch/>
+                                <StopWatch data={{user, category, project, task}} navigation={props.navigation}/>
                             </View>
                         }
                     </View>

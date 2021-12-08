@@ -34,7 +34,7 @@ export const DoneTasksScreen = (props) => {
     return (
         <ScrollView style={styles.mainContainer}>
             {
-                tasks ?
+                tasks.filter((item) =>  item.done === true).length > 0 ?
                     tasks
                         .filter((item) =>  item.done === true)
                         .map((item) => (
@@ -52,7 +52,11 @@ export const DoneTasksScreen = (props) => {
                                     <ListItem.Chevron color={Colors.black2} iconStyle={{alignSelf: 'flex-end'}}/>
                                 </ListItem>
                             </View>
-                        )) : null
+                        )) : (
+                        <View style={{alignContent: 'center', alignItems: 'center', marginTop: 10}}>
+                            <Text style={{fontSize: 20, color: Colors.red}}>Brak ukończonych zadań</Text>
+                        </View>
+                    )
             }
         </ScrollView>
     );

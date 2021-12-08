@@ -3,7 +3,7 @@ import {Alert, StyleSheet, Text, View} from "react-native";
 import {Icon} from "react-native-elements";
 import {Colors, sleep} from "./tools";
 import {useDispatch} from "react-redux";
-import {clearProjects, clearTasks, deleteTask, listProjects} from "../store/actions/tasksActions";
+import {clearProjects, clearTasks, deleteTask} from "../store/actions/tasksActions";
 
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
@@ -21,7 +21,7 @@ export const StackHeader = (props) => {
                                 color={Colors.black}
                                 size={30}
                                 onPress={() => {
-                                    sleep(1000).then(props.navigation.goBack())
+                                    props.navigation.goBack()
                                 }}
                             />
                         </View>
@@ -39,8 +39,9 @@ export const StackHeader = (props) => {
                                 color={Colors.black}
                                 size={30}
                                 onPress={() => {
-                                    sleep(1000).then(props.navigation.goBack())
-                                    dispatch(clearProjects());
+                                    props.navigation.goBack()
+                                    dispatch(clearProjects())
+                                    props.setLoading(true)
                                 }}
                             />
                         </View>
@@ -62,9 +63,9 @@ export const StackHeader = (props) => {
                                     color={Colors.black}
                                     size={30}
                                     onPress={() => {
-                                        sleep(1000).then(props.navigation.goBack())
-                                        dispatch(listProjects(props.user, props.category))
+                                        props.navigation.goBack()
                                         dispatch(clearTasks());
+                                        props.setLoading(true)
                                     }}
                                 />
                             </View>

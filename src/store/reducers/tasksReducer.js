@@ -2,7 +2,7 @@ import {
     ADD_CATEGORY,
     ADD_PROJECT,
     ADD_TASK,
-    CLEAR_CATEGORIES, CLEAR_ERROR,
+    CLEAR_CATEGORIES, CLEAR_ERROR, CLEAR_MESSAGE,
     CLEAR_PROJECTS, CLEAR_STATUS,
     CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK, END_TASK,
     LIST_CATEGORIES,
@@ -14,7 +14,8 @@ const INITIAL_STATE = {
     categories: [],
     projects: [],
     tasks: [],
-    error: null
+    error: null,
+    message: null
 }
 
 export default function (state=INITIAL_STATE,action) {
@@ -66,6 +67,8 @@ export default function (state=INITIAL_STATE,action) {
             return {...state, status: []}
         case CLEAR_ERROR:
             return {...state, error: null}
+        case CLEAR_MESSAGE:
+            return {...state, message: null}
 
         default:
             return state;

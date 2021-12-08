@@ -13,6 +13,7 @@ export const Tiles = (props) => {
                     goToScreen={props.goToScreen}
                     category={props.category}
                     type={props.type}
+                    setLoading={props.setLoading}
                 />)): null}
         </>
     )

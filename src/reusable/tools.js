@@ -141,3 +141,17 @@ export const getSeconds= (item) => {
         return '0' + separatedTime[2]
     else return separatedTime[2]
 }
+
+export const clockify = (counter) => {
+    let hours = Math.floor(counter / 60 / 60)
+    let minutes = Math.floor(counter / 60 % 60)
+    let seconds  = Math.floor(counter % 60)
+
+    let displayHours = hours < 10 ? `0${hours}` : hours
+    let displayMinutes = minutes < 10 ? `0${minutes}` : minutes
+    let displaySeconds = seconds < 10 ? `0${seconds}` : seconds
+
+    return {
+        displayHours, displayMinutes, displaySeconds
+    }
+}

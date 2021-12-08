@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Colors } from './tools'
 import React, {useEffect, useState} from 'react'
 import {
+    clearError, clearMessage,
     clearStatus,
     deleteCategory,
     deleteProject,
@@ -11,6 +12,9 @@ import {
     listProjects, listTasks, updateCategory, updateProject
 } from '../store/actions/tasksActions'
 import ModalAdd from "./modalAdd";
+import {Loading} from "./loading";
+import Error from "./error";
+import Message from "./message";
 
 export const ItemOptions = (props) => {
     const user = useSelector(state => state.auth.user)
@@ -19,6 +23,10 @@ export const ItemOptions = (props) => {
     const [modalType, setModalType] = useState('');
     const [loading, setLoading] = useState(false)
     const status = useSelector(state => state.tasks.status)
+    const error = useSelector(state => state.auth.error)
+    const message = useSelector(state => state.auth.message)
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
+    const [showMessageAlert, setShowMessageAlert] = useState(false);
 
     const handlePress = (value) => {
         switch (value) {
@@ -49,6 +57,14 @@ export const ItemOptions = (props) => {
     }
 
     useEffect(() => {
+        if(status === 'categories_listed') {
+            dispatch(clearStatus())
+            setLoading(false)
+        }
+        if(status === 'projects_listed') {
+            dispatch(clearStatus())
+            setLoading(false)
+        }
         if(status === 'category_updated') {
             dispatch(clearStatus())
             setLoading(false)
@@ -62,10 +78,29 @@ export const ItemOptions = (props) => {
             dispatch(listProjects(user, props.category))
         }
 
-    }, [status]);
+        if(error !== null) {
+            setShowErrorAlert(true)
+        }
+        if(message !== null) {
+            setShowMessageAlert(true)
+        }
+    }, [status, error, message]);
+
+
+    const handleErrorDismiss = () => {
+        setShowErrorAlert(false)
+        dispatch(clearError())
+    }
+
+    const handleMessageDismiss = () => {
+        setShowMessageAlert(false)
+        dispatch(clearMessage())
+    }
 
     return (
         <>
+            <Error showAlert={showErrorAlert} error={error} handleDismiss={handleErrorDismiss}/>
+            <Message showAlert={showMessageAlert} message={message} handleDismiss={handleMessageDismiss}/>
             <ModalAdd
                 modalVisible={modalVisible}
                 hideModal={() => {
@@ -78,6 +113,7 @@ export const ItemOptions = (props) => {
                 item={props.item}
                 edit
             />
+            {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
             <View style={{marginHorizontal: 20, alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
                 <View style={{flex: 0.15}}>
                     <TouchableOpacity
@@ -105,7 +141,8 @@ export const ItemOptions = (props) => {
                             dispatch(listProjects(user, props.item))
                             props.navigation.navigate(props.goToScreen, {
                                 item: props.item,
-                                category: props.category
+                                category: props.category,
+                                setLoading: props.setLoading
                             })
                         }}
                     />
@@ -141,6 +178,7 @@ export const ItemOptions = (props) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            }
         </>
 
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
-import {Colors, sleep} from "./tools";
+import {clockify, Colors, sleep} from "./tools";
 import {useDispatch} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
 
@@ -33,20 +33,6 @@ const Timer = (props) => {
         }, 1000)
     }
 
-    const clockify = () => {
-        let hours = Math.floor(counter / 60 / 60)
-        let minutes = Math.floor(counter / 60 % 60)
-        let seconds  = Math.floor(counter % 60)
-
-        let displayHours = hours < 10 ? `0${hours}` : hours
-        let displayMinutes = minutes < 10 ? `0${minutes}` : minutes
-        let displaySeconds = seconds < 10 ? `0${seconds}` : seconds
-
-        return {
-            displayHours, displayMinutes, displaySeconds
-        }
-    }
-
 
     return (
         <>
@@ -54,19 +40,19 @@ const Timer = (props) => {
                 <View style={{flexDirection: 'row', marginRight: 5}}>
                     <View style={{ marginRight: 5}}>
                         <View style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify().displayHours}</Text>
+                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(counter).displayHours}</Text>
                         </View>
                         <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Godz</Text>
                     </View>
                     <View style={{ marginRight: 5}}>
                         <View  style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify().displayMinutes}</Text>
+                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(counter).displayMinutes}</Text>
                         </View>
                         <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Min</Text>
                     </View>
                     <View>
                         <View  style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify().displaySeconds}</Text>
+                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(counter).displaySeconds}</Text>
                         </View>
                         <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Sek</Text>
                     </View>

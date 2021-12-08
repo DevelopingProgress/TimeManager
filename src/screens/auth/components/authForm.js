@@ -7,6 +7,8 @@ import { Colors } from '../../../reusable/tools'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearAuthError, clearAuthMessage, loginFacebookUser, loginGoogleUser, loginUser, passwordResetUser, registerUser } from '../../../store/actions/authActions'
 import { useFocusEffect } from '@react-navigation/core'
+import Error from "../../../reusable/error";
+import Message from "../../../reusable/message";
 
 export const AuthForm = () => {
 
@@ -21,23 +23,21 @@ export const AuthForm = () => {
     const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
     const error = useSelector(state => state.auth.error)
     const message = useSelector(state => state.auth.message)
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
+    const [showMessageAlert, setShowMessageAlert] = useState(false);
 
     useEffect(() => {
-        if(error) {
-            //ERROR COMPONENT TODO
-            alert(error)
+        if(error !== null) {
+            setShowErrorAlert(true)
             setLoading(false)
             setLoadingFacebook(false)
             setLoadingGoogle(false)
-            dispatch(clearAuthError())
         }
-        if(message) {
-            //MESSAGE COMPONENT TODO
-            alert(message)
+        if(message !== null) {
+            setShowMessageAlert(true)
             setLoading(false)
             setLoadingFacebook(false)
             setLoadingGoogle(false)
-            dispatch(clearAuthMessage())
         }
     }, [error, message])
 
@@ -84,8 +84,20 @@ export const AuthForm = () => {
         }
     }
 
+    const handleErrorDismiss = () => {
+        setShowErrorAlert(false)
+        dispatch(clearAuthError())
+    }
+
+    const handleMessageDismiss = () => {
+        setShowMessageAlert(false)
+        dispatch(clearAuthMessage())
+    }
+
     return (
         <>
+       <Error showAlert={showErrorAlert} error={error} handleDismiss={handleErrorDismiss}/>
+       <Message showAlert={showMessageAlert} message={message} handleDismiss={handleMessageDismiss}/>
         <Formik 
             initialValues={
                 formType === 'Login' ? {
@@ -138,8 +150,7 @@ export const AuthForm = () => {
             )}
         >
             {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
-                <>   
-                    
+                <>
                     <Input 
                         inputStyle={styles.input}
                         placeholder='Email'

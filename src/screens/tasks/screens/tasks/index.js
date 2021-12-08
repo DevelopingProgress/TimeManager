@@ -4,13 +4,14 @@ import {useDispatch, useSelector} from "react-redux";
 
 import { AddFab } from '../../../../reusable/addFab'
 import {Alert, BackHandler, ScrollView, Text, View} from 'react-native'
-import {clearTasks, deleteTask, listProjects, listTasks} from "../../../../store/actions/tasksActions";
+import {clearStatus, clearTasks, deleteTask, listProjects, listTasks} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/tools";
 import TasksItems from "./tasksItems";
 import moment from "moment";
 import {useFocusEffect} from "@react-navigation/core";
+import {Loading} from "../../../../reusable/loading";
 
 export const TaskScreen = (props) => {
     const dispatch = useDispatch();
@@ -23,6 +24,8 @@ export const TaskScreen = (props) => {
     const [nextExpanded, setNextExpanded] = useState(false)
     const [noDateExpanded, setNoDateExpanded] = useState(false);
     const scrollRef = useRef();
+    const [loading, setLoading] = useState(true);
+    const status = useSelector(state => state.tasks.status)
 
     useFocusEffect (
         React.useCallback(() => {
@@ -34,10 +37,19 @@ export const TaskScreen = (props) => {
         }, [dispatch, category, project])
     );
 
+    useEffect(() => {
+        if(status === 'tasks_listed') {
+            dispatch(clearStatus())
+            setLoading(false)
+        }
+    }, [status])
+
+
 
     return (
         <>
             <ScrollView style={styles.mainContainer} ref={scrollRef}>
+                {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
                 <View style={{margin: 20, marginTop: 10}}>
                     {tasks.length > 0 ?  (
                         <>
@@ -179,6 +191,7 @@ export const TaskScreen = (props) => {
                         </View>
                     )}
                 </View>
+                }
             </ScrollView>
             <AddFab type={2} category={category} project={project}/>
         </>

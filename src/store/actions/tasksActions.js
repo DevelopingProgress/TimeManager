@@ -9,13 +9,13 @@ import {
     delProj,
     delTsk,
     updateCat,
-    updateProj, updateTsk, endTsk
+    updateProj, updateTsk, endTsk, endNoDateTsk
 } from "../api/apiTasks";
 import {
     ADD_CATEGORY,
     ADD_PROJECT,
     ADD_TASK,
-    CLEAR_CATEGORIES, CLEAR_ERROR,
+    CLEAR_CATEGORIES, CLEAR_ERROR, CLEAR_MESSAGE,
     CLEAR_PROJECTS, CLEAR_STATUS,
     CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK, END_TASK,
     LIST_CATEGORIES,
@@ -79,9 +79,14 @@ export const updateTask = (user, name, category, project, task, dueDate, timer) 
     payload: updateTsk(user, name, category, project, task, dueDate, timer)
 })
 
+//END TASK
 export const endTask = (user, category, project, task, endDate) => ({
     type: END_TASK,
     payload: endTsk(user, category, project, task, endDate)
+})
+export const endNoDateTask = (user, category, project, task, endDate, timer) => ({
+    type: END_TASK,
+    payload: endNoDateTsk(user, category, project, task, endDate, timer)
 })
 
 //CLEAR
@@ -99,4 +104,7 @@ export const clearStatus = () => ({
 })
 export const clearError = () => ({
     type: CLEAR_ERROR,
+})
+export const clearMessage = () => ({
+    type: CLEAR_MESSAGE,
 })

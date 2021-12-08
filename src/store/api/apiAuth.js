@@ -25,7 +25,7 @@ export const register = async({email, name, password}) => {
         return {isAuth: false, isVerified: false, message: 'Wysłano wiadomość e-mail z potwierdzeniem.'}
 
     } catch (error) {
-        return {error: error.message}
+        return {error: 'Nie udało się zarejestrować, proszę sprawdzić swoje dane logowania.'}
     }
 }
 
@@ -81,7 +81,7 @@ export const loginFacebook = async() => {
             }
         } 
     } catch (error) {
-        return {error: error.message}
+        return {error: "Nie udało się zalogować, błąd logowania poprzez Facebook."}
     }
     
 }
@@ -114,7 +114,7 @@ export const loginGoogle = async() => {
             }
         }
     } catch (error) {
-        return {error: 'Nie udało się zalogować, błąd logowania poprzez Google'}
+        return {error: 'Nie udało się zalogować, błąd logowania poprzez Google.'}
     }
     
 }
@@ -146,6 +146,6 @@ export const passwordReset = async(email) => {
         await firebase.auth().sendPasswordResetEmail(email)
         return {message: 'Wysłano e-mail do resetu hasła.'}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem z wysłaniem wiadomości e-mail resetującej hasło."}
     }
 }

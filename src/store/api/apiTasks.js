@@ -7,15 +7,19 @@ export const listCat = async(user) => {
     try {
 
         let categoriesList = []
-        const categories = await usersCollection.doc(user.uid).collection('categories').get()
+        const categories = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .orderBy("createdAt", "asc")
+            .get()
 
         categories.forEach(doc => {
             categoriesList.push(doc.data()) 
         })
         
-        return {categories: categoriesList}
+        return {categories: categoriesList, status: 'categories_listed'}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem z wyświetleniem listy kategorii."}
     }
 
 }
@@ -28,14 +32,15 @@ export const listProj = async(user, category) => {
         .collection('categories')
         .doc(category.id)
         .collection('projects')
+        .orderBy("createdAt", "asc")
         .get()
         projects.forEach(doc => {
             projectsList.push(doc.data())
         })
         
-        return {projects: projectsList}
+        return {projects: projectsList, status: 'projects_listed'}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem z wyświetleniem listy projektów."}
     }
 }
 
@@ -49,17 +54,17 @@ export const listTsk = async(user, category, project) => {
             .collection('projects')
             .doc(project.id)
             .collection('tasks')
+            .orderBy("createdAt", "asc")
             .get()
+
         tasks.forEach(doc => {
             tasksList.push(doc.data())
         })
 
-        
-
-        return {tasks: tasksList}
+        return {tasks: tasksList, status: 'tasks_listed'}
 
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem z wyświetleniem listy zadań."}
     }
 }
 
@@ -75,9 +80,9 @@ export const addCat = async(name, user) => {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             })
         }
-        return {status: 'category_added'}
+        return {status: 'category_added', message: "Dodano kategorię."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy dodawaniu kategorii."}
     }
 }
 
@@ -97,9 +102,9 @@ export const addProj = async(user, name, category) => {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             })
         }
-        return {status: 'project_added'}
+        return {status: 'project_added', message: "Dodano projekt."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy dodawaniu projektu."}
     }
 }
 
@@ -134,9 +139,9 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
                     }
             )
         }
-        return {status: 'task_added'}
+        return {status: 'task_added', message: "Dodano zadanie."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy dodawaniu zadania."}
     }
 }
 
@@ -144,9 +149,9 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
 export const delCat = async (user, category) => {
     try {
         await usersCollection.doc(user.uid).collection('categories').doc(category.id).delete()
-        return {status: 'category_deleted'}
+        return {status: 'category_deleted', message: "Usunięto  kategorię."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy usuwaniu  kategorii."}
     }
 }
 
@@ -158,9 +163,9 @@ export const delProj= async (user, category, project) => {
             .doc(category.id)
             .collection('projects')
             .doc(project.id).delete()
-        return {status: 'project_deleted'}
+        return {status: 'project_deleted', message: "Usunięto  projekt."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy usuwaniu  projektu."}
     }
 }
 
@@ -175,9 +180,9 @@ export const delTsk= async (user, category, project, task) => {
             .collection('tasks')
             .doc(task.id)
             .delete()
-        return {status: 'task_deleted'}
+        return {status: 'task_deleted', message: "Usunięto  zadanie."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy usuwaniu  zadania."}
     }
 }
 
@@ -187,9 +192,9 @@ export const updateCat = async (name, user, category) => {
         await usersCollection.doc(user.uid).collection('categories').doc(category.id).update({
             name: name
         })
-        return {status: 'category_updated'}
+        return {status: 'category_updated', message: "Zaktualizowano  kategorię."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy aktualizacji  kategorii."}
     }
 }
 
@@ -204,9 +209,9 @@ export const updateProj= async (user, name, category, project) => {
             .update({
                 name: name
             })
-        return {status: 'project_updated'}
+        return {status: 'project_updated', message: "Zaktualizowano  projekt."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy aktualizacji  projektu."}
     }
 }
 
@@ -237,9 +242,9 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
                 })
             }
         }
-        return {status: 'task_updated'}
+        return {status: 'task_updated', message: "Zaktualizowano  zadanie."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy aktualizacji  zadania."}
     }
 }
 
@@ -258,8 +263,31 @@ export const endTsk = async (user, category, project, task, endDate) => {
             await endTask.update('done', true)
             await endTask.set({endDate: firebase.firestore.Timestamp.fromDate(endDate)}, {merge: true})
         }
-        return {status: 'task_ended'}
+        return {status: 'task_ended', message: "Ukończono  zadanie."}
     } catch (error) {
-        return {error: error.message}
+        return {error: "Problem przy ukończeniu  zadania."}
+    }
+}
+
+export const endNoDateTsk = async (user, category, project, task, endDate, timer) => {
+    try {
+        const endNoDateTask = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .doc(category.id)
+            .collection('projects')
+            .doc(project.id)
+            .collection('tasks')
+            .doc(task.id)
+        if(endNoDateTask) {
+            await endNoDateTask.update('done', true)
+            await endNoDateTask.set({
+                endDate: firebase.firestore.Timestamp.fromDate(endDate),
+                timer: timer
+            }, {merge: true})
+        }
+        return {status: 'task_ended', message: "Ukończono  zadanie."}
+    } catch (error) {
+        return {error: "Problem przy ukończeniu  zadania."}
     }
 }
