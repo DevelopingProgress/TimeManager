@@ -5,6 +5,7 @@ import {Icon} from "react-native-elements";
 import {clockify, Colors, sleep} from "./tools";
 import {useDispatch} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
+import ReactNativeBackgroundTimer from "react-native-background-timer";
 
 const Timer = (props) => {
 
@@ -16,17 +17,17 @@ const Timer = (props) => {
 
     useEffect(() => {
         if(isPlaying) startTimer();
-        return () => clearTimeout(timer);
+        return () => ReactNativeBackgroundTimer.clearTimeout(timer);
     });
 
     let timer = () => {};
     const startTimer = () => {
-        timer = setTimeout(() => {
+        timer = ReactNativeBackgroundTimer.setTimeout(() => {
             if(counter <= 0){
                 setIsPlaying(false)
                 setCounter(props.count)
                 setShowAlert(true)
-                clearTimeout(timer);
+                ReactNativeBackgroundTimer.clearTimeout(timer);
                 return false;
             }
             setCounter(counter-1);

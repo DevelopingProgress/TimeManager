@@ -13,7 +13,7 @@ const config = {
 }
 
 firebase.initializeApp(config)
-
+firebase.firestore().settings({ experimentalForceLongPolling: true })
 const DB = firebase.firestore();
 const usersCollection = DB.collection('users');
 
