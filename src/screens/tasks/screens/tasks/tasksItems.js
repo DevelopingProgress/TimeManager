@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Text, View} from 'react-native';
 import {Divider, ListItem} from "react-native-elements";
-import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/tools";
+import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/utils/tools";
 import moment from "moment";
 
 

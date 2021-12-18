@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {styles} from "../home";
 import {ListItem} from "react-native-elements";
-import {Colors, polishShortMonths} from "../../reusable/tools";
+import {Colors, polishShortMonths} from "../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
 import {useFocusEffect} from "@react-navigation/core";
 import {listTasks} from "../../store/actions/tasksActions";

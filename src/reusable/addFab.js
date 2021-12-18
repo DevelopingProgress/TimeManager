@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import { Colors} from './tools';
-import ModalAdd from './modalAdd';
+import { Colors} from './utils/tools';
+import AddForm from './forms/addForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     addCategory,
@@ -15,7 +15,7 @@ export const AddFab = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
     const [loading, setLoading] = useState(false)
-
+    const {category, project, type} = props
 
     const handlePress = (value) => {
         switch (value) {
@@ -47,12 +47,12 @@ export const AddFab = (props) => {
             dispatch(addCategory(values.name, user))
         } else if(modalType === 1) {
             setLoading(true)
-            dispatch(addProject(user, values.name, props.category))
+            dispatch(addProject(user, values.name, category))
         } else if(modalType === 2) {
             setLoading(true)
             if(values.withoutDate)
-                dispatch(addTask(user, values.name, props.category, props.project, null, null))
-            else dispatch(addTask(user, values.name, props.category, props.project, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
+                dispatch(addTask(user, values.name, category, project, null, null))
+            else dispatch(addTask(user, values.name, category, project, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
         }
     }
 
@@ -67,19 +67,19 @@ export const AddFab = (props) => {
             setModalVisible(false)
             dispatch(clearStatus())
             setLoading(false)
-            dispatch(listProjects(user, props.category))
+            dispatch(listProjects(user, category))
         }
         if(status === 'task_added') {
             setModalVisible(false)
             dispatch(clearStatus())
             setLoading(false)
-            dispatch(listTasks(user, props.category, props.project))
+            dispatch(listTasks(user, category, project))
         }
     }, [status]);
 
     return (
         <>
-            <ModalAdd
+            <AddForm
                 modalVisible={modalVisible}
                 hideModal={() => {
                     setModalVisible(!modalVisible)
@@ -93,7 +93,7 @@ export const AddFab = (props) => {
             <Button
                 icon={<Icon type='ionicons' name='add' size={25}/>}
                 onPress={() => {
-                    handlePress(props.type)
+                    handlePress(type)
                 }}
                 buttonStyle={{
                     backgroundColor: Colors.blue,

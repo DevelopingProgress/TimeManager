@@ -1,7 +1,7 @@
 import React from 'react'
 import {Platform, StyleSheet, Text, View} from 'react-native'
-import { Loading } from '../../reusable/loading'
-import { Logo } from '../../reusable/logo'
+import { Loading } from '../../reusable/utils/loading'
+import { Logo } from '../../reusable/utils/logo'
 
 export const SplashScreen = () => {
     return (
@@ -17,8 +17,8 @@ export const SplashScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        alignContent: 'center', 
-        alignItems: 'center', 
+        alignContent: 'center',
+        alignItems: 'center',
         marginTop: 230
     }
 })

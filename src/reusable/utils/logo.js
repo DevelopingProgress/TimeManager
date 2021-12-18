@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Image } from 'react-native-elements'
-import LogoImage from '../assets/images/TimeManagerLogo.png'
+import LogoImage from '../../assets/images/TimeManagerLogo.png'
 
 export const Logo = (props) => (
     <View style={{alignItems: 'center'}}>

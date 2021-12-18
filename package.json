@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "expo start --dev-client",
+    "devtools": "react-devtools",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
@@ -17,6 +18,7 @@
     "axios": "^0.24.0",
     "expo": "~43.0.0",
     "expo-background-fetch": "~10.0.3",
+    "expo-community-flipper": "^43.0.5",
     "expo-dev-client": "~0.6.3",
     "expo-facebook": "~12.0.3",
     "expo-google-app-auth": "~9.0.0",
@@ -30,6 +32,7 @@
     "material-bread": "^0.2.10",
     "moment": "^2.29.1",
     "react": "17.0.1",
+    "react-devtools-core": "^4.22.1",
     "react-dom": "17.0.1",
     "react-moment": "^1.1.1",
     "react-native": "0.64.3",
@@ -39,6 +42,7 @@
     "react-native-countdown-component": "^2.7.1",
     "react-native-date-picker": "^4.1.2",
     "react-native-elements": "^3.4.2",
+    "react-native-flipper": "^0.126.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-icon-picker": "^1.0.6",
     "react-native-pager-view": "5.4.6",
@@ -56,12 +60,14 @@
     "react-redux": "^7.2.6",
     "react-speed-dial": "^0.5.2",
     "redux": "^4.1.2",
+    "redux-flipper": "^2.0.1",
     "redux-promise": "^0.6.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "@react-navigation/core": "^6.1.0"
+    "@react-navigation/core": "^6.1.0",
+    "react-devtools": "^4.22.1"
   },
   "private": true,
   "name": "TimeManager",

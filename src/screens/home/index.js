@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
-import { Colors } from '../../reusable/tools'
+import { Colors } from '../../reusable/utils/tools'
 import { Pane } from './components/pane'
 import TasksImage from '../../assets/images/Tasks.jpg'
 import AnalyticsImage from '../../assets/images/Analytics.jpg'
@@ -15,7 +15,7 @@ export const HomeScreen = ({navigation}) => {
     var hours = new Date().getHours()
     const user = useSelector(state => state.auth.user)
     const scrollRef = useRef();
-    
+
     useFocusEffect(
         React.useCallback(() => {
             scrollRef.current?.scrollTo({
@@ -24,7 +24,7 @@ export const HomeScreen = ({navigation}) => {
             })
         })
     )
-    
+
     const GreetingText = () => (
         <View style={{flex: 1}}>
             <Text style={styles.greetingText}>
@@ -34,34 +34,34 @@ export const HomeScreen = ({navigation}) => {
                 </Text>
             </Text>
         </View>
-            
+
     )
 
     const Panes = () => (
         <>
-            <Pane 
-                title='Twórz zadania' 
+            <Pane
+                title='Twórz zadania'
                 sub='Wykonuj je w określonym czasie'
-                navigation={navigation} 
+                navigation={navigation}
                 navigate='TasksScreen'
                 image={TasksImage}
             />
-            <Pane 
-                title='Sprawdzaj statystyki' 
+            <Pane
+                title='Sprawdzaj statystyki'
                 sub='Sprawdzaj swoje statystyki'
-                navigation={navigation} 
+                navigation={navigation}
                 navigate='AnalyticsScreen'
                 image={AnalyticsImage}
             />
-            <Pane 
-                title='Zintegruj zadania' 
+            <Pane
+                title='Zintegruj zadania'
                 sub='Zintegruj swoje zadania z kalendarzem'
-                navigation={navigation} 
+                navigation={navigation}
                 navigate='CalendarScreen'
                 image={CalendarImage}
             />
         </>
-        
+
     )
 
     return (
@@ -86,7 +86,7 @@ export const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         paddingTop: 10,
         paddingHorizontal: 10,
-        paddingBottom: 5, 
+        paddingBottom: 5,
         flexDirection: 'row'
     },
     greetingText: {
@@ -95,8 +95,8 @@ export const styles = StyleSheet.create({
         fontSize: Platform.OS === 'android' ? 25 : 20
     },
     greetingName: {
-        fontSize: Platform.OS === 'android' ? 25 : 20, 
-        fontWeight: 'bold', 
+        fontSize: Platform.OS === 'android' ? 25 : 20,
+        fontWeight: 'bold',
         color: Colors.blue
     },
     cardTitle: {

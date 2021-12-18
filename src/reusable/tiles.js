@@ -1,19 +1,19 @@
 import React from 'react'
-import {FlatList} from "react-native";
 import {ItemOptions} from "./itemOptions";
 
 export const Tiles = (props) => {
+    const {array, type, navigation, category, setLoading, goToScreen} = props
     return (
         <>
-            {props.array ? props.array.map((item) => (
+            {array ? array.map((item) => (
                 <ItemOptions
                     key={item.id}
                     item={item}
-                    navigation={props.navigation}
-                    goToScreen={props.goToScreen}
-                    category={props.category}
-                    type={props.type}
-                    setLoading={props.setLoading}
+                    navigation={navigation}
+                    goToScreen={goToScreen}
+                    category={category}
+                    type={type}
+                    setLoading={setLoading}
                 />)): null}
         </>
     )

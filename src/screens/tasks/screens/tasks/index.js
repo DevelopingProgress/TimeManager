@@ -7,11 +7,11 @@ import {Alert, BackHandler, ScrollView, Text, View} from 'react-native'
 import {clearStatus, clearTasks, deleteTask, listProjects, listTasks} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
-import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/tools";
+import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/utils/tools";
 import TasksItems from "./tasksItems";
 import moment from "moment";
 import {useFocusEffect} from "@react-navigation/core";
-import {Loading} from "../../../../reusable/loading";
+import {Loading} from "../../../../reusable/utils/loading";
 
 export const TaskScreen = (props) => {
     const dispatch = useDispatch();

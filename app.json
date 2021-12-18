@@ -8,7 +8,8 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "jsEngine": "hermes"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -34,6 +35,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-community-flipper"]
   }
 }

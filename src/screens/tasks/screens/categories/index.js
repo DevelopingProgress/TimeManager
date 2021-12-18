@@ -13,11 +13,11 @@ import {
     listTasks
 } from "../../../../store/actions/tasksActions";
 import {StackHeader} from "../../../../reusable/stackHeader";
-import {Colors} from "../../../../reusable/tools";
-import {Loading} from "../../../../reusable/loading";
+import {Colors} from "../../../../reusable/utils/tools";
+import {Loading} from "../../../../reusable/utils/loading";
 import {useFocusEffect} from "@react-navigation/core";
-import Error from "../../../../reusable/error";
-import Message from "../../../../reusable/message";
+import Error from "../../../../reusable/utils/error";
+import Message from "../../../../reusable/utils/message";
 import {clearAuthError, clearAuthMessage} from "../../../../store/actions/authActions";
 
 export const CategoriesScreen = ({navigation}) => {

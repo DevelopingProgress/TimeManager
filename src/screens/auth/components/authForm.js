@@ -3,12 +3,12 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { Input, Button } from 'react-native-elements'
 import { Platform, StyleSheet } from 'react-native'
-import { Colors } from '../../../reusable/tools'
+import { Colors } from '../../../reusable/utils/tools'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearAuthError, clearAuthMessage, loginFacebookUser, loginGoogleUser, loginUser, passwordResetUser, registerUser } from '../../../store/actions/authActions'
 import { useFocusEffect } from '@react-navigation/core'
-import Error from "../../../reusable/error";
-import Message from "../../../reusable/message";
+import Error from "../../../reusable/utils/error";
+import Message from "../../../reusable/utils/message";
 
 export const AuthForm = () => {
 
@@ -55,7 +55,7 @@ export const AuthForm = () => {
             dispatch(registerUser(values))
         } else if(formType === 'RemindPass') {
             dispatch(passwordResetUser(values.email))
-        } 
+        }
     }
 
     const handleFacebookLogin = () => {
@@ -98,7 +98,7 @@ export const AuthForm = () => {
         <>
        <Error showAlert={showErrorAlert} error={error} handleDismiss={handleErrorDismiss}/>
        <Message showAlert={showMessageAlert} message={message} handleDismiss={handleMessageDismiss}/>
-        <Formik 
+        <Formik
             initialValues={
                 formType === 'Login' ? {
                     email: '',
@@ -151,7 +151,7 @@ export const AuthForm = () => {
         >
             {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
                 <>
-                    <Input 
+                    <Input
                         inputStyle={styles.input}
                         placeholder='Email'
                         containerStyle={styles.containerStyle}
@@ -163,8 +163,8 @@ export const AuthForm = () => {
                         errorStyle={{color: Colors.red, fontSize: 15}}
                         maxLength={50}
                     />
-                    {formType === 'Register' && 
-                    <Input 
+                    {formType === 'Register' &&
+                    <Input
                         inputStyle={styles.input}
                         placeholder='Imię'
                         containerStyle={styles.containerStyle}
@@ -177,14 +177,14 @@ export const AuthForm = () => {
                         maxLength={50}
                     />
                     }
-                    {formType !== 'RemindPass' && 
-                    <Input 
+                    {formType !== 'RemindPass' &&
+                    <Input
                         inputStyle={styles.input}
                         placeholder='Hasło'
                         containerStyle={styles.containerStyle}
                         rightIcon={{
-                            type:'entypo', 
-                            name:'eye', 
+                            type:'entypo',
+                            name:'eye',
                             color: showPass ? Colors.grey : Colors.black,
                             onPress: () => setShowPass(!showPass)
                         }}
@@ -199,14 +199,14 @@ export const AuthForm = () => {
                     />
                     }
 
-                    {formType === 'Register' && 
-                    <Input 
+                    {formType === 'Register' &&
+                    <Input
                         inputStyle={styles.input}
                         placeholder='Potwierdź hasło'
                         containerStyle={styles.containerStyle}
                         rightIcon={{
-                            type:'entypo', 
-                            name:'eye', 
+                            type:'entypo',
+                            name:'eye',
                             color: showConfirmPass ? Colors.grey : Colors.black,
                             onPress: () => setShowConfirmPass(!showConfirmPass)
                         }}
@@ -252,7 +252,7 @@ export const AuthForm = () => {
                             loading={loading}
                         />
                     }
-                    
+
                 </>
             )}
         </Formik>
@@ -297,10 +297,10 @@ export const AuthForm = () => {
                 color: Colors.white,
                 style: {marginStart: 0}
             }}
-        />    
+        />
         </>
         }
-        
+
         <Button
             title={`${
                 formType === 'Login' ? 'Nie masz konta? Zarejestruj się' 
@@ -310,7 +310,7 @@ export const AuthForm = () => {
                 marginTop: Platform.OS === 'ios' ? 0 : 5
             }}
             titleStyle={{
-                width: '100%',  
+                width: '100%',
                 color: Colors.black2,
                 fontSize: Platform.OS === 'ios' ? 12 : 15
             }}
@@ -323,7 +323,7 @@ export const AuthForm = () => {
                 : formType === 'RemindPass' ? 'Powrót do logowania' : ''
             }`}
             titleStyle={{
-                width: '100%',  
+                width: '100%',
                 color: Colors.black2,
                 fontSize: Platform.OS === 'ios' ? 12 : 15
             }}

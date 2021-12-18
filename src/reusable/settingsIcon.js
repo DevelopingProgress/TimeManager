@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Colors } from './tools'
+import { Colors } from './utils/tools'
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
 import { Divider, Icon } from 'react-native-elements'
 import { useDispatch } from 'react-redux'
@@ -20,11 +20,11 @@ export const SettingsIcon = ({navigation}) => {
         <>
             <View>
             <Menu>
-                <MenuTrigger> 
+                <MenuTrigger>
                     <Icon
-                        type='entypo' 
-                        name='dots-three-vertical' 
-                        size={25} 
+                        type='entypo'
+                        name='dots-three-vertical'
+                        size={25}
                         style={{
                             marginTop: 5,
                             color: Colors.black2,
@@ -32,37 +32,37 @@ export const SettingsIcon = ({navigation}) => {
                     />
                 </MenuTrigger>
                 <MenuOptions customStyles={{optionsContainer: styles.optionsContainer}}>
-                    <MenuOption 
+                    <MenuOption
                         style={{flexDirection: 'row'}}
                         onSelect={() => navigation.navigate('SettingsScreen')}
-                    > 
-                        <Icon 
-                            type='ionicons' 
+                    >
+                        <Icon
+                            type='ionicons'
                             name='settings'
-                            size={20} 
+                            size={20}
                             style={{
                                 marginTop: 13,
                                 color: Colors.blue,
                             }}
-                        /> 
+                        />
                         <Text style={styles.option}>
                             Ustawienia
                         </Text>
                     </MenuOption>
                     <Divider  orientation="horizontal" width={1}/>
-                    <MenuOption 
-                        style={{flexDirection: 'row'}} 
+                    <MenuOption
+                        style={{flexDirection: 'row'}}
                         onSelect={handleLogout}
-                    > 
-                        <Icon 
-                            type='entypo' 
+                    >
+                        <Icon
+                            type='entypo'
                             name='log-out'
-                            size={20} 
+                            size={20}
                             style={{
                                 marginTop: 13,
                                 color: Colors.blue,
                             }}
-                        /> 
+                        />
                         <Text style={styles.option}>
                             Wyloguj
                         </Text>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
     option: {
         margin: 10,
-        color: Colors.black, 
+        color: Colors.black,
         fontSize: 20
     }
 })

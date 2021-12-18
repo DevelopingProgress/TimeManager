@@ -1,6 +1,6 @@
 import React from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {Colors} from "../reusable/tools";
+import {Colors} from "../reusable/utils/tools";
 import {HomeScreen} from "../screens/home";
 import {TaskStack} from "./taskStack";
 import {AnalyticsScreen} from "../screens/analytics";
@@ -19,7 +19,7 @@ const tabOptions = {
 
 export const HomeStack = () => (
     <>
-        <Tab.Navigator 
+        <Tab.Navigator
             initialRouteName="TasksScreen"
             screenOptions={{
                 headerBackTitleVisible: false,
@@ -33,24 +33,24 @@ export const HomeStack = () => (
                 },
             }}
         >
-            <Tab.Screen 
-                name="HomeScreen" 
+            <Tab.Screen
+                name="HomeScreen"
                 component={HomeScreen}
                 options={{
                     ...tabOptions,
                     tabBarIcon: ({focused}) => {
-                        return ( 
-                        <Icon 
-                            type='materialcommunityicons' 
+                        return (
+                        <Icon
+                            type='materialcommunityicons'
                             name='home'
-                            color={focused ? Colors.blue : Colors.grey }  
+                            color={focused ? Colors.blue : Colors.grey }
                             size={45}
                         />
                         )
                     },
                 }}
             />
-            <Tab.Screen 
+            <Tab.Screen
                 name="TasksScreen"
                 component={TasksScreen}
                 options={{
@@ -67,34 +67,34 @@ export const HomeStack = () => (
                     },
                 }}
             />
-            <Tab.Screen 
-                name="AnalyticsScreen" 
+            <Tab.Screen
+                name="AnalyticsScreen"
                 component={AnalyticsScreen}
                 options={{
                     ...tabOptions,
                     tabBarIcon: ({focused}) => {
-                        return ( 
-                        <Icon 
-                            type='antdesign' 
+                        return (
+                        <Icon
+                            type='antdesign'
                             name='barchart'
-                            color={focused ? Colors.blue : Colors.grey }  
+                            color={focused ? Colors.blue : Colors.grey }
                             size={40}
                         />
                         )
                     },
                 }}
             />
-            <Tab.Screen 
-                name="CalendarScreen" 
+            <Tab.Screen
+                name="CalendarScreen"
                 component={CalendarScreen}
                 options={{
                     ...tabOptions,
                     tabBarIcon: ({focused}) => {
-                        return ( 
-                        <Icon 
-                            type='antdesign' 
+                        return (
+                        <Icon
+                            type='antdesign'
                             name='calendar'
-                            color={focused ? Colors.blue : Colors.grey }  
+                            color={focused ? Colors.blue : Colors.grey }
                             size={45}
                         />
                         )

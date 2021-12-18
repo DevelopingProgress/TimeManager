@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { styles } from "../screens/home";
+import { styles } from "../../screens/home";
 import React from "react";
 
 export const GreetingText = (props) => (
@@ -8,5 +8,5 @@ export const GreetingText = (props) => (
             {props.title}
         </Text>
     </View>
-    
+
 )

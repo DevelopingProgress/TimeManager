@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, View } from 'react-native'
-import { GreetingText } from '../../reusable/greetingText'
+import { GreetingText } from '../../reusable/utils/greetingText'
 import { styles } from '../home'
 import { SettingsIcon } from '../../reusable/settingsIcon'
 

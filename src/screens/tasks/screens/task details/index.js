@@ -3,9 +3,9 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
-import {Colors, getHours, getMinutes, getSeconds} from "../../../../reusable/tools";
+import {Colors, getHours, getMinutes, getSeconds} from "../../../../reusable/utils/tools";
 import Timer from "../../../../reusable/timer";
-import ModalAdd from "../../../../reusable/modalAdd";
+import AddForm from "../../../../reusable/forms/addForm";
 import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";
 import StopWatch from "../../../../reusable/stopwatch";
@@ -58,7 +58,7 @@ export const TaskDetailsScreen = (props) => {
 
     return (
         <>
-            <ModalAdd
+            <AddForm
                 modalVisible={modalVisible}
                 hideModal={() => {
                     setModalVisible(!modalVisible)

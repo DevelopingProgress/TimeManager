@@ -1,17 +1,17 @@
 import React from 'react'
 import {Alert, StyleSheet, Text, View} from "react-native";
 import {Icon} from "react-native-elements";
-import {Colors, sleep} from "./tools";
+import {Colors, sleep} from "./utils/tools";
 import {useDispatch} from "react-redux";
 import {clearProjects, clearTasks, deleteTask} from "../store/actions/tasksActions";
 
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
-
+    const {type, category, user, setLoading, task, navigation, project} = props
     return (
         <>
             {
-                props.type === 'categories' ? (
+                type === 'categories' ? (
                     <View style={styles.container}>
                         <View style={styles.iconWrapper}>
                             <Icon
@@ -21,7 +21,7 @@ export const StackHeader = (props) => {
                                 color={Colors.black}
                                 size={30}
                                 onPress={() => {
-                                    props.navigation.goBack()
+                                    navigation.goBack()
                                 }}
                             />
                         </View>
@@ -29,7 +29,7 @@ export const StackHeader = (props) => {
                             <Text style={styles.text}>Kategorie</Text>
                         </View>
                     </View>
-                ) : props.type === 'projects' ? (
+                ) : type === 'projects' ? (
                     <View style={styles.container}>
                         <View style={styles.iconWrapper}>
                             <Icon
@@ -39,9 +39,9 @@ export const StackHeader = (props) => {
                                 color={Colors.black}
                                 size={30}
                                 onPress={() => {
-                                    props.navigation.goBack()
+                                    navigation.goBack()
                                     dispatch(clearProjects())
-                                    props.setLoading(true)
+                                    setLoading(true)
                                 }}
                             />
                         </View>
@@ -49,10 +49,10 @@ export const StackHeader = (props) => {
                             <Text style={styles.text}>
                                 Projekty
                             </Text>
-                            <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w kategorii {props.category.name}</Text>
+                            <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w kategorii {category.name}</Text>
                         </View>
                     </View>
-                ) : props.type === 'tasks' ? (
+                ) : type === 'tasks' ? (
                     <>
                         <View style={styles.container}>
                             <View style={styles.iconWrapper}>
@@ -63,9 +63,9 @@ export const StackHeader = (props) => {
                                     color={Colors.black}
                                     size={30}
                                     onPress={() => {
-                                        props.navigation.goBack()
+                                        navigation.goBack()
                                         dispatch(clearTasks());
-                                        props.setLoading(true)
+                                        setLoading(true)
                                     }}
                                 />
                             </View>
@@ -75,9 +75,9 @@ export const StackHeader = (props) => {
                                 </Text>
                             </View>
                         </View>
-                        <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w projekcie {props.project.name}</Text>
+                        <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w projekcie {project.name}</Text>
                     </>
-                ) : props.type === 'task' ? (
+                ) : type === 'task' ? (
                 <View style={styles.container}>
                     <View style={styles.iconWrapper}>
                         <Icon
@@ -87,14 +87,14 @@ export const StackHeader = (props) => {
                         color={Colors.black}
                         size={30}
                         onPress={() => {
-                            sleep(1000).then(props.navigation.goBack())
+                            sleep(1000).then(navigation.goBack())
                         }}
                         />
                     </View>
 
                     <View style={styles.textWrapper}>
-                        <Text style={[styles.text, {color: props.task.color}]}>
-                            {props.task.name}
+                        <Text style={[styles.text, {color: task.color}]}>
+                            {task.name}
                         </Text>
                     </View>
 
@@ -107,7 +107,7 @@ export const StackHeader = (props) => {
                             size={30}
                             onPress={() => {
                                 Alert.alert(
-                                    'Usuwanie zadania '  +  props.task.name,
+                                    'Usuwanie zadania '  +  task.name,
                                     'Czy chcesz usunąć zadanie?' ,
                                     [
                                         {
@@ -116,8 +116,8 @@ export const StackHeader = (props) => {
                                         {
                                             text: 'Usuń',
                                             onPress: () => {
-                                                dispatch(deleteTask(props.user, props.category, props.project, props.task))
-                                                sleep(1000).then(props.navigation.goBack())
+                                                dispatch(deleteTask(user, category, project, task))
+                                                sleep(1000).then(navigation.goBack())
                                             }
                                         }
                                     ], {cancelable: true})

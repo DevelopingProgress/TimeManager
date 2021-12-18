@@ -8,12 +8,21 @@ import reducers from './src/store/reducers';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Provider as PaperProvider } from 'react-native-paper';
 
+const middlewares = [
+    /* other middlewares */
+    promiseMiddleware
+];
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+if (__DEV__) {
+    const createDebugger = require('redux-flipper').default;
+    middlewares.push(createDebugger());
+}
+
+
 
 const createStoreWithMiddleware = createStore(
     reducers,
-    composeEnhancers(applyMiddleware(promiseMiddleware)),
+    applyMiddleware(...middlewares)
 )
 
 const reduxApp = () => (

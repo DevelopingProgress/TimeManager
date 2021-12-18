@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Card, Text } from 'react-native-elements'
-import { Colors } from '../../../reusable/tools'
+import { Colors } from '../../../reusable/utils/tools'
 
 export const Pane = (props) => {
     return (
@@ -16,8 +16,8 @@ export const Pane = (props) => {
                 </Text>
             </View>
             <View>
-                <Button 
-                    title='Przejdź' 
+                <Button
+                    title='Przejdź'
                     buttonStyle={{backgroundColor: Colors.blue}}
                     onPress={() => props.navigation.navigate(props.navigate)}
                 />
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'android' ? 25 : 20
     },
     greetingName: {
-        fontSize: Platform.OS === 'android' ? 25 : 20, 
-        fontWeight: 'bold', 
+        fontSize: Platform.OS === 'android' ? 25 : 20,
+        fontWeight: 'bold',
         color: Colors.blue
     },
     cardTitle: {

@@ -1,8 +1,8 @@
 import React from 'react'
 import {View, StyleSheet, ScrollView, Platform} from 'react-native'
 import { AuthForm } from './components/authForm'
-import { Logo } from '../../reusable/logo'
-import { Colors } from '../../reusable/tools'
+import { Logo } from '../../reusable/utils/logo'
+import { Colors } from '../../reusable/utils/tools'
 
 export const AuthScreen = () => {
     return (

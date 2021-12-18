@@ -2,29 +2,30 @@ import React, {useState, useEffect} from 'react';
 
 import {Text, View} from 'react-native';
 import {useDispatch} from "react-redux";
-import {clockify, Colors, sleep} from "./tools";
+import {clockify, Colors, sleep} from "./utils/tools";
 import {Icon} from "react-native-elements";
 import AwesomeAlert from "react-native-awesome-alerts";
 import {endNoDateTask, listTasks} from "../store/actions/tasksActions";
-import {endNoDateTsk} from "../store/api/apiTasks";
+import ReactNativeBackgroundTimer from "react-native-background-timer";
 
 const StopWatch = (props) => {
 
+    const {data, navigation} = props
     const [isPlaying, setIsPlaying] = useState(false);
     const [counter, setCounter] = useState(0);
     const [showAlert, setShowAlert] = useState(false);
-    const {user, category, project, task} = props.data
+    const {user, category, project, task} = data
     const dispatch = useDispatch()
     const timeSpent = clockify(counter).displayHours+':'+clockify(counter).displayMinutes+':'+clockify(counter).displaySeconds
 
     useEffect(() => {
         if(isPlaying) startTimer();
-        return () => clearTimeout(timer);
+        return () => ReactNativeBackgroundTimer.clearTimeout(timer);
     });
 
     let timer = () => {};
     const startTimer = () => {
-        timer = setTimeout(() => {
+        timer = ReactNativeBackgroundTimer.setTimeout(() => {
             setCounter((counter) => counter + 1);
         }, 1000)
     }
@@ -94,7 +95,7 @@ const StopWatch = (props) => {
                     dispatch(endNoDateTask(user, category, project, task, new Date(Date.now()), timeSpent))
                     dispatch(listTasks(user, category, project))
                     sleep(1000).then(
-                        props.navigation.navigate('DoneTasksScreen', {
+                        navigation.navigate('DoneTasksScreen', {
                             item: project,
                             category: category
                         })

@@ -1,5 +1,5 @@
 import { firebase, usersCollection } from "../../database/firebase";
-import {randDarkColor} from "../../reusable/tools";
+import {randDarkColor} from "../../reusable/utils/tools";
 
 
 //LIST
@@ -14,9 +14,9 @@ export const listCat = async(user) => {
             .get()
 
         categories.forEach(doc => {
-            categoriesList.push(doc.data()) 
+            categoriesList.push(doc.data())
         })
-        
+
         return {categories: categoriesList, status: 'categories_listed'}
     } catch (error) {
         return {error: "Problem z wyświetleniem listy kategorii."}
@@ -37,7 +37,7 @@ export const listProj = async(user, category) => {
         projects.forEach(doc => {
             projectsList.push(doc.data())
         })
-        
+
         return {projects: projectsList, status: 'projects_listed'}
     } catch (error) {
         return {error: "Problem z wyświetleniem listy projektów."}

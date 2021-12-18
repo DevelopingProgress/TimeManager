@@ -2,17 +2,18 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
-import {clockify, Colors, sleep} from "./tools";
+import {clockify, Colors, sleep} from "./utils/tools";
 import {useDispatch} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 
 const Timer = (props) => {
 
+    const {count, data, navigation} = props
     const [isPlaying, setIsPlaying] = useState(false);
-    const [counter, setCounter] = useState(props.count);
+    const [counter, setCounter] = useState(count);
     const [showAlert, setShowAlert] = useState(false);
-    const {user, category, project, task} = props.data
+    const {user, category, project, task} = data
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -25,7 +26,7 @@ const Timer = (props) => {
         timer = ReactNativeBackgroundTimer.setTimeout(() => {
             if(counter <= 0){
                 setIsPlaying(false)
-                setCounter(props.count)
+                setCounter(count)
                 setShowAlert(true)
                 ReactNativeBackgroundTimer.clearTimeout(timer);
                 return false;
@@ -89,14 +90,14 @@ const Timer = (props) => {
                 confirmButtonColor={Colors.lightgreen}
                 actionContainerStyle={{flexDirection: 'column', alignItems: 'center'}}
                 onCancelPressed={() => {
-                    console.log('cancel')
+                    setShowAlert(false)
                 }}
                 onConfirmPressed={() => {
                     setShowAlert(false)
                     dispatch(endTask(user, category, project, task, new Date(Date.now())))
                     dispatch(listTasks(user, category, project))
                     sleep(1000).then(
-                        props.navigation.navigate('DoneTasksScreen', {
+                        navigation.navigate('DoneTasksScreen', {
                             item: project,
                             category: category
                         })
