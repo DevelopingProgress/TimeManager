@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
-import {clockify, Colors, sleep} from "./utils/tools";
+import {clockify, Colors, getHours, sleep} from "./utils/tools";
 import {useDispatch} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
+import AddTimeForm from "./forms/addTimeForm";
 
 const Timer = (props) => {
 
@@ -15,6 +16,7 @@ const Timer = (props) => {
     const [showAlert, setShowAlert] = useState(false);
     const {user, category, project, task} = data
     const dispatch = useDispatch()
+    const [addTimeModalVisible, setAddTimeModalVisible] = useState(false);
 
     useEffect(() => {
         if(isPlaying) startTimer();
@@ -35,6 +37,11 @@ const Timer = (props) => {
         }, 1000)
     }
 
+    const handleSubmit = (values) => {
+        setAddTimeModalVisible(false)
+        setShowAlert(false)
+        setCounter(parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds))
+    }
 
     return (
         <>
@@ -90,7 +97,7 @@ const Timer = (props) => {
                 confirmButtonColor={Colors.lightgreen}
                 actionContainerStyle={{flexDirection: 'column', alignItems: 'center'}}
                 onCancelPressed={() => {
-                    setShowAlert(false)
+                    setAddTimeModalVisible(true)
                 }}
                 onConfirmPressed={() => {
                     setShowAlert(false)
@@ -104,6 +111,7 @@ const Timer = (props) => {
                     )
                 }}
             />
+            <AddTimeForm modalVisible={addTimeModalVisible} hideModal={() => setAddTimeModalVisible(false)} handleSubmit={handleSubmit}/>
         </>
 
     );

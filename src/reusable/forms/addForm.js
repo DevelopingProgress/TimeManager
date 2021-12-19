@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Modal, Text, View} from 'react-native';
-import {Colors, getHours, getMinutes, getSeconds} from '../utils/tools';
+import {Colors, getHours, getMinutes, getSeconds, hoursRegex, minsecsRegex} from '../utils/tools';
 import * as Yup from "yup";
 import {Button} from 'react-native-elements';
 import CategoryForm from "./categoryForm";
@@ -10,10 +10,8 @@ import TaskForm from "./taskForm";
 
 
 const AddForm = (props) => {
-    const hoursRegex = /^(((0|1)[0-9])|2[0-3])$/
-    const minsecsRegex = /\b([0-5]){1}([0-9]){1}/gm
     const [withoutDate, setWithoutDate] = useState(false );
-    const {hideModal, modalVisible, modalType, edit, handleSubmit, loading} = props
+    const {hideModal, modalVisible, modalType, edit, handleSubmit, loading, item} = props
 
     useEffect(() => {
         if(hideModal) setWithoutDate(false)

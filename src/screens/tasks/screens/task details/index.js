@@ -10,6 +10,7 @@ import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";
 import StopWatch from "../../../../reusable/stopwatch";
 import moment from "moment";
+import AddTimeForm from "../../../../reusable/forms/addTimeForm";
 
 export const TaskDetailsScreen = (props) => {
     const task = props.route.params.task
@@ -21,6 +22,7 @@ export const TaskDetailsScreen = (props) => {
     const [loading, setLoading] = useState(false)
     const status = useSelector(state => state.tasks.status)
     const dispatch = useDispatch()
+
 
     const handlePress = (value) => {
         switch (value) {
@@ -147,6 +149,7 @@ export const TaskDetailsScreen = (props) => {
                 onPress={() => handlePress('task')}
                 disabled={task.done}
             />
+
         </>
 
     );

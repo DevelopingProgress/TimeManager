@@ -155,3 +155,6 @@ export const clockify = (counter) => {
         displayHours, displayMinutes, displaySeconds
     }
 }
+
+export const hoursRegex = /^(((0|1)[0-9])|2[0-3])$/
+export const minsecsRegex = /\b([0-5]){1}([0-9]){1}/gm
