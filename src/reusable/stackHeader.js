@@ -4,10 +4,11 @@ import {Icon} from "react-native-elements";
 import {Colors, sleep} from "./utils/tools";
 import {useDispatch} from "react-redux";
 import {clearProjects, clearTasks, deleteTask} from "../store/actions/tasksActions";
+import {updateTimerDatabase} from "../store/actions/timerActions";
 
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
-    const {type, category, user, setLoading, task, navigation, project} = props
+    const {type, category, user, setLoading, task, navigation, project, isPlaying, tasks, taskTimer} = props
     return (
         <>
             {
@@ -84,11 +85,14 @@ export const StackHeader = (props) => {
                         type='antdesign'
                         name='back'
                         style={styles.icon}
-                        color={Colors.black}
+                        color={!isPlaying ? Colors.black : Colors.grey }
                         size={30}
                         onPress={() => {
+                            dispatch(updateTimerDatabase(user, category, project, tasks, task, taskTimer))
                             sleep(1000).then(navigation.goBack())
                         }}
+                        disabled={isPlaying}
+                        disabledStyle={{backgroundColor: 'transparent'}}
                         />
                     </View>
 
@@ -103,7 +107,9 @@ export const StackHeader = (props) => {
                             type='entypo'
                             name='trash'
                             style={styles.icon}
-                            color={Colors.red}
+                            color={!isPlaying ? Colors.red : Colors.grey}
+                            disabled={isPlaying}
+                            disabledStyle={{backgroundColor: 'transparent'}}
                             size={30}
                             onPress={() => {
                                 Alert.alert(

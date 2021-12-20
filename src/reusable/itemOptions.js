@@ -22,7 +22,7 @@ export const ItemOptions = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState('');
     const [loading, setLoading] = useState(false)
-    const status = useSelector(state => state.tasks.status)
+    const status = useSelector(state => state.app.status)
     const error = useSelector(state => state.auth.error)
     const message = useSelector(state => state.auth.message)
     const [showErrorAlert, setShowErrorAlert] = useState(false);

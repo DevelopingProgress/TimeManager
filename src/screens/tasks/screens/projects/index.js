@@ -14,10 +14,10 @@ import {useFocusEffect} from "@react-navigation/core";
 export const ProjectsScreen = (props) => {
     const dispatch = useDispatch();
     const category = props.route.params.item
-    const projects = useSelector(state => state.tasks.projects)
+    const projects = useSelector(state => state.app.projects)
     const user = useSelector(state => state.auth.user)
     const [loading, setLoading] = useState(true);
-    const status = useSelector(state => state.tasks.status)
+    const status = useSelector(state => state.app.status)
     const scrollRef = useRef();
 
     useFocusEffect (

@@ -56,6 +56,7 @@ export const TasksScreen = ({navigation, route}) => {
                     component={TaskDetailsScreen}
                     options={{
                         headerShown: false,
+                        headerLeft: false,
                         title: route.params && route.params.task ? route.params.task.name : '',
                         gestureEnabled: false
                     }}

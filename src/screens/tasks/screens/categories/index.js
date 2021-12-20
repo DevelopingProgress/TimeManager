@@ -23,9 +23,9 @@ import {clearAuthError, clearAuthMessage} from "../../../../store/actions/authAc
 export const CategoriesScreen = ({navigation}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user)
-    const categories = useSelector(state => state.tasks.categories)
+    const categories = useSelector(state => state.app.categories)
     const [loading, setLoading] = useState(true);
-    const status = useSelector(state => state.tasks.status)
+    const status = useSelector(state => state.app.status)
 
     useEffect(() => {
         dispatch(listCategories(user))

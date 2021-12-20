@@ -38,7 +38,7 @@ export const AddFab = (props) => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
-    const status = useSelector(state => state.tasks.status)
+    const status = useSelector(state => state.app.status)
 
 
     const handleSubmit = (values) => {
@@ -52,7 +52,8 @@ export const AddFab = (props) => {
             setLoading(true)
             if(values.withoutDate)
                 dispatch(addTask(user, values.name, category, project, null, null))
-            else dispatch(addTask(user, values.name, category, project, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
+            else dispatch(addTask(user, values.name, category, project, values.date,
+                parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds)))
         }
     }
 

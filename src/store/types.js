@@ -35,3 +35,7 @@ export const CLEAR_TASKS = 'CLEAR_TASKS'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
 export const CLEAR_STATUS = 'CLEAR_STATUS'
+
+//TIMER
+export const ADD_TIMER = 'ADD_TIMER'
+export const UPDATE_TIMER  = 'UPDATE_TIMER'

@@ -13,7 +13,7 @@ export const DoneTasksScreen = (props) => {
     const user = useSelector(state => state.auth.user)
     const project  = props.route.params.route.params.item
     const category = props.route.params.route.params.category
-    const tasks  = useSelector(state => state.tasks.tasks)
+    const tasks  = useSelector(state => state.app.tasks)
     const scrollRef = useRef();
 
     useFocusEffect (

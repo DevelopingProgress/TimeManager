@@ -18,14 +18,14 @@ export const TaskScreen = (props) => {
     const user = useSelector(state => state.auth.user)
     const project  = props.route.params.route.params.item
     const category = props.route.params.route.params.category
-    const tasks  = useSelector(state => state.tasks.tasks)
+    const tasks  = useSelector(state => state.app.tasks)
     const [todayExpanded, setTodayExpanded] = useState(false)
     const [overdueExpanded, setOverdueExpanded] = useState(false);
     const [nextExpanded, setNextExpanded] = useState(false)
     const [noDateExpanded, setNoDateExpanded] = useState(false);
     const scrollRef = useRef();
     const [loading, setLoading] = useState(true);
-    const status = useSelector(state => state.tasks.status)
+    const status = useSelector(state => state.app.status)
 
     useFocusEffect (
         React.useCallback(() => {

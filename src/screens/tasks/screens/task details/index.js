@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {BackHandler, ScrollView, StyleSheet, View} from 'react-native';
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
 import {Colors, getHours, getMinutes, getSeconds} from "../../../../reusable/utils/tools";
-import Timer from "../../../../reusable/timer";
+import Timer from "../../../../reusable/countdownTimer";
 import AddForm from "../../../../reusable/forms/addForm";
 import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";
 import StopWatch from "../../../../reusable/stopwatch";
 import moment from "moment";
-import AddTimeForm from "../../../../reusable/forms/addTimeForm";
 
 export const TaskDetailsScreen = (props) => {
     const task = props.route.params.task
@@ -20,8 +19,13 @@ export const TaskDetailsScreen = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState('');
     const [loading, setLoading] = useState(false)
-    const status = useSelector(state => state.tasks.status)
+    const status = useSelector(state => state.app.status)
     const dispatch = useDispatch()
+    const [isPlaying, setIsPlaying] = useState(false);
+    const tasks = useSelector(state => state.app.tasks)
+    const taskTimer = tasks.filter((item) => item.id === task.id).map((item, index) => {
+        return item.timer
+    }).toString()
 
 
     const handlePress = (value) => {
@@ -52,10 +56,12 @@ export const TaskDetailsScreen = (props) => {
         }
     }, [status]);
 
-
-
-    const [overallTime, setOverallTime] = useState(
-        parseInt(getHours(task)) * 60 * 60 + parseInt(getMinutes(task)) * 60 + parseInt(getSeconds(task)));
+    useEffect(() => {
+        if(isPlaying) {
+            const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+            return () => backHandler.remove()
+        }
+    }, [isPlaying])
 
 
     return (
@@ -73,18 +79,17 @@ export const TaskDetailsScreen = (props) => {
                 edit
             />
             <ScrollView style={styles.mainContainer}>
-                <StackHeader type='task' navigation={props.navigation}  user={user} category={category} project={project} task={task}/>
-                <View style={stylesTask.taskContainer}>
-                    <Text h4 style={{flex: 1}}>
-                        Status
-                    </Text>
-                    <Button
-                        style={{flex: 0.1}}
-                        title='Do zrobienia'
-                        buttonStyle={stylesTask.statusButtonStyle}
-                        onPress={() => console.log('Change status')}
-                    />
-                </View>
+                <StackHeader
+                    type='task'
+                    navigation={props.navigation}
+                    user={user}
+                    category={category}
+                    project={project}
+                    task={task}
+                    isPlaying={isPlaying}
+                    taskTimer={taskTimer}
+                    tasks={tasks}
+                />
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
                     <Text h4>
                         Data i godzina
@@ -105,7 +110,15 @@ export const TaskDetailsScreen = (props) => {
                         </Text>
                         {task.dueDate ?
                             <View style={{flexDirection: 'row', marginRight: 13}}>
-                                <Timer count={overallTime} data={{user, category, project, task}} navigation={props.navigation}/>
+                                <Timer
+                                    count={task.timer}
+                                    data={{user, category, project, task}}
+                                    navigation={props.navigation}
+                                    isPlaying={isPlaying}
+                                    setIsPlaying={setIsPlaying}
+                                    taskTimer={taskTimer}
+                                    tasks={tasks}
+                                />
                             </View>
                             :
                             <View style={{flexDirection: 'row', marginRight: 13}}>
@@ -147,28 +160,12 @@ export const TaskDetailsScreen = (props) => {
                     bottom: 20
                 }}
                 onPress={() => handlePress('task')}
-                disabled={task.done}
+                disabled={task.done || isPlaying}
             />
-
         </>
 
     );
 };
 
-const stylesTask = StyleSheet.create({
-    taskContainer: {
-        marginHorizontal: 40,
-        marginTop:  30,
-        padding: 20,
-        borderWidth: 1,
-        flexDirection: 'row'
-    },
-    statusButtonStyle: {
-        borderColor: Colors.black,
-        borderWidth: 0.5,
-        alignSelf: 'flex-end',
-        backgroundColor: Colors.blue
-    }
-})
 
 

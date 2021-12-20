@@ -2,17 +2,15 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
-import {clockify, Colors, getHours, sleep} from "./utils/tools";
-import {useDispatch} from "react-redux";
+import {clockify, Colors, sleep} from "./utils/tools";
+import {useDispatch, useSelector} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 import AddTimeForm from "./forms/addTimeForm";
+import {updateTimer} from "../store/actions/timerActions";
 
-const Timer = (props) => {
-
-    const {count, data, navigation} = props
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [counter, setCounter] = useState(count);
+const CountdownTimer = (props) => {
+    const {data, navigation, isPlaying, setIsPlaying, taskTimer, tasks} = props
     const [showAlert, setShowAlert] = useState(false);
     const {user, category, project, task} = data
     const dispatch = useDispatch()
@@ -26,21 +24,20 @@ const Timer = (props) => {
     let timer = () => {};
     const startTimer = () => {
         timer = ReactNativeBackgroundTimer.setTimeout(() => {
-            if(counter <= 0){
+            if(task.timer <= 0){
                 setIsPlaying(false)
-                setCounter(count)
                 setShowAlert(true)
                 ReactNativeBackgroundTimer.clearTimeout(timer);
                 return false;
             }
-            setCounter(counter-1);
+            dispatch(updateTimer(tasks, task))
         }, 1000)
     }
 
     const handleSubmit = (values) => {
         setAddTimeModalVisible(false)
         setShowAlert(false)
-        setCounter(parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds))
+        // setCounter(parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds))
     }
 
     return (
@@ -49,19 +46,19 @@ const Timer = (props) => {
                 <View style={{flexDirection: 'row', marginRight: 5}}>
                     <View style={{ marginRight: 5}}>
                         <View style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(counter).displayHours}</Text>
+                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(taskTimer).displayHours}</Text>
                         </View>
                         <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Godz</Text>
                     </View>
                     <View style={{ marginRight: 5}}>
                         <View  style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(counter).displayMinutes}</Text>
+                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(taskTimer).displayMinutes}</Text>
                         </View>
                         <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Min</Text>
                     </View>
                     <View>
                         <View  style={{borderWidth: 1, borderRadius: 5, paddingVertical: 15, paddingHorizontal: 13}}>
-                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(counter).displaySeconds}</Text>
+                            <Text style={{fontSize: 25, fontWeight: 'bold'}}>{clockify(taskTimer).displaySeconds}</Text>
                         </View>
                         <Text style={{fontSize: 20, textAlign: 'center', padding: 2}}>Sek</Text>
                     </View>
@@ -70,7 +67,9 @@ const Timer = (props) => {
                     <Icon
                         name='play-circle-outline'
                         type='iconicon'
-                        onPress={() => setIsPlaying(true)}
+                        onPress={() => {
+                            setIsPlaying(true)
+                        }}
                         size={60}
                         containerStyle={{marginHorizontal: 10}}
                     /> :
@@ -88,7 +87,7 @@ const Timer = (props) => {
                 showProgress={false}
                 title="Czas się skończył"
                 message="Czy chcesz ukończyć zadanie?"
-                closeOnTouchOutside={true}
+                closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
                 showCancelButton={true}
                 showConfirmButton={true}
@@ -117,4 +116,4 @@ const Timer = (props) => {
     );
 };
 
-export default Timer;
+export default CountdownTimer;

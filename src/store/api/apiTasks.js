@@ -1,5 +1,6 @@
 import { firebase, usersCollection } from "../../database/firebase";
 import {randDarkColor} from "../../reusable/utils/tools";
+import {addTimer} from "../actions/timerActions";
 
 
 //LIST
