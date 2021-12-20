@@ -3,7 +3,7 @@ import {BackHandler, ScrollView, StyleSheet, View} from 'react-native';
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
-import {Colors, getHours, getMinutes, getSeconds} from "../../../../reusable/utils/tools";
+import {Colors, getHours, getMinutes, getSeconds, parseSeconds} from "../../../../reusable/utils/tools";
 import Timer from "../../../../reusable/countdownTimer";
 import AddForm from "../../../../reusable/forms/addForm";
 import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
@@ -43,7 +43,7 @@ export const TaskDetailsScreen = (props) => {
             setLoading(true)
            if(values.withoutDate)
                dispatch(updateTask(user, values.name, category, project, task, null, null))
-           else dispatch(updateTask(user, values.name, category, project, task, values.date, values.hours + ':'+values.minutes+':'+values.seconds))
+           else dispatch(updateTask(user, values.name, category, project, task, values.date, parseSeconds(values.hours, values.minutes, values.seconds)))
         }
     }
 
@@ -76,6 +76,7 @@ export const TaskDetailsScreen = (props) => {
                 handleSubmit={handleSubmit}
                 loading={loading}
                 item={task}
+                taskTimer={taskTimer}
                 edit
             />
             <ScrollView style={styles.mainContainer}>

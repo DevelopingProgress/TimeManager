@@ -51,9 +51,24 @@ export const AddFab = (props) => {
         } else if(modalType === 2) {
             setLoading(true)
             if(values.withoutDate)
-                dispatch(addTask(user, values.name, category, project, null, null))
-            else dispatch(addTask(user, values.name, category, project, values.date,
-                parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds)))
+                dispatch(addTask(
+                    user,
+                    values.name,
+                    category,
+                    project,
+                    null,
+                    null,
+                    null
+                ))
+            else dispatch(addTask(
+                user,
+                values.name,
+                category,
+                project,
+                values.date,
+                parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds),
+                parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds)
+            ))
         }
     }
 

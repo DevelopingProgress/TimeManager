@@ -134,6 +134,7 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
                         name: name,
                         dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
                         timer: timer,
+                        timeSpent: 0,
                         done: false,
                         color: randDarkColor(),
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()

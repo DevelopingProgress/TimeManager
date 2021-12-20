@@ -158,3 +158,7 @@ export const clockify = (counter) => {
 
 export const hoursRegex = /^(((0|1)[0-9])|2[0-3])$/
 export const minsecsRegex = /\b([0-5]){1}([0-9]){1}/gm
+
+export const parseSeconds = (hours, minutes, seconds) => {
+    return parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds)
+}

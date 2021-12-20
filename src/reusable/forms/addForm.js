@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Modal, Text, View} from 'react-native';
-import {Colors, getHours, getMinutes, getSeconds, hoursRegex, minsecsRegex} from '../utils/tools';
+import {clockify, Colors, hoursRegex, minsecsRegex} from '../utils/tools';
 import * as Yup from "yup";
 import {Button} from 'react-native-elements';
 import CategoryForm from "./categoryForm";
@@ -11,7 +11,7 @@ import TaskForm from "./taskForm";
 
 const AddForm = (props) => {
     const [withoutDate, setWithoutDate] = useState(false );
-    const {hideModal, modalVisible, modalType, edit, handleSubmit, loading, item} = props
+    const {hideModal, modalVisible, modalType, edit, handleSubmit, loading, item, taskTimer} = props
 
     useEffect(() => {
         if(hideModal) setWithoutDate(false)
@@ -43,6 +43,7 @@ const AddForm = (props) => {
                                             modalType === 'task' ?
                                                 <Text style={styles.modalText}>Edytuj zadanie</Text>: null
                     }
+                    {console.log(item && item.timer)}
                     <Formik
                         initialValues={
                             modalType === 0 || modalType === 'category' ?
@@ -56,17 +57,17 @@ const AddForm = (props) => {
                                 name: !edit ? '' : item && item.name,
                                 date: !edit  ? new Date(Date.now()) : item &&  item.dueDate ? item.dueDate.toDate() : new Date(Date.now()),
                                 hours: !edit ? '01' : item && item.timer ?
-                                parseInt(getHours(item)) < 10
-                                    ? `0${parseInt(getHours(item)).toString()}`
-                                    : parseInt(getHours(item)).toString() : '01',
+                                parseInt(clockify(taskTimer).displayHours) < 10
+                                    ? `0${parseInt(clockify(taskTimer).displayHours).toString()}`
+                                    : parseInt(clockify(taskTimer).displayHours).toString() : '01',
                                 minutes: !edit ? '00' : item && item.timer ?
-                                parseInt(getMinutes(item)) < 10
-                                    ? `0${parseInt(getMinutes(item)).toString()}`
-                                    : parseInt(getMinutes(item)).toString() : '00',
+                                parseInt(clockify(taskTimer).displayMinutes) < 10
+                                    ? `0${parseInt(clockify(taskTimer).displayMinutes).toString()}`
+                                    : parseInt(clockify(taskTimer).displayMinutes).toString() : '00',
                                 seconds: !edit ? '00' : item && item.timer ?
-                                parseInt(getSeconds(item))< 10
-                                    ? `0${parseInt(getSeconds(item)).toString()}`
-                                    : parseInt(getSeconds(item)).toString() : '00',
+                                parseInt(clockify(taskTimer).displaySeconds)< 10
+                                    ? `0${parseInt(clockify(taskTimer).displaySeconds).toString()}`
+                                    : parseInt(clockify(taskTimer).displaySeconds).toString() : '00',
                                 withoutDate: false
                             } : null
                         }

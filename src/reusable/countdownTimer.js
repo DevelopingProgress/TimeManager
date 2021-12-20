@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
-import {clockify, Colors, sleep} from "./utils/tools";
-import {useDispatch, useSelector} from "react-redux";
+import {clockify, Colors, parseSeconds, sleep} from "./utils/tools";
+import {useDispatch} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 import AddTimeForm from "./forms/addTimeForm";
-import {updateTimer} from "../store/actions/timerActions";
+import {addTime, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
 
 const CountdownTimer = (props) => {
     const {data, navigation, isPlaying, setIsPlaying, taskTimer, tasks} = props
@@ -15,18 +15,23 @@ const CountdownTimer = (props) => {
     const {user, category, project, task} = data
     const dispatch = useDispatch()
     const [addTimeModalVisible, setAddTimeModalVisible] = useState(false);
+    const taskTimeSpent = tasks.filter((item) => item.id === task.id).map((item, index) => {
+        return item.timeSpent
+    }).toString()
+    const [additionalTime, setAdditionalTime] = useState(0);
 
     useEffect(() => {
         if(isPlaying) startTimer();
         return () => ReactNativeBackgroundTimer.clearTimeout(timer);
-    });
+    }, [isPlaying, taskTimer]);
 
     let timer = () => {};
     const startTimer = () => {
         timer = ReactNativeBackgroundTimer.setTimeout(() => {
-            if(task.timer <= 0){
+            if(taskTimer <= 0){
                 setIsPlaying(false)
                 setShowAlert(true)
+                dispatch(updateTimerDatabase(user, category, project, tasks, task, parseInt(task.timer), additionalTime))
                 ReactNativeBackgroundTimer.clearTimeout(timer);
                 return false;
             }
@@ -37,7 +42,8 @@ const CountdownTimer = (props) => {
     const handleSubmit = (values) => {
         setAddTimeModalVisible(false)
         setShowAlert(false)
-        // setCounter(parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds))
+        setAdditionalTime(parseSeconds(values.hours, values.minutes, values.seconds))
+        dispatch(addTime(user, category, project, tasks, task, additionalTime))
     }
 
     return (
