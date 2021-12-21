@@ -125,6 +125,9 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
                 dueDate === null && timer === null ? {
                         id: newTask.id,
                         name: name,
+                        timer: 0,
+                        timeSpent: 0,
+                        isPlaying: false,
                         done: false,
                         color: randDarkColor(),
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -135,6 +138,7 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
                         dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
                         timer: timer,
                         timeSpent: 0,
+                        isPlaying: false,
                         done: false,
                         color: randDarkColor(),
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -228,13 +232,16 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
             .collection('tasks')
             .doc(task.id)
         if(updateTask) {
-            if(dueDate === null && timer === null) {
+            if(dueDate === null) {
                 await updateTask.set({
                     id: task.id,
                     name: name,
+                    timer: 0,
+                    timeSpent: 0,
+                    isPlaying: false,
                     done: false,
                     color: randDarkColor(),
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 })
             } else {
                 await updateTask.update({
@@ -271,7 +278,7 @@ export const endTsk = async (user, category, project, task, endDate) => {
     }
 }
 
-export const endNoDateTsk = async (user, category, project, task, endDate, timer) => {
+export const endNoDateTsk = async (user, category, project, task, endDate, timeSpent) => {
     try {
         const endNoDateTask = await usersCollection
             .doc(user.uid)
@@ -285,7 +292,7 @@ export const endNoDateTsk = async (user, category, project, task, endDate, timer
             await endNoDateTask.update('done', true)
             await endNoDateTask.set({
                 endDate: firebase.firestore.Timestamp.fromDate(endDate),
-                timer: timer
+                timeSpent: parseInt(timeSpent)
             }, {merge: true})
         }
         return {status: 'task_ended', message: "Ukończono  zadanie."}

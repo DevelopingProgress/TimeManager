@@ -1,24 +1,32 @@
-import {ADD_TIMER, UPDATE_TIMER} from "../types";
-import {addTimerToTask, addTm, addTmSpent, updateTmr, updateTmrDatabase} from "../api/apiTimer";
-
-
-export const addTimer  = (timers, task, counter) => ({
-    type: ADD_TIMER,
-    payload: addTimerToTask(timers, task, counter)
-})
+import {ADD_TIME, TOGGLE_TIMER, UPDATE_TIMER, UPDATE_TIMER_DATABASE} from "../types";
+import {addTm, toggleTmr, updateSW, updateSWDatabase, updateTmr, updateTmrDatabase} from "../api/apiTimer";
 
 export const updateTimer  = (tasks, task) => ({
     type: UPDATE_TIMER,
     payload: updateTmr(tasks, task)
 })
 
-export const updateTimerDatabase  = (user, category, project, tasks, task, timer, additionalTime) => ({
+export const updateStopwatch  = (tasks, task) => ({
     type: UPDATE_TIMER,
+    payload: updateSW(tasks, task)
+})
+
+export const updateTimerDatabase  = (user, category, project, tasks, task, timer, additionalTime) => ({
+    type: UPDATE_TIMER_DATABASE,
     payload: updateTmrDatabase(user, category, project, tasks, task, timer, additionalTime)
 })
 
 export const addTime = (user, category, project, tasks, task, additionalTime) => ({
-    type: UPDATE_TIMER,
+    type: ADD_TIME,
     payload: addTm(user, category, project, tasks, task, additionalTime)
 })
 
+export const toggleTimer = (user, category, project, tasks, task, isPlaying) => ({
+    type: TOGGLE_TIMER,
+    payload: toggleTmr(user, category, project, tasks, task, isPlaying)
+})
+
+export const updateStopWatchDatabase  = (user, category, project, tasks, task, timer) => ({
+    type: UPDATE_TIMER_DATABASE,
+    payload: updateSWDatabase(user, category, project, tasks, task, timer)
+})

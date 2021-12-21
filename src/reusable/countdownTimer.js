@@ -7,18 +7,15 @@ import {useDispatch} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 import AddTimeForm from "./forms/addTimeForm";
-import {addTime, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
+import {addTime, toggleTimer, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
 
 const CountdownTimer = (props) => {
-    const {data, navigation, isPlaying, setIsPlaying, taskTimer, tasks} = props
+    const {data, navigation, isPlaying, taskTimer, tasks, additionalTime, setAdditionalTime} = props
     const [showAlert, setShowAlert] = useState(false);
     const {user, category, project, task} = data
     const dispatch = useDispatch()
     const [addTimeModalVisible, setAddTimeModalVisible] = useState(false);
-    const taskTimeSpent = tasks.filter((item) => item.id === task.id).map((item, index) => {
-        return item.timeSpent
-    }).toString()
-    const [additionalTime, setAdditionalTime] = useState(0);
+
 
     useEffect(() => {
         if(isPlaying) startTimer();
@@ -29,7 +26,7 @@ const CountdownTimer = (props) => {
     const startTimer = () => {
         timer = ReactNativeBackgroundTimer.setTimeout(() => {
             if(taskTimer <= 0){
-                setIsPlaying(false)
+                dispatch(toggleTimer(user, category, project, tasks,  task, false))
                 setShowAlert(true)
                 dispatch(updateTimerDatabase(user, category, project, tasks, task, parseInt(task.timer), additionalTime))
                 ReactNativeBackgroundTimer.clearTimeout(timer);
@@ -74,7 +71,7 @@ const CountdownTimer = (props) => {
                         name='play-circle-outline'
                         type='iconicon'
                         onPress={() => {
-                            setIsPlaying(true)
+                            dispatch(toggleTimer(user, category, project, tasks,  task, true))
                         }}
                         size={60}
                         containerStyle={{marginHorizontal: 10}}
@@ -82,7 +79,9 @@ const CountdownTimer = (props) => {
                     <Icon
                         name='stop-circle-outline'
                         type='ionicon'
-                        onPress={() => setIsPlaying(false)}
+                        onPress={() => {
+                            dispatch(toggleTimer(user, category, project, tasks,  task, false))
+                        }}
                         size={60}
                         containerStyle={{marginHorizontal: 10}}
                     />

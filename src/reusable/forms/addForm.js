@@ -43,7 +43,6 @@ const AddForm = (props) => {
                                             modalType === 'task' ?
                                                 <Text style={styles.modalText}>Edytuj zadanie</Text>: null
                     }
-                    {console.log(item && item.timer)}
                     <Formik
                         initialValues={
                             modalType === 0 || modalType === 'category' ?

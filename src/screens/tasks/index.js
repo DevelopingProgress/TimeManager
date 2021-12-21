@@ -21,9 +21,6 @@ export const TasksScreen = ({navigation, route}) => {
 
             <Stack.Navigator
                 initialRouteName="CategoriesScreen"
-                screenOptions={{
-
-                }}
             >
                 <Stack.Screen
                     name="CategoriesScreen"
@@ -58,7 +55,7 @@ export const TasksScreen = ({navigation, route}) => {
                         headerShown: false,
                         headerLeft: false,
                         title: route.params && route.params.task ? route.params.task.name : '',
-                        gestureEnabled: false
+                        gestureEnabled: false,
                     }}
                 />
             </Stack.Navigator>

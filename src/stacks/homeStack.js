@@ -7,6 +7,7 @@ import {AnalyticsScreen} from "../screens/analytics";
 import {CalendarScreen} from "../screens/calendar";
 import {Icon} from "react-native-elements";
 import {TasksScreen} from "../screens/tasks";
+import {TouchableOpacity} from "react-native";
 
 
 const Tab = createBottomTabNavigator();
@@ -17,7 +18,7 @@ const tabOptions = {
 
 
 
-export const HomeStack = () => (
+export const HomeStack = (props) => (
     <>
         <Tab.Navigator
             initialRouteName="TasksScreen"
@@ -48,6 +49,7 @@ export const HomeStack = () => (
                         />
                         )
                     },
+                    tabBarButton: (props) => <TouchableOpacity {...props}  />
                 }}
             />
             <Tab.Screen
@@ -65,6 +67,13 @@ export const HomeStack = () => (
                         />
                         )
                     },
+                    tabBarButton: ({ children, ...rest }) => {
+                        return (
+                            <TouchableOpacity {...rest} onPress={() => {props.navigation.navigate('TasksScreen')}}>
+                                {children}
+                            </TouchableOpacity>
+                        );
+                    }
                 }}
             />
             <Tab.Screen
@@ -82,6 +91,7 @@ export const HomeStack = () => (
                         />
                         )
                     },
+                    tabBarButton: (props) => <TouchableOpacity {...props}  />
                 }}
             />
             <Tab.Screen
@@ -99,6 +109,7 @@ export const HomeStack = () => (
                         />
                         )
                     },
+                    tabBarButton: (props) => <TouchableOpacity {...props}  />
                 }}
             />
         </Tab.Navigator>

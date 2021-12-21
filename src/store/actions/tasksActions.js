@@ -84,9 +84,9 @@ export const endTask = (user, category, project, task, endDate) => ({
     type: END_TASK,
     payload: endTsk(user, category, project, task, endDate)
 })
-export const endNoDateTask = (user, category, project, task, endDate, timer) => ({
+export const endNoDateTask = (user, category, project, task, endDate, timeSpent) => ({
     type: END_TASK,
-    payload: endNoDateTsk(user, category, project, task, endDate, timer)
+    payload: endNoDateTsk(user, category, project, task, endDate, timeSpent)
 })
 
 //CLEAR
