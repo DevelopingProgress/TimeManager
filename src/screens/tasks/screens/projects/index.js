@@ -7,7 +7,7 @@ import {Tiles} from "../../../../reusable/tiles";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors} from "../../../../reusable/utils/tools";
-import {clearStatus, listProjects, listTasks} from "../../../../store/actions/tasksActions";
+import {clearStatus, listProjects, listTasks, setLoading} from "../../../../store/actions/tasksActions";
 import {Loading} from "../../../../reusable/utils/loading";
 import {useFocusEffect} from "@react-navigation/core";
 
@@ -16,32 +16,26 @@ export const ProjectsScreen = (props) => {
     const category = props.route.params.item
     const projects = useSelector(state => state.app.projects)
     const user = useSelector(state => state.auth.user)
-    const [loading, setLoading] = useState(true);
-    const status = useSelector(state => state.app.status)
+    const loading = useSelector(state => state.app.loading)
     const scrollRef = useRef();
 
     useFocusEffect (
         React.useCallback(() => {
+            dispatch(setLoading())
             dispatch(listProjects(user, category))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,
             })
-        }, [dispatch, user, category, loading])
+        }, [dispatch, user, category])
     );
 
-    useEffect(() => {
-        if(status === 'projects_listed') {
-            dispatch(clearStatus())
-            setLoading(false)
-        }
-    }, [status])
 
 
     return (
         <>
             <ScrollView style={styles.mainContainer} ref={scrollRef}>
-                <StackHeader type='projects' navigation={props.navigation} category={category} user={user}  setLoading={setLoading}/>
+                <StackHeader type='projects' navigation={props.navigation} category={category} user={user}/>
                 {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
                 projects.length > 0  ?  <Tiles
                         array={projects}
@@ -49,7 +43,6 @@ export const ProjectsScreen = (props) => {
                         goToScreen='TaskStack'
                         category={category}
                         type='project'
-                        setLoading={setLoading}
                     /> :
                     <View style={{alignContent: 'center', alignItems: 'center'}}>
                         <Text style={{fontSize: 20, color: Colors.red}}>Brak projektów dla wybranej  kategorii</Text>

@@ -4,7 +4,14 @@ import {useDispatch, useSelector} from "react-redux";
 
 import { AddFab } from '../../../../reusable/addFab'
 import {Alert, BackHandler, ScrollView, Text, View} from 'react-native'
-import {clearStatus, clearTasks, deleteTask, listProjects, listTasks} from "../../../../store/actions/tasksActions";
+import {
+    clearStatus,
+    clearTasks,
+    deleteTask,
+    listProjects,
+    listTasks,
+    setLoading
+} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/utils/tools";
@@ -24,27 +31,18 @@ export const TaskScreen = (props) => {
     const [nextExpanded, setNextExpanded] = useState(false)
     const [noDateExpanded, setNoDateExpanded] = useState(false);
     const scrollRef = useRef();
-    const [loading, setLoading] = useState(true);
-    const status = useSelector(state => state.app.status)
+    const loading = useSelector(state => state.app.loading)
 
     useFocusEffect (
         React.useCallback(() => {
+            dispatch(setLoading())
             dispatch(listTasks(user, category, project))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,
             })
-        }, [dispatch, category, project])
+        }, [dispatch, user, category, project])
     );
-
-    useEffect(() => {
-        if(status === 'tasks_listed') {
-            dispatch(clearStatus())
-            setLoading(false)
-        }
-    }, [status])
-
-
 
     return (
         <>
@@ -83,6 +81,7 @@ export const TaskScreen = (props) => {
                                     project={project}
                                     filter='today'
                                     navigation={props.navigation}
+                                    loading={loading}
                                 />
                             </ListItem.Accordion>
 

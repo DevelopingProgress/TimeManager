@@ -20,7 +20,7 @@ import {
     CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK, END_TASK,
     LIST_CATEGORIES,
     LIST_PROJECTS,
-    LIST_TASKS, UPDATE_CATEGORY, UPDATE_PROJECT, UPDATE_TASK
+    LIST_TASKS, LOADING, UPDATE_CATEGORY, UPDATE_PROJECT, UPDATE_TASK
 } from "../types";
 
 //LIST
@@ -107,4 +107,9 @@ export const clearError = () => ({
 })
 export const clearMessage = () => ({
     type: CLEAR_MESSAGE,
+})
+
+//LOADING
+export const setLoading = () => ({
+    type: LOADING
 })

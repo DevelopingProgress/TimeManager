@@ -5,7 +5,8 @@ import {ListItem} from "react-native-elements";
 import {Colors, polishShortMonths} from "../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
 import {useFocusEffect} from "@react-navigation/core";
-import {listTasks} from "../../store/actions/tasksActions";
+import {listTasks, setLoading} from "../../store/actions/tasksActions";
+import {Loading} from "../../reusable/utils/loading";
 
 export const DoneTasksScreen = (props) => {
 
@@ -14,10 +15,12 @@ export const DoneTasksScreen = (props) => {
     const project  = props.route.params.route.params.item
     const category = props.route.params.route.params.category
     const tasks  = useSelector(state => state.app.tasks)
+    const loading  = useSelector(state => state.app.loading)
     const scrollRef = useRef();
 
     useFocusEffect (
         React.useCallback(() => {
+            dispatch(setLoading())
             dispatch(listTasks(user, category, project))
             scrollRef.current?.scrollTo({
                 y: 0,
@@ -33,7 +36,7 @@ export const DoneTasksScreen = (props) => {
 
     return (
         <ScrollView style={styles.mainContainer}>
-            {
+            {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
                 tasks.filter((item) =>  item.done === true).length > 0 ?
                     tasks
                         .filter((item) =>  item.done === true)

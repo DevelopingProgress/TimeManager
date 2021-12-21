@@ -7,13 +7,14 @@ import {
     CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK, END_TASK,
     LIST_CATEGORIES,
     LIST_PROJECTS,
-    LIST_TASKS, TOGGLE_TIMER, UPDATE_CATEGORY, UPDATE_PROJECT, UPDATE_TASK, UPDATE_TIMER, UPDATE_TIMER_DATABASE
+    LIST_TASKS, LOADING, TOGGLE_TIMER, UPDATE_CATEGORY, UPDATE_PROJECT, UPDATE_TASK, UPDATE_TIMER, UPDATE_TIMER_DATABASE
 } from "../types";
 
 const INITIAL_STATE = {
     categories: [],
     projects: [],
     tasks: [],
+    loading: false,
     error: null,
     message: null
 }
@@ -37,6 +38,8 @@ export default function (state=INITIAL_STATE,action) {
             return {...state, ...action.payload}
         case ADD_TIME:
             return {...state, ...action.payload}
+        case LOADING:
+            return {...state, loading: true}
 
         //DELETE
         case DELETE_CATEGORY:
@@ -71,8 +74,6 @@ export default function (state=INITIAL_STATE,action) {
             return {...state, projects: []}
         case CLEAR_TASKS:
             return {...state, tasks: []}
-        case CLEAR_STATUS:
-            return {...state, status: []}
         case CLEAR_ERROR:
             return {...state, error: null}
         case CLEAR_MESSAGE:

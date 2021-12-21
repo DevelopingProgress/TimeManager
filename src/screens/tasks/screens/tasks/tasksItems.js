@@ -3,6 +3,7 @@ import {Text, View} from 'react-native';
 import {Divider, ListItem} from "react-native-elements";
 import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/utils/tools";
 import moment from "moment";
+import {Loading} from "../../../../reusable/utils/loading";
 
 const TasksItems = (props) => {
 

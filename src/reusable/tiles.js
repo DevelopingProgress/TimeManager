@@ -2,7 +2,7 @@ import React from 'react'
 import {ItemOptions} from "./itemOptions";
 
 export const Tiles = (props) => {
-    const {array, type, navigation, category, setLoading, goToScreen} = props
+    const {array, type, navigation, category, goToScreen} = props
     return (
         <>
             {array ? array.map((item) => (
@@ -13,7 +13,6 @@ export const Tiles = (props) => {
                     goToScreen={goToScreen}
                     category={category}
                     type={type}
-                    setLoading={setLoading}
                 />)): null}
         </>
     )

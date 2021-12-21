@@ -17,7 +17,7 @@ export  const TaskStack = (props) => {
     return (
         <>
             <View style={{paddingBottom: 10, backgroundColor: Colors.white}}>
-                <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category} project={project} setLoading={props.route.params.setLoading}/>
+                <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category} project={project}/>
             </View>
             <Tab.Navigator
                 initialRouteName='TaskScreen'

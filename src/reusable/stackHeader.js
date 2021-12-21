@@ -3,12 +3,19 @@ import {Alert, StyleSheet, Text, View} from "react-native";
 import {Icon} from "react-native-elements";
 import {Colors, sleep} from "./utils/tools";
 import {useDispatch} from "react-redux";
-import {clearProjects, clearTasks, deleteTask} from "../store/actions/tasksActions";
+import {
+    clearProjects,
+    clearTasks,
+    deleteTask,
+    listCategories,
+    listProjects,
+    setLoading
+} from "../store/actions/tasksActions";
 import {updateTimerDatabase} from "../store/actions/timerActions";
 
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
-    const {type, category, user, setLoading, task, navigation, project, isPlaying, tasks, taskTimer} = props
+    const {type, category, user, task, navigation, project, isPlaying, tasks, taskTimer} = props
     return (
         <>
             {
@@ -42,7 +49,8 @@ export const StackHeader = (props) => {
                                 onPress={() => {
                                     navigation.goBack()
                                     dispatch(clearProjects())
-                                    setLoading(true)
+                                    dispatch(setLoading())
+                                    dispatch(listCategories(user))
                                 }}
                             />
                         </View>
@@ -66,7 +74,8 @@ export const StackHeader = (props) => {
                                     onPress={() => {
                                         navigation.goBack()
                                         dispatch(clearTasks());
-                                        setLoading(true)
+                                        dispatch(setLoading())
+                                        dispatch(listProjects(user, category))
                                     }}
                                 />
                             </View>

@@ -9,7 +9,7 @@ import {
     deleteCategory,
     deleteProject,
     listCategories,
-    listProjects, listTasks, updateCategory, updateProject
+    listProjects, listTasks, setLoading, updateCategory, updateProject
 } from '../store/actions/tasksActions'
 import AddForm from "./forms/addForm";
 import {Loading} from "./utils/loading";
@@ -21,13 +21,13 @@ export const ItemOptions = (props) => {
     const dispatch = useDispatch()
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [loading, setLoading] = useState(false)
     const status = useSelector(state => state.app.status)
     const error = useSelector(state => state.auth.error)
     const message = useSelector(state => state.auth.message)
     const [showErrorAlert, setShowErrorAlert] = useState(false);
     const [showMessageAlert, setShowMessageAlert] = useState(false);
     const {item, category, goToScreen, type, navigation} = props
+    const loading = useSelector(state => state.app.loading)
 
     const handlePress = (value) => {
         switch (value) {
@@ -49,10 +49,10 @@ export const ItemOptions = (props) => {
     }
     const handleSubmit = (values) => {
         if(modalType === 'category') {
-            setLoading(true)
+            dispatch(setLoading())
             dispatch(updateCategory(values.name, user, item))
         } else if(modalType === 'project') {
-            setLoading(true)
+            dispatch(setLoading())
             dispatch(updateProject(user, values.name, category, item))
         }
     }
@@ -60,21 +60,17 @@ export const ItemOptions = (props) => {
     useEffect(() => {
         if(status === 'categories_listed') {
             dispatch(clearStatus())
-            setLoading(false)
         }
         if(status === 'projects_listed') {
             dispatch(clearStatus())
-            setLoading(false)
         }
         if(status === 'category_updated') {
             dispatch(clearStatus())
-            setLoading(false)
             setModalVisible(false)
             dispatch(listCategories(user))
         }
         if(status === 'project_updated') {
             dispatch(clearStatus())
-            setLoading(false)
             setModalVisible(false)
             dispatch(listProjects(user, category))
         }
@@ -106,7 +102,6 @@ export const ItemOptions = (props) => {
                 modalVisible={modalVisible}
                 hideModal={() => {
                     setModalVisible(!modalVisible)
-                    setLoading(false)
                 }}
                 modalType={modalType}
                 handleSubmit={handleSubmit}
@@ -139,11 +134,9 @@ export const ItemOptions = (props) => {
                             width: '100%',
                             borderRadius: 100,}}
                         onPress={() => {
-                            dispatch(listProjects(user, item))
                             navigation.navigate(goToScreen, {
                                 item: item,
                                 category: category,
-                                setLoading: setLoading
                             })
                         }}
                     />
@@ -167,8 +160,10 @@ export const ItemOptions = (props) => {
                                         onPress: () => {
                                             type === 'category' ?
                                                 dispatch(deleteCategory(user, item)) &&
+                                                dispatch(setLoading()) &&
                                                 dispatch(listCategories(user)) :
                                                 dispatch(deleteProject(user, category, item)) &&
+                                                dispatch(setLoading()) &&
                                                 dispatch(listProjects(user, category))
                                         }
                                     }

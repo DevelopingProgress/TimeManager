@@ -10,7 +10,7 @@ import {
     clearStatus,
     listCategories,
     listProjects,
-    listTasks
+    listTasks, setLoading
 } from "../../../../store/actions/tasksActions";
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors} from "../../../../reusable/utils/tools";
@@ -24,24 +24,17 @@ export const CategoriesScreen = ({navigation}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user)
     const categories = useSelector(state => state.app.categories)
-    const [loading, setLoading] = useState(true);
-    const status = useSelector(state => state.app.status)
+    const loading = useSelector(state => state.app.loading)
 
     useEffect(() => {
+        dispatch(setLoading())
         dispatch(listCategories(user))
-    }, [user, loading])
-
-    useEffect(() => {
-        if(status === 'categories_listed') {
-            dispatch(clearStatus())
-            setLoading(false)
-        }
-    }, [status])
+    }, [dispatch, user])
 
     return (
         <>
             <ScrollView style={styles.mainContainer}>
-                <StackHeader type='categories' navigation={navigation} setLoading={(loading) => setLoading(loading)}/>
+                <StackHeader type='categories' navigation={navigation} />
                 {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
                 categories.length > 0  ?  <Tiles
                         array={categories}

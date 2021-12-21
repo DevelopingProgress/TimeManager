@@ -149,19 +149,6 @@ export const TaskDetailsScreen = (props) => {
                         </View>
                     </View>
                 }
-                <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
-                    <Text h4>
-                        Opis
-                    </Text>
-                    {task && task.description ?
-                    <Text style={{fontSize: 18}}>
-                        {task.description}
-                    </Text>:
-                    <Text style={{fontSize: 18}}>
-                        Brak opisu
-                    </Text>
-                    }
-                </View>
             </ScrollView>
             <Button
                 icon={<Icon

@@ -41,3 +41,6 @@ export const ADD_TIME = 'ADD_TIME'
 export const UPDATE_TIMER  = 'UPDATE_TIMER'
 export const UPDATE_TIMER_DATABASE  = 'UPDATE_TIMER_DATABASE'
 export const TOGGLE_TIMER = 'TOGGLE_TIMER'
+
+//LOADING
+export const LOADING = 'LOADING'
