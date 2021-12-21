@@ -6,7 +6,7 @@ import {Button, Icon, Text} from "react-native-elements";
 import {clockify, Colors, getHours, getMinutes, getSeconds, parseSeconds} from "../../../../reusable/utils/tools";
 import CountdownTimer  from "../../../../reusable/countdownTimer";
 import AddForm from "../../../../reusable/forms/addForm";
-import {clearStatus, updateTask} from "../../../../store/actions/tasksActions";
+import {clearStatus, setLoading, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";
 import StopWatch from "../../../../reusable/stopwatch";
 import moment from "moment";
@@ -18,7 +18,6 @@ export const TaskDetailsScreen = (props) => {
     const project = props.route.params.project
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [loading, setLoading] = useState(false)
     const status = useSelector(state => state.app.status)
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.app.tasks)
@@ -29,6 +28,7 @@ export const TaskDetailsScreen = (props) => {
         return item.id === task.id
     }).isPlaying
     const [additionalTime, setAdditionalTime] = useState(0);
+    const loading = useSelector(state => state.app.loading)
 
     const handlePress = (value) => {
         switch (value) {
@@ -42,7 +42,7 @@ export const TaskDetailsScreen = (props) => {
     }
     const handleSubmit = (values) => {
        if(modalType === 'task') {
-            setLoading(true)
+            dispatch(setLoading())
            if(values.withoutDate)
                dispatch(updateTask(user, values.name, category, project, task, null, 0))
            else dispatch(updateTask(user, values.name, category, project, task, values.date, parseSeconds(values.hours, values.minutes, values.seconds)))
@@ -52,9 +52,11 @@ export const TaskDetailsScreen = (props) => {
     useEffect(() => {
         if(status === 'task_updated') {
             dispatch(clearStatus())
-            setLoading(false)
             setModalVisible(false)
             props.navigation.goBack()
+        }
+        if(status === 'task_deleted') {
+            dispatch(clearStatus())
         }
     }, [status]);
 

@@ -36,7 +36,6 @@ export const TasksScreen = ({navigation, route}) => {
                     options={{
                         headerShown: false,
                         title: "Projekty",
-
                     }}
                 />
                 <Stack.Screen

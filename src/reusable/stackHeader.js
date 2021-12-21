@@ -8,7 +8,7 @@ import {
     clearTasks,
     deleteTask,
     listCategories,
-    listProjects,
+    listProjects, listTasks,
     setLoading
 } from "../store/actions/tasksActions";
 import {updateTimerDatabase} from "../store/actions/timerActions";
@@ -73,7 +73,7 @@ export const StackHeader = (props) => {
                                     size={30}
                                     onPress={() => {
                                         navigation.goBack()
-                                        dispatch(clearTasks());
+                                        dispatch(clearTasks())
                                         dispatch(setLoading())
                                         dispatch(listProjects(user, category))
                                     }}
@@ -131,8 +131,12 @@ export const StackHeader = (props) => {
                                         {
                                             text: 'Usuń',
                                             onPress: () => {
+                                                task &&
+                                                dispatch(setLoading()) &&
                                                 dispatch(deleteTask(user, category, project, task))
-                                                sleep(1000).then(navigation.goBack())
+                                                dispatch(setLoading()) &&
+                                                dispatch(listTasks(user, category, project))
+                                                navigation.goBack()
                                             }
                                         }
                                     ], {cancelable: true})

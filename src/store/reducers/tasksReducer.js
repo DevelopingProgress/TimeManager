@@ -74,6 +74,8 @@ export default function (state=INITIAL_STATE,action) {
             return {...state, projects: []}
         case CLEAR_TASKS:
             return {...state, tasks: []}
+        case CLEAR_STATUS:
+            return {...state, status: []}
         case CLEAR_ERROR:
             return {...state, error: null}
         case CLEAR_MESSAGE:

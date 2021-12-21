@@ -7,15 +7,15 @@ import {
     addProject,
     addTask,
     clearStatus,
-    listCategories, listProjects, listTasks,
+    listCategories, listProjects, listTasks, setLoading,
 } from '../store/actions/tasksActions';
 import {Button, Icon} from "react-native-elements";
 
 export const AddFab = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
-    const [loading, setLoading] = useState(false)
     const {category, project, type} = props
+    const loading = useSelector(state => state.app.loading)
 
     const handlePress = (value) => {
         switch (value) {
@@ -43,13 +43,13 @@ export const AddFab = (props) => {
 
     const handleSubmit = (values) => {
         if(modalType === 0) {
-            setLoading(true)
+            dispatch(setLoading())
             dispatch(addCategory(values.name, user))
         } else if(modalType === 1) {
-            setLoading(true)
+            dispatch(setLoading())
             dispatch(addProject(user, values.name, category))
         } else if(modalType === 2) {
-            setLoading(true)
+            dispatch(setLoading())
             if(values.withoutDate)
                 dispatch(addTask(
                     user,
@@ -76,19 +76,16 @@ export const AddFab = (props) => {
         if(status === 'category_added') {
             setModalVisible(false)
             dispatch(clearStatus())
-            setLoading(false)
             dispatch(listCategories(user))
         }
         if(status === 'project_added') {
             setModalVisible(false)
             dispatch(clearStatus())
-            setLoading(false)
             dispatch(listProjects(user, category))
         }
         if(status === 'task_added') {
             setModalVisible(false)
             dispatch(clearStatus())
-            setLoading(false)
             dispatch(listTasks(user, category, project))
         }
     }, [status]);
@@ -99,7 +96,6 @@ export const AddFab = (props) => {
                 modalVisible={modalVisible}
                 hideModal={() => {
                     setModalVisible(!modalVisible)
-                    setLoading(false)
                 }}
                 modalType={modalType}
                 handleSubmit={handleSubmit}
