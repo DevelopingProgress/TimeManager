@@ -185,6 +185,7 @@ export const delTsk= async (user, category, project, task) => {
             .collection('tasks')
             .doc(task.id)
             .delete()
+
         return {status: 'task_deleted', message: "Usunięto  zadanie.", loading: false}
     } catch (error) {
         return {error: "Problem przy usuwaniu  zadania."}

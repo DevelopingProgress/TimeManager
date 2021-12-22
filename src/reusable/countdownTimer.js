@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
-import {clockify, Colors, parseSeconds, sleep} from "./utils/tools";
+import {clockify, Colors, getTodayDate, parseSeconds, sleep} from "./utils/tools";
 import {useDispatch} from "react-redux";
 import {endTask, listTasks} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 import AddTimeForm from "./forms/addTimeForm";
 import {addTime, toggleTimer, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
+import moment from "moment";
 
 const CountdownTimer = (props) => {
     const {data, navigation, isPlaying, taskTimer, tasks, additionalTime, setAdditionalTime} = props
@@ -75,6 +76,9 @@ const CountdownTimer = (props) => {
                         }}
                         size={60}
                         containerStyle={{marginHorizontal: 10}}
+                        color={moment(task.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate() ? Colors.grey : Colors.black}
+                        disabled={moment(task.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()}
+                        disabledStyle={{backgroundColor: 'transparent'}}
                     /> :
                     <Icon
                         name='stop-circle-outline'

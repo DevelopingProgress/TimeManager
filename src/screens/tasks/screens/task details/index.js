@@ -55,9 +55,6 @@ export const TaskDetailsScreen = (props) => {
             setModalVisible(false)
             props.navigation.goBack()
         }
-        if(status === 'task_deleted') {
-            dispatch(clearStatus())
-        }
     }, [status]);
 
     useEffect(() => {
@@ -74,7 +71,6 @@ export const TaskDetailsScreen = (props) => {
                 modalVisible={modalVisible}
                 hideModal={() => {
                     setModalVisible(!modalVisible)
-                    setLoading(false)
                 }}
                 modalType={modalType}
                 handleSubmit={handleSubmit}
@@ -94,6 +90,7 @@ export const TaskDetailsScreen = (props) => {
                     isPlaying={isPlaying}
                     taskTimer={taskTimer}
                     tasks={tasks}
+                    loading={loading}
                 />
                 <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
                     <Text h4>

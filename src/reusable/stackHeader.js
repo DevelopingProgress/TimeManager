@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Alert, StyleSheet, Text, View} from "react-native";
 import {Icon} from "react-native-elements";
 import {Colors, sleep} from "./utils/tools";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
-    clearProjects,
+    clearProjects, clearStatus,
     clearTasks,
     deleteTask,
     listCategories,
@@ -16,6 +16,8 @@ import {updateTimerDatabase} from "../store/actions/timerActions";
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
     const {type, category, user, task, navigation, project, isPlaying, tasks, taskTimer} = props
+
+
     return (
         <>
             {
@@ -131,12 +133,9 @@ export const StackHeader = (props) => {
                                         {
                                             text: 'Usuń',
                                             onPress: () => {
-                                                task &&
-                                                dispatch(setLoading()) &&
+                                                dispatch(setLoading())
                                                 dispatch(deleteTask(user, category, project, task))
-                                                dispatch(setLoading()) &&
-                                                dispatch(listTasks(user, category, project))
-                                                navigation.goBack()
+                                                navigation.navigate('TaskScreen')
                                             }
                                         }
                                     ], {cancelable: true})

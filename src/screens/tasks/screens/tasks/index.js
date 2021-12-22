@@ -32,6 +32,7 @@ export const TaskScreen = (props) => {
     const [noDateExpanded, setNoDateExpanded] = useState(false);
     const scrollRef = useRef();
     const loading = useSelector(state => state.app.loading)
+    const status = useSelector(state => state.app.status)
 
     useFocusEffect (
         React.useCallback(() => {
@@ -43,6 +44,13 @@ export const TaskScreen = (props) => {
             })
         }, [dispatch, user, category, project])
     );
+
+    useEffect(() => {
+        if(status === 'task_deleted') {
+            dispatch(listTasks(user, category, project))
+            dispatch(clearStatus())
+        }
+    }, [status]);
 
     return (
         <>

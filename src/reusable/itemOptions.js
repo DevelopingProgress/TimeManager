@@ -64,14 +64,26 @@ export const ItemOptions = (props) => {
         if(status === 'projects_listed') {
             dispatch(clearStatus())
         }
+        if(status === 'category_deleted') {
+            dispatch(clearStatus())
+            dispatch(setLoading())
+            dispatch(listCategories(user))
+        }
+        if(status === 'project_deleted') {
+            dispatch(clearStatus())
+            dispatch(setLoading())
+            dispatch(listProjects(user, category))
+        }
         if(status === 'category_updated') {
             dispatch(clearStatus())
             setModalVisible(false)
+            dispatch(setLoading())
             dispatch(listCategories(user))
         }
         if(status === 'project_updated') {
             dispatch(clearStatus())
             setModalVisible(false)
+            dispatch(setLoading())
             dispatch(listProjects(user, category))
         }
 
@@ -159,12 +171,11 @@ export const ItemOptions = (props) => {
                                         text: 'Usuń',
                                         onPress: () => {
                                             type === 'category' ?
-                                                dispatch(deleteCategory(user, item)) &&
                                                 dispatch(setLoading()) &&
-                                                dispatch(listCategories(user)) :
-                                                dispatch(deleteProject(user, category, item)) &&
+                                                loading && dispatch(deleteCategory(user, item))
+                                                :
                                                 dispatch(setLoading()) &&
-                                                dispatch(listProjects(user, category))
+                                                loading && dispatch(deleteProject(user, category, item))
                                         }
                                     }
                                 ], {cancelable: true})
@@ -180,20 +191,3 @@ export const ItemOptions = (props) => {
 
     )
 }
-
-const styles = StyleSheet.create({
-    optionsContainer: {
-        marginTop: 40,
-        borderRadius: 3,
-        alignItems: 'center',
-        textAlign: 'center',
-    },
-    option: {
-        margin: 10,
-        color: Colors.black,
-        fontSize: 20
-    },
-    deleteOption: {
-        color: Colors.red
-    }
-})
