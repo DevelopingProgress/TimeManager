@@ -1,12 +1,14 @@
-import registerRootComponent from 'expo/build/launch/registerRootComponent';
 import React from 'react';
 import App from './src/App'
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware, compose} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import promiseMiddleware from 'redux-promise';
 import reducers from './src/store/reducers';
 import { MenuProvider } from 'react-native-popup-menu';
-import { Provider as PaperProvider } from 'react-native-paper';
+import {registerRootComponent} from "expo";
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 const middlewares = [
     /* other middlewares */
@@ -28,9 +30,7 @@ const createStoreWithMiddleware = createStore(
 const reduxApp = () => (
     <Provider store={createStoreWithMiddleware}>
         <MenuProvider>
-            <PaperProvider>
-                <App/>
-            </PaperProvider>
+            <App/>
         </MenuProvider>
     </Provider>
 )

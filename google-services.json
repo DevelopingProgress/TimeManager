@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "872972852759",
+    "project_id": "timemanager-c7d49",
+    "storage_bucket": "timemanager-c7d49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872972852759:android:8572ad9b4ab8146a6d0652",
+        "android_client_info": {
+          "package_name": "com.developingprogress.TimeManager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872972852759-0qjbmil5v62bg3dni9t8ckq0btmrhb07.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developingprogress.TimeManager",
+            "certificate_hash": "a173edbe8a627f18be6a0fe185974dc5b0797776"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFbk6smnwB669DhWfaElbI6fee3cHqQ0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872972852759-sj8h1mgemv21bg0n5etkkiupe1n8oq7h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -39,7 +39,7 @@ const TasksItems = (props) => {
                                     project: project,
                                 })
                             }}>
-                                <ListItem.Title style={{color: item.color, fontWeight: 'bold', flex: item.timer ? 1 : 3}}>{item.name}</ListItem.Title>
+                                <ListItem.Title style={{color: item.color, fontWeight: 'bold', flex: 3}}>{item.name}</ListItem.Title>
                                 <ListItem.Content><Text style={{alignSelf: 'flex-end'}}>{item.dueDate && getPolishMonths(item)}</Text></ListItem.Content>
                                 <ListItem.Chevron color={Colors.black2} iconStyle={{alignSelf: 'flex-end'}}/>
                             </ListItem>

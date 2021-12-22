@@ -75,7 +75,6 @@ const CountdownTimer = (props) => {
                             dispatch(toggleTimer(user, category, project, tasks,  task, true))
                         }}
                         size={60}
-                        containerStyle={{marginHorizontal: 10}}
                         color={moment(task.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate() ? Colors.grey : Colors.black}
                         disabled={moment(task.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()}
                         disabledStyle={{backgroundColor: 'transparent'}}
@@ -87,7 +86,6 @@ const CountdownTimer = (props) => {
                             dispatch(toggleTimer(user, category, project, tasks,  task, false))
                         }}
                         size={60}
-                        containerStyle={{marginHorizontal: 10}}
                     />
                 }
             </View>

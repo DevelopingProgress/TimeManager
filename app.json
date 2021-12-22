@@ -31,11 +31,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.developingprogress.TimeManager"
+      "package": "com.developingprogress.TimeManager",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-community-flipper"]
+    "plugins": [
+      "expo-community-flipper"
+    ]
   }
 }

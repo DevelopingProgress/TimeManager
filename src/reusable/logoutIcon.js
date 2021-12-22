@@ -2,12 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from './utils/tools'
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
-import { Divider, Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import { useDispatch } from 'react-redux'
 import { logoutUser } from '../store/actions/authActions'
 import { clearCategories } from '../store/actions/tasksActions'
 
-export const SettingsIcon = ({navigation}) => {
+export const LogoutIcon = ({navigation}) => {
 
     const dispatch = useDispatch()
 
@@ -32,24 +32,6 @@ export const SettingsIcon = ({navigation}) => {
                     />
                 </MenuTrigger>
                 <MenuOptions customStyles={{optionsContainer: styles.optionsContainer}}>
-                    <MenuOption
-                        style={{flexDirection: 'row'}}
-                        onSelect={() => navigation.navigate('SettingsScreen')}
-                    >
-                        <Icon
-                            type='ionicons'
-                            name='settings'
-                            size={20}
-                            style={{
-                                marginTop: 13,
-                                color: Colors.blue,
-                            }}
-                        />
-                        <Text style={styles.option}>
-                            Ustawienia
-                        </Text>
-                    </MenuOption>
-                    <Divider  orientation="horizontal" width={1}/>
                     <MenuOption
                         style={{flexDirection: 'row'}}
                         onSelect={handleLogout}

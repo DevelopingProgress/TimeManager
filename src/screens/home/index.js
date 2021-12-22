@@ -6,7 +6,7 @@ import { Pane } from './components/pane'
 import TasksImage from '../../assets/images/Tasks.jpg'
 import AnalyticsImage from '../../assets/images/Analytics.jpg'
 import CalendarImage from '../../assets/images/Calendar.jpg'
-import { SettingsIcon } from '../../reusable/settingsIcon'
+import { LogoutIcon } from '../../reusable/logoutIcon'
 import { useFocusEffect } from '@react-navigation/core'
 
 
@@ -68,7 +68,7 @@ export const HomeScreen = ({navigation}) => {
         <ScrollView style={styles.mainContainer} ref={scrollRef}>
             <View style={styles.container}>
                 <GreetingText/>
-                <SettingsIcon navigation={navigation}/>
+                <LogoutIcon navigation={navigation}/>
             </View>
             <Panes/>
         </ScrollView>
