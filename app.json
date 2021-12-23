@@ -38,7 +38,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-community-flipper"
+      "expo-community-flipper",
+      "@notifee/react-native"
     ]
   }
 }

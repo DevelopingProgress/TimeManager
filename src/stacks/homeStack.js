@@ -7,6 +7,8 @@ import {CalendarScreen} from "../screens/calendar";
 import {Button, Icon} from "react-native-elements";
 import {TasksScreen} from "../screens/tasks";
 import {TouchableOpacity} from "react-native";
+import notifee from '@notifee/react-native';
+import onDisplayNotification from "../reusable/notifications";
 
 
 const Tab = createBottomTabNavigator();
@@ -21,6 +23,7 @@ export const HomeStack = (props) => {
 
     return (
         <>
+            <Button title="Display Notification" onPress={() => onDisplayNotification()} />
             <Tab.Navigator
                 initialRouteName="TasksScreen"
                 screenOptions={{
