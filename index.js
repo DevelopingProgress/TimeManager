@@ -7,6 +7,7 @@ import reducers from './src/store/reducers';
 import { MenuProvider } from 'react-native-popup-menu';
 import {registerRootComponent} from "expo";
 import { LogBox } from 'react-native';
+import {requestUserPermission} from "./src/reusable/notifications";
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -20,12 +21,12 @@ if (__DEV__) {
     middlewares.push(createDebugger());
 }
 
-
-
 const createStoreWithMiddleware = createStore(
     reducers,
     applyMiddleware(...middlewares)
 )
+
+requestUserPermission()
 
 const reduxApp = () => (
     <Provider store={createStoreWithMiddleware}>

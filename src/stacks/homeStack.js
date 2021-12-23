@@ -4,11 +4,9 @@ import {Colors} from "../reusable/utils/tools";
 import {HomeScreen} from "../screens/home";
 import {AnalyticsScreen} from "../screens/analytics";
 import {CalendarScreen} from "../screens/calendar";
-import {Button, Icon} from "react-native-elements";
+import {Icon} from "react-native-elements";
 import {TasksScreen} from "../screens/tasks";
 import {TouchableOpacity} from "react-native";
-import notifee from '@notifee/react-native';
-import onDisplayNotification from "../reusable/notifications";
 
 
 const Tab = createBottomTabNavigator();
@@ -17,13 +15,10 @@ const tabOptions = {
     tabBarActiveTintColor: Colors.blue
 }
 
-
-
 export const HomeStack = (props) => {
 
     return (
         <>
-            <Button title="Display Notification" onPress={() => onDisplayNotification()} />
             <Tab.Navigator
                 initialRouteName="TasksScreen"
                 screenOptions={{

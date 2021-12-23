@@ -9,6 +9,8 @@ import ReactNativeBackgroundTimer from "react-native-background-timer";
 import AddTimeForm from "./forms/addTimeForm";
 import {addTime, toggleTimer, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
 import moment from "moment";
+import {displayEndTaskNotification, displayStartTaskNotification} from "./notifications";
+
 
 const CountdownTimer = (props) => {
     const {data, navigation, isPlaying, taskTimer, tasks, additionalTime, setAdditionalTime} = props
@@ -23,10 +25,18 @@ const CountdownTimer = (props) => {
         return () => ReactNativeBackgroundTimer.clearTimeout(timer);
     }, [isPlaying, taskTimer]);
 
+    useEffect(() => {
+        if(moment(task.dueDate.toDate()).diff(Date.now(), "m") === 15) {
+            displayStartTaskNotification(task)
+        }
+    }, [task]);
+
+
     let timer = () => {};
     const startTimer = () => {
         timer = ReactNativeBackgroundTimer.setTimeout(() => {
             if(taskTimer <= 0){
+                displayEndTaskNotification(task)
                 dispatch(toggleTimer(user, category, project, tasks,  task, false))
                 setShowAlert(true)
                 dispatch(updateTimerDatabase(user, category, project, tasks, task, parseInt(task.timer), additionalTime))
