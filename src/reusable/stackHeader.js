@@ -97,7 +97,6 @@ export const StackHeader = (props) => {
                         color={!isPlaying ? Colors.black : Colors.grey }
                         size={30}
                         onPress={() => {
-                            dispatch(preserveTimer(user, category, project, tasks, task, parseInt(taskTimer)))
                             sleep(1000).then(navigation.goBack())
                         }}
                         disabled={isPlaying}

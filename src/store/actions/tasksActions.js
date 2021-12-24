@@ -74,9 +74,9 @@ export const updateProject = (user, name, category, project) => ({
     type: UPDATE_PROJECT,
     payload: updateProj(user, name, category, project)
 })
-export const updateTask = (user, name, category, project, task, dueDate, timer) => ({
+export const updateTask = (user, name, category, project, task, dueDate, timer, taskTimer) => ({
     type: UPDATE_TASK,
-    payload: updateTsk(user, name, category, project, task, dueDate, timer)
+    payload: updateTsk(user, name, category, project, task, dueDate, timer, taskTimer)
 })
 
 //END TASK

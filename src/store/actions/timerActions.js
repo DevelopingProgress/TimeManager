@@ -11,9 +11,9 @@ export const updateStopwatch  = (tasks, task) => ({
     payload: updateSW(tasks, task)
 })
 
-export const updateTimerDatabase  = (user, category, project, tasks, task) => ({
+export const updateTimerDatabase  = (user, category, project, tasks, task, additionalTime) => ({
     type: UPDATE_TIMER_DATABASE,
-    payload: updateTmrDatabase(user, category, project, tasks, task)
+    payload: updateTmrDatabase(user, category, project, tasks, task, additionalTime)
 })
 
 export const addTime = (user, category, project, tasks, task, additionalTime) => ({
@@ -31,9 +31,9 @@ export const updateStopWatchDatabase  = (user, category, project, tasks, task, t
     payload: updateSWDatabase(user, category, project, tasks, task, timer)
 })
 
-export const preserveTimer  = (user, category, project, tasks, task, timer) => ({
+export const preserveTimer  = (user, category, project, tasks, task, timer, additionalTime, timeSpent) => ({
     type: PRESERVE_TIMER,
-    payload: preserveTmr(user, category, project, tasks, task, timer)
+    payload: preserveTmr(user, category, project, tasks, task, timer, additionalTime, timeSpent)
 })
 
 

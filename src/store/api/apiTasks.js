@@ -137,6 +137,7 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
                         dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
                         timer: timer,
                         timeSpent: 0,
+                        additionalTime: 0,
                         isPlaying: false,
                         done: false,
                         color: randDarkColor(),
@@ -221,7 +222,7 @@ export const updateProj= async (user, name, category, project) => {
     }
 }
 
-export const updateTsk= async (user, name, category, project, task, dueDate, timer) => {
+export const updateTsk= async (user, name, category, project, task, dueDate, timer, taskTimer) => {
     try {
         const updateTask = await usersCollection
             .doc(user.uid)
@@ -248,6 +249,10 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
                     name: name,
                     dueDate: firebase.firestore.Timestamp.fromDate(dueDate),
                     timer: timer,
+                    additionalTime: task.additionalTime !== 0 ? timer : 0,
+                    timeSpent: task.additionalTime !== 0 ?
+                            task.timeSpent + Math.abs(task.additionalTime - taskTimer) :
+                            task.timeSpent
                 })
             }
         }

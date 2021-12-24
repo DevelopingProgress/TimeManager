@@ -3,17 +3,17 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
 import {clockify, Colors, getTodayDate, parseSeconds, sleep} from "./utils/tools";
-import {useDispatch, useSelector} from "react-redux";
-import {endTask, listTasks, setLoading} from "../store/actions/tasksActions";
+import {useDispatch} from "react-redux";
+import {endTask, listTasks} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 import AddTimeForm from "./forms/addTimeForm";
-import {addTime, toggleTimer, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
+import {addTime, preserveTimer, toggleTimer, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
 import moment from "moment";
 import {displayEndTaskNotification, displayStartTaskNotification} from "./notifications";
 
 
 const CountdownTimer = (props) => {
-    const {data, navigation, isPlaying, taskTimer, tasks} = props
+    const {data, navigation, isPlaying, taskTimer, tasks, additionalTime, timeSpent} = props
     const [showAlert, setShowAlert] = useState(false);
     const {user, category, project, task} = data
     const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const CountdownTimer = (props) => {
     useEffect(() => {
         if(isPlaying) startTimer();
         return () => ReactNativeBackgroundTimer.clearTimeout(timer);
-    }, [isPlaying, taskTimer]);
+    }, [isPlaying, taskTimer, tasks, task, additionalTime, timeSpent]);
 
     useEffect(() => {
         if(moment(task.dueDate.toDate()).diff(Date.now(), "m") === 15) {
@@ -36,7 +36,11 @@ const CountdownTimer = (props) => {
         timer = ReactNativeBackgroundTimer.setTimeout(() => {
             if(taskTimer === 0){
                 dispatch(toggleTimer(user, category, project, tasks,  task, false))
-                dispatch(updateTimerDatabase(user, category, project, tasks, task))
+                if(additionalTime === 0) {
+                    dispatch(updateTimerDatabase(user, category, project, tasks, task, 0))
+                } else {
+                    dispatch(updateTimerDatabase(user, category, project, tasks, task, additionalTime))
+                }
                 setShowAlert(true)
                 ReactNativeBackgroundTimer.clearTimeout(timer);
                 displayEndTaskNotification(task)
@@ -91,6 +95,7 @@ const CountdownTimer = (props) => {
                         type='ionicon'
                         onPress={() => {
                             dispatch(toggleTimer(user, category, project, tasks,  task, false))
+                            dispatch(preserveTimer(user, category, project, tasks, task, parseInt(taskTimer), additionalTime, timeSpent))
                         }}
                         size={60}
                     />

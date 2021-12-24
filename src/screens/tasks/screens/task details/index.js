@@ -27,6 +27,12 @@ export const TaskDetailsScreen = (props) => {
     const isPlaying  = tasks.find(function(item) {
         return item.id === task.id
     }).isPlaying
+    const additionalTime  = tasks.find(function(item) {
+        return item.id === task.id
+    }).additionalTime
+    const timeSpent  = tasks.find(function(item) {
+        return item.id === task.id
+    }).timeSpent
     const loading = useSelector(state => state.app.loading)
 
     const handlePress = (value) => {
@@ -43,8 +49,8 @@ export const TaskDetailsScreen = (props) => {
        if(modalType === 'task') {
             dispatch(setLoading())
            if(values.withoutDate)
-               dispatch(updateTask(user, values.name, category, project, task, null, 0))
-           else dispatch(updateTask(user, values.name, category, project, task, values.date, parseSeconds(values.hours, values.minutes, values.seconds)))
+               dispatch(updateTask(user, values.name, category, project, task, null, 0, null))
+           else dispatch(updateTask(user, values.name, category, project, task, values.date, parseSeconds(values.hours, values.minutes, values.seconds), taskTimer))
         }
     }
 
@@ -115,9 +121,10 @@ export const TaskDetailsScreen = (props) => {
                                     data={{user, category, project, task}}
                                     navigation={props.navigation}
                                     isPlaying={isPlaying}
-                                    // setIsPlaying={setIsPlaying}
                                     taskTimer={taskTimer}
                                     tasks={tasks}
+                                    additionalTime={additionalTime}
+                                    timeSpent={timeSpent}
                                 />
                             </View>
                             :
