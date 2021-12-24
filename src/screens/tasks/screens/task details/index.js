@@ -27,7 +27,6 @@ export const TaskDetailsScreen = (props) => {
     const isPlaying  = tasks.find(function(item) {
         return item.id === task.id
     }).isPlaying
-    const [additionalTime, setAdditionalTime] = useState(0);
     const loading = useSelector(state => state.app.loading)
 
     const handlePress = (value) => {
@@ -119,8 +118,6 @@ export const TaskDetailsScreen = (props) => {
                                     // setIsPlaying={setIsPlaying}
                                     taskTimer={taskTimer}
                                     tasks={tasks}
-                                    additionalTime={additionalTime}
-                                    setAdditionalTime={setAdditionalTime}
                                 />
                             </View>
                             :

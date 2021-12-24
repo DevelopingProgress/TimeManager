@@ -11,7 +11,7 @@ import {
     listProjects, listTasks,
     setLoading
 } from "../store/actions/tasksActions";
-import {updateTimerDatabase} from "../store/actions/timerActions";
+import {preserveTimer, updateTimerDatabase} from "../store/actions/timerActions";
 
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
@@ -50,7 +50,6 @@ export const StackHeader = (props) => {
                                 size={30}
                                 onPress={() => {
                                     navigation.goBack()
-                                    dispatch(clearProjects())
                                     dispatch(setLoading())
                                     dispatch(listCategories(user))
                                 }}
@@ -75,7 +74,6 @@ export const StackHeader = (props) => {
                                     size={30}
                                     onPress={() => {
                                         navigation.goBack()
-                                        dispatch(clearTasks())
                                         dispatch(setLoading())
                                         dispatch(listProjects(user, category))
                                     }}
@@ -99,7 +97,7 @@ export const StackHeader = (props) => {
                         color={!isPlaying ? Colors.black : Colors.grey }
                         size={30}
                         onPress={() => {
-                            dispatch(updateTimerDatabase(user, category, project, tasks, task, parseInt(taskTimer), null))
+                            dispatch(preserveTimer(user, category, project, tasks, task, parseInt(taskTimer)))
                             sleep(1000).then(navigation.goBack())
                         }}
                         disabled={isPlaying}

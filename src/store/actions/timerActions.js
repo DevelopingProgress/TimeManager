@@ -1,5 +1,5 @@
-import {ADD_TIME, TOGGLE_TIMER, UPDATE_TIMER, UPDATE_TIMER_DATABASE} from "../types";
-import {addTm, toggleTmr, updateSW, updateSWDatabase, updateTmr, updateTmrDatabase} from "../api/apiTimer";
+import {ADD_TIME, PRESERVE_TIMER, TOGGLE_TIMER, UPDATE_TIMER, UPDATE_TIMER_DATABASE} from "../types";
+import {addTm, preserveTmr, toggleTmr, updateSW, updateSWDatabase, updateTmr, updateTmrDatabase} from "../api/apiTimer";
 
 export const updateTimer  = (tasks, task) => ({
     type: UPDATE_TIMER,
@@ -11,9 +11,9 @@ export const updateStopwatch  = (tasks, task) => ({
     payload: updateSW(tasks, task)
 })
 
-export const updateTimerDatabase  = (user, category, project, tasks, task, timer, additionalTime) => ({
+export const updateTimerDatabase  = (user, category, project, tasks, task) => ({
     type: UPDATE_TIMER_DATABASE,
-    payload: updateTmrDatabase(user, category, project, tasks, task, timer, additionalTime)
+    payload: updateTmrDatabase(user, category, project, tasks, task)
 })
 
 export const addTime = (user, category, project, tasks, task, additionalTime) => ({
@@ -30,3 +30,10 @@ export const updateStopWatchDatabase  = (user, category, project, tasks, task, t
     type: UPDATE_TIMER_DATABASE,
     payload: updateSWDatabase(user, category, project, tasks, task, timer)
 })
+
+export const preserveTimer  = (user, category, project, tasks, task, timer) => ({
+    type: PRESERVE_TIMER,
+    payload: preserveTmr(user, category, project, tasks, task, timer)
+})
+
+
