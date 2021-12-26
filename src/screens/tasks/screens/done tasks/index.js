@@ -1,12 +1,12 @@
 import React, {useRef} from 'react';
 import {ScrollView, Text, View} from 'react-native';
-import {styles} from "../home";
+import {styles} from "../../../home";
 import {ListItem} from "react-native-elements";
-import {Colors, polishShortMonths} from "../../reusable/utils/tools";
+import {Colors, polishShortMonths} from "../../../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
 import {useFocusEffect} from "@react-navigation/core";
-import {listTasks, setLoading} from "../../store/actions/tasksActions";
-import {Loading} from "../../reusable/utils/loading";
+import {listTasks, setLoading} from "../../../../store/actions/tasksActions";
+import {Loading} from "../../../../reusable/utils/loading";
 
 export const DoneTasksScreen = (props) => {
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import {DoneTasksScreen} from "../screens/done tasks";
+import {DoneTasksScreen} from "../screens/tasks/screens/done tasks";
 import {TaskScreen} from "../screens/tasks/screens/tasks";
 import {Colors} from "../reusable/utils/tools";
 import {StackHeader} from "../reusable/stackHeader";

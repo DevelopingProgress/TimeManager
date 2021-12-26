@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Modal, Text, View} from 'react-native';
+import {StyleSheet, Modal, Text, View, ScrollView} from 'react-native';
 import {clockify, Colors, hoursRegex, minsecsRegex} from '../utils/tools';
 import * as Yup from "yup";
 import {Button} from 'react-native-elements';
@@ -28,7 +28,7 @@ const AddForm = (props) => {
             collapsable={true}
             statusBarTranslucent={true}
             >
-                <View style={styles.centeredView}>
+                <ScrollView contentContainerStyle={styles.centeredView}>
                     {
                         modalType === 0 ?
                             <Text style={styles.modalText}>Dodaj Kategorię</Text> :
@@ -67,7 +67,8 @@ const AddForm = (props) => {
                                 parseInt(clockify(taskTimer).displaySeconds)< 10
                                     ? `0${parseInt(clockify(taskTimer).displaySeconds).toString()}`
                                     : parseInt(clockify(taskTimer).displaySeconds).toString() : '00',
-                                withoutDate: false
+                                withoutDate: false,
+                                description: item && item.description ? item.description : ''
                             } : null
                         }
                         onSubmit={values => handleSubmit(values)}
@@ -101,7 +102,8 @@ const AddForm = (props) => {
                                     .string()
                                     .matches(minsecsRegex, 'Nieprawidłowe.')
                                     .required('Wymagane'),
-                                withoutDate: Yup.boolean().required()
+                                withoutDate: Yup.boolean().required(),
+                                description: Yup.string()
                             } : null
                         )}
                     >
@@ -183,7 +185,7 @@ const AddForm = (props) => {
                         onPress={hideModal}
                         title='Anuluj'
                     />
-                </View>
+                </ScrollView>
             </Modal>
 
 
@@ -192,24 +194,25 @@ const AddForm = (props) => {
 
 const styles = StyleSheet.create({
     centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: Colors.white,
+        flex: 1,
+        margin: 10,
+        justifyContent: 'center',
+        backgroundColor: Colors.white,
     },
     modalView: {
-    margin: 60,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+        margin: 60,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 10,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
     },
     button: {
         borderRadius: 20,
@@ -219,13 +222,14 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonOpen: {
-    backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue,
     },
     buttonClose: {
-    backgroundColor: Colors.red,
+        backgroundColor: Colors.red,
+        marginBottom: 40
     },
     modalText: {
-        marginBottom: 25,
+        marginTop: 20,
         textAlign: 'center',
         fontSize: 40
     },

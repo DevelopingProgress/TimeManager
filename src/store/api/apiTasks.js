@@ -108,7 +108,7 @@ export const addProj = async(user, name, category) => {
     }
 }
 
-export const addTsk = async(user, name, category, project, dueDate, timer) => {
+export const addTsk = async(user, name, category, project, dueDate, timer, description) => {
     try {
         const newTask  = await usersCollection
             .doc(user.uid)
@@ -128,6 +128,7 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
                         timeSpent: 0,
                         isPlaying: false,
                         done: false,
+                        description: description,
                         color: randDarkColor(),
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     } :
@@ -140,6 +141,7 @@ export const addTsk = async(user, name, category, project, dueDate, timer) => {
                         additionalTime: 0,
                         isPlaying: false,
                         done: false,
+                        description: description,
                         color: randDarkColor(),
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     }
@@ -222,7 +224,7 @@ export const updateProj= async (user, name, category, project) => {
     }
 }
 
-export const updateTsk= async (user, name, category, project, task, dueDate, timer, taskTimer) => {
+export const updateTsk= async (user, name, category, project, task, dueDate, timer, taskTimer, description) => {
     try {
         const updateTask = await usersCollection
             .doc(user.uid)
@@ -241,6 +243,7 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
                     timeSpent: 0,
                     isPlaying: false,
                     done: false,
+                    description: description,
                     color: randDarkColor(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 })
@@ -252,7 +255,8 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
                     additionalTime: task.additionalTime !== 0 ? timer : 0,
                     timeSpent: task.additionalTime !== 0 ?
                             task.timeSpent + Math.abs(task.additionalTime - taskTimer) :
-                            task.timeSpent
+                            task.timeSpent,
+                    description: description
                 })
             }
         }

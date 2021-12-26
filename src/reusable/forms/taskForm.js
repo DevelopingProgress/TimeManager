@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Button, Divider, Icon, Input, Switch} from "react-native-elements";
-import {Modal, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Divider, Icon, Input, Switch} from "react-native-elements";
+import {Text, TouchableOpacity, View, StyleSheet, ScrollView, TextInput} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import {Colors} from "../utils/tools";
 import ModalTimerAdd from "../modalTimerAdd";
-
-
-
 const TaskForm  = (props) => {
     const {handleChange, handleBlur, values, containerStyle, setFieldValue, errors, errorStyle, inputStyle, maxLength, touched} = props
     const [mode, setMode] = useState('date');
@@ -77,6 +74,20 @@ const TaskForm  = (props) => {
                         style={{marginTop: 5}}
                     />
             </View>
+            <View style={styles.container}>
+                <Text style={{color: Colors.black, fontSize: 17}}>Opis</Text>
+                <View style={styles.textareaContainer}>
+                    <TextInput
+                        style={styles.textarea}
+                        maxLength={120}
+                        placeholder='Opis do zadania [120 liter]'
+                        multiline={true}
+                        value={values.description}
+                        onChangeText={handleChange('description')}
+                    />
+                </View>
+
+            </View>
             {!props.withoutDate &&
                 <>
                     <TouchableOpacity style={{marginHorizontal: 40}} onPress={showDatePicker} disabled={props.withoutDate}>
@@ -90,7 +101,7 @@ const TaskForm  = (props) => {
                         <Divider color={Colors.black2} style={{borderWidth: 0.3}}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{marginHorizontal: 40, marginTop: 30}} onPress={showTimePicker} disabled={props.withoutDate}>
+                    <TouchableOpacity style={{marginHorizontal: 40, marginTop: 10}} onPress={showTimePicker} disabled={props.withoutDate}>
                         <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
                             <Text style={{color: Colors.grey}}>Godzina</Text>
                             <Text  style={{color: Colors.grey, fontSize: 25, marginBottom: 5, flex: 1, textAlign: 'center'}}>
@@ -101,7 +112,7 @@ const TaskForm  = (props) => {
                         <Divider color={Colors.black2} style={{borderWidth: 0.3}}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{marginHorizontal: 40, marginVertical: 30, marginBottom: 40}} onPress={showTimerPicker} disabled={props.withoutDate}>
+                    <TouchableOpacity style={{marginHorizontal: 40, marginTop: 10, marginBottom: 20}} onPress={showTimerPicker} disabled={props.withoutDate}>
                         <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
                             <Text style={{color: Colors.grey, flex: 0.23}}>Czas</Text>
                             <Text  style={{color: Colors.grey, fontSize: 25, marginBottom: 5, flex: 1, textAlign: 'center'}}>
@@ -114,7 +125,6 @@ const TaskForm  = (props) => {
                         {errors.minutes && <Text style={{color: Colors.red, marginTop: 5, textAlign: 'center'}}>Nieprawidłowy czas - minuty</Text>}
                         {errors.seconds && <Text style={{color: Colors.red, marginTop: 5, textAlign: 'center'}}>Nieprawidłowy czas - sekundy</Text>}
                     </TouchableOpacity>
-
                     <ModalTimerAdd
                         timerPicker={timerPicker}
                         hideTimerPicker={hideTimerPicker}
@@ -127,8 +137,6 @@ const TaskForm  = (props) => {
                     />
                 </>
             }
-
-
             <View>
                 {show && (
                     <DateTimePicker
@@ -147,5 +155,23 @@ const TaskForm  = (props) => {
         </>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 40,
+        marginBottom: 20
+    },
+    textareaContainer: {
+        height: 120,
+        padding: 5,
+        backgroundColor: Colors.eggshell,
+    },
+    textarea: {
+        textAlignVertical: 'top',  // hack android
+        height: 170,
+        fontSize: 14,
+        color: '#333',
+    },
+});
 
 export default  TaskForm

@@ -46,9 +46,9 @@ export const addProject = (user, name, category) => ({
     type: ADD_PROJECT,
     payload: addProj(user, name, category)
 })
-export const addTask = (user, name, category, project, dueDate, timer) => ({
+export const addTask = (user, name, category, project, dueDate, timer, description) => ({
         type: ADD_TASK,
-        payload: addTsk(user, name, category, project, dueDate, timer)
+        payload: addTsk(user, name, category, project, dueDate, timer, description)
     })
 
 //DELETE
@@ -74,9 +74,9 @@ export const updateProject = (user, name, category, project) => ({
     type: UPDATE_PROJECT,
     payload: updateProj(user, name, category, project)
 })
-export const updateTask = (user, name, category, project, task, dueDate, timer, taskTimer) => ({
+export const updateTask = (user, name, category, project, task, dueDate, timer, taskTimer,  description) => ({
     type: UPDATE_TASK,
-    payload: updateTsk(user, name, category, project, task, dueDate, timer, taskTimer)
+    payload: updateTsk(user, name, category, project, task, dueDate, timer, taskTimer, description)
 })
 
 //END TASK

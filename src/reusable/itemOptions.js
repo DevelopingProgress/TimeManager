@@ -172,10 +172,10 @@ export const ItemOptions = (props) => {
                                         onPress: () => {
                                             type === 'category' ?
                                                 dispatch(setLoading()) &&
-                                                loading && dispatch(deleteCategory(user, item))
+                                                dispatch(deleteCategory(user, item))
                                                 :
                                                 dispatch(setLoading()) &&
-                                                loading && dispatch(deleteProject(user, category, item))
+                                                dispatch(deleteProject(user, category, item))
                                         }
                                     }
                                 ], {cancelable: true})

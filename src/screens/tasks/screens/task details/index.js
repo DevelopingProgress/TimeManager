@@ -49,8 +49,8 @@ export const TaskDetailsScreen = (props) => {
        if(modalType === 'task') {
             dispatch(setLoading())
            if(values.withoutDate)
-               dispatch(updateTask(user, values.name, category, project, task, null, 0, null))
-           else dispatch(updateTask(user, values.name, category, project, task, values.date, parseSeconds(values.hours, values.minutes, values.seconds), taskTimer))
+               dispatch(updateTask(user, values.name, category, project, task, null, 0, null, values.description))
+           else dispatch(updateTask(user, values.name, category, project, task, values.date, parseSeconds(values.hours, values.minutes, values.seconds), taskTimer, values.description))
         }
     }
 
@@ -152,6 +152,19 @@ export const TaskDetailsScreen = (props) => {
                         </View>
                     </View>
                 }
+                <View style={{marginHorizontal: 40, marginTop:  20, padding: 20, borderWidth: 1}}>
+                    <Text h4>
+                        Opis
+                    </Text>
+                    {task && task.description ?
+                        <Text style={{fontSize: 18}}>
+                            {task.description}
+                        </Text>:
+                        <Text style={{fontSize: 18}}>
+                            Brak opisu
+                        </Text>
+                    }
+                </View>
             </ScrollView>
             <Button
                 icon={<Icon

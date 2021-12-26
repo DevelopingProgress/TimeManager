@@ -58,7 +58,7 @@ export const AddFab = (props) => {
                     project,
                     null,
                     null,
-                    null
+                    values.description
                 ))
             else dispatch(addTask(
                 user,
@@ -67,7 +67,7 @@ export const AddFab = (props) => {
                 project,
                 values.date,
                 parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds),
-                parseInt(values.hours) * 3600 + parseInt(values.minutes) * 60 + parseInt(values.seconds)
+                values.description
             ))
         }
     }
