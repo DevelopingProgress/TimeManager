@@ -8,10 +8,21 @@ import MonthAnalytics from "./screens/MonthAnalytics";
 import WeekAnalytics from "./screens/WeekAnalytics";
 import DayAnalytics from "./screens/DayAnalytics";
 import { Colors } from "../../reusable/utils/tools";
+import {useDispatch, useSelector} from "react-redux";
+import {useFocusEffect} from "@react-navigation/core";
+import {listAllTasks} from "../../store/actions/tasksActions";
 
 const Tab = createMaterialTopTabNavigator();
 
 export const AnalyticsScreen = ({navigation}) => {
+
+    const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
+
+    useFocusEffect(React.useCallback(() => {
+        dispatch(listAllTasks(user))
+    }, []))
+
     return (
         <>
                 <View style={styles.container}>

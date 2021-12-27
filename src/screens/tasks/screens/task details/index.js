@@ -11,7 +11,9 @@ import {useDispatch, useSelector} from "react-redux";
 import StopWatch from "../../../../reusable/stopwatch";
 import moment from "moment";
 
+
 export const TaskDetailsScreen = (props) => {
+    const {navigation} = props
     const task = props.route.params.task
     const user = props.route.params.user
     const category = props.route.params.category
@@ -65,7 +67,9 @@ export const TaskDetailsScreen = (props) => {
     useEffect(() => {
         if(isPlaying) {
             const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
-            return () => backHandler.remove()
+            return () => {
+                backHandler.remove()
+            }
         }
     }, [isPlaying])
 

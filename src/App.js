@@ -8,7 +8,6 @@ import { AuthScreen } from './screens/auth';
 import { SplashScreen } from './screens/splash';
 import { autoLoginUser } from './store/actions/authActions';
 import { View } from 'react-native';
-import { SettingsScreen } from './screens/settings';
 
 const Stack = createStackNavigator()
 
@@ -31,7 +30,7 @@ class App extends Component {
           backgroundColor: 'rgba(255, 255, 255, 0.2)',
           height: 40,
         }}>
-          <StatusBar 
+          <StatusBar
             translucent
             backgroundColor='transparent'
             hideTransitionAnimation='fade'
@@ -43,40 +42,35 @@ class App extends Component {
           >
             {this.props.auth.isAuth ? (
               <>
-                <Stack.Screen 
-                  name="Home" 
-                  component={HomeStack} 
-                  options={{headerShown: false}}
-                />
-                <Stack.Screen 
-                  name="SettingsScreen" 
-                  component={SettingsScreen} 
+                <Stack.Screen
+                  name="Home"
+                  component={HomeStack}
                   options={{headerShown: false}}
                 />
               </>
-                
+
             )
             : (
-              this.state.loading ? 
+              this.state.loading ?
                 <Stack.Screen
                   name="SplashScreen"
                   component={SplashScreen}
                   options={{headerShown: false}}
                 />
-                : 
+                :
                 <Stack.Screen
                   name="AuthScreen"
                   component={AuthScreen}
                   options={{headerShown: false}}
                 />
-            )} 
+            )}
           </Stack.Navigator>
         </NavigationContainer>
       </>
-      
+
     );
   }
-  
+
 }
 
 const mapStateToProps = state => ({

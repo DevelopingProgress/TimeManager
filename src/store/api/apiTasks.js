@@ -68,6 +68,55 @@ export const listTsk = async(user, category, project) => {
     }
 }
 
+export const listAllTsk = async (user) => {
+    try {
+        let categoriesList = []
+        let projectsList = []
+        let tasksList = []
+
+        const categories = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .orderBy("createdAt", "asc")
+            .get()
+
+        categories.forEach(doc => {
+            categoriesList.push(doc.data())
+        })
+
+        for (const category of categoriesList) {
+            const projects = await usersCollection
+                .doc(user.uid)
+                .collection('categories')
+                .doc(category.id)
+                .collection('projects')
+                .orderBy("createdAt", "asc")
+                .get()
+            projects.forEach(doc => {
+                projectsList.push(doc.data())
+            })
+            for (const project of projectsList) {
+                const tasks = await usersCollection
+                    .doc(user.uid)
+                    .collection('categories')
+                    .doc(category.id)
+                    .collection('projects')
+                    .doc(project.id)
+                    .collection('tasks')
+                    .orderBy("createdAt", "asc")
+                    .get()
+                console.log()
+                tasks.forEach(doc => {
+                    tasksList.push({...doc.data(), projID: project.id, catID: category.id})
+                })
+            }
+        }
+        return {tasks: tasksList, loading: false}
+    } catch (error) {
+        return {error: "Problem z wyświetleniem listy zadań."}
+    }
+}
+
 //ADD
 export const addCat = async(name, user) => {
     try {

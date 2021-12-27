@@ -9,7 +9,7 @@ import {
     delProj,
     delTsk,
     updateCat,
-    updateProj, updateTsk, endTsk, endNoDateTsk
+    updateProj, updateTsk, endTsk, endNoDateTsk, listAllTsk
 } from "../api/apiTasks";
 import {
     ADD_CATEGORY,
@@ -35,6 +35,10 @@ export const listProjects = (user, category) => ({
 export const listTasks = (user, category, project) => ({
     type: LIST_TASKS,
     payload: listTsk(user, category, project)
+})
+export const listAllTasks = (user) => ({
+    type: LIST_TASKS,
+    payload: listAllTsk(user)
 })
 
 //ADD

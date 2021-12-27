@@ -12,7 +12,7 @@ import { useFocusEffect } from '@react-navigation/core'
 
 export const HomeScreen = ({navigation}) => {
 
-    var hours = new Date().getHours()
+    const hours = new Date().getHours();
     const user = useSelector(state => state.auth.user)
     const scrollRef = useRef();
 

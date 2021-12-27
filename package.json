@@ -34,6 +34,7 @@
     "react-native": "0.64.3",
     "react-native-awesome-alerts": "^1.5.2",
     "react-native-background-timer": "^2.4.1",
+    "react-native-calendars": "^1.1274.0",
     "react-native-chart-kit": "^6.11.0",
     "react-native-elements": "^3.4.2",
     "react-native-flipper": "^0.126.0",
