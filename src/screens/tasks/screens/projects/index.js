@@ -49,7 +49,6 @@ export const ProjectsScreen = (props) => {
                     </View>
                 }
             </ScrollView>
-            <AddFab type={1} category={category}/>
         </>
 
     )

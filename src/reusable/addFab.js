@@ -114,12 +114,13 @@ export const AddFab = (props) => {
                     height: 55,
                     borderStyle: "solid",
                     borderColor: Colors.lightgrey,
-                    borderWidth: 1
+                    borderWidth: 1,
                 }}
                 containerStyle={{
-                    position: "absolute",
-                    right: 15,
-                    bottom: 20
+                    // position: "absolute",
+                    // right: 15,
+                    // top: 10
+                    flex: 0.2
                 }}
             />
         </>

@@ -200,7 +200,6 @@ export const TaskScreen = (props) => {
                 </View>
                 }
             </ScrollView>
-            <AddFab type={2} category={category} project={project}/>
         </>
 
     )

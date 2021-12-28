@@ -14,7 +14,7 @@ export const register = async({email, name, password}) => {
             uid: user.uid,
             email: email,
             name: name
-        } 
+        }
 
         await usersCollection.doc(user.uid).set(userProfile);
 
@@ -25,7 +25,7 @@ export const register = async({email, name, password}) => {
         return {isAuth: false, isVerified: false, message: 'Wysłano wiadomość e-mail z potwierdzeniem.'}
 
     } catch (error) {
-        return {error: 'Nie udało się zarejestrować, proszę sprawdzić swoje dane logowania.'}
+        return {error: 'Nie udało się zarejestrować, proszę sprawdzić swoje dane logowania.', errStatus: error.message}
     }
 }
 
@@ -40,13 +40,13 @@ export const login = async({email, password}) => {
             return {isAuth: true, isVerified: true, user: data}
         } else {
             return {
-                isAuth: false, 
-                isVerified: false, 
+                isAuth: false,
+                isVerified: false,
                 error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.'}
         }
-        
+
     } catch (error) {
-        return {error: 'Nie udało się zalogować, proszę sprawdzić swoje dane logowania.'}
+        return {error: 'Nie udało się zalogować, proszę sprawdzić swoje dane logowania.', errStatus: error.message}
     }
 }
 
@@ -59,17 +59,17 @@ export const loginFacebook = async() => {
         const {type, token} = await Facebook.logInWithReadPermissionsAsync({
             permissions: ['public_profile', 'email']
         })
-        
-        if(type === 'success') {
 
+        if(type === 'success') {
             const credential = firebase.auth.FacebookAuthProvider.credential(token)
             const res = await firebase.auth().signInWithCredential(credential)
             await firebase.auth().updateCurrentUser(res.user)
             const userProfile = {
                 uid: res.user.uid,
                 email: res.user.email,
-                name: res.user.displayName
-            } 
+                name: res.user.displayName,
+                isFacebook: true
+            }
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 
             if(ActiveUser.exists) {
@@ -79,11 +79,11 @@ export const loginFacebook = async() => {
                 await usersCollection.doc(res.user.uid).set(userProfile);
                 return {isAuth: true, isVerified: true, user: userProfile}
             }
-        } 
+        }
     } catch (error) {
-        return {error: "Nie udało się zalogować, błąd logowania poprzez Facebook."}
+        return {error: "Nie udało się zalogować, błąd logowania poprzez Facebook.", errStatus: error.message}
     }
-    
+
 }
 
 export const loginGoogle = async() => {
@@ -102,7 +102,7 @@ export const loginGoogle = async() => {
                 uid: res.user.uid,
                 email: res.user.email,
                 name: res.user.displayName
-            } 
+            }
             const ActiveUser = await usersCollection.doc(res.user.uid).get();
 
             if(ActiveUser.exists) {
@@ -114,9 +114,9 @@ export const loginGoogle = async() => {
             }
         }
     } catch (error) {
-        return {error: 'Nie udało się zalogować, błąd logowania poprzez Google.'}
+        return {error: 'Nie udało się zalogować, błąd logowania poprzez Google.', errStatus: error.message}
     }
-    
+
 }
 
 export const autoLogin = () => (
@@ -124,7 +124,7 @@ export const autoLogin = () => (
         firebase.auth().onAuthStateChanged( user => {
             if(user){
                 usersCollection.doc(user.uid).get().then( snapshot =>{
-                    if(user.emailVerified) {
+                    if(user.emailVerified || snapshot.data().isFacebook) {
                         resolve({ isAuth: true, isVerified: true, user: snapshot.data() })
                     } else {
                         resolve({ isAuth: false, isVerified: false, user:[], error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.' })

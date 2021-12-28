@@ -12,6 +12,7 @@ import {
     setLoading
 } from "../store/actions/tasksActions";
 import {preserveTimer, updateTimerDatabase} from "../store/actions/timerActions";
+import {AddFab} from "./addFab";
 
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
@@ -38,6 +39,7 @@ export const StackHeader = (props) => {
                         <View  style={styles.textWrapper}>
                             <Text style={styles.text}>Kategorie</Text>
                         </View>
+                        <AddFab type={0}/>
                     </View>
                 ) : type === 'projects' ? (
                     <View style={styles.container}>
@@ -61,6 +63,7 @@ export const StackHeader = (props) => {
                             </Text>
                             <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w kategorii {category.name}</Text>
                         </View>
+                        <AddFab type={1} category={category}/>
                     </View>
                 ) : type === 'tasks' ? (
                     <>
@@ -84,6 +87,7 @@ export const StackHeader = (props) => {
                                     Zadania
                                 </Text>
                             </View>
+                            <AddFab type={2} category={category} project={project}/>
                         </View>
                         <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w projekcie {project.name}</Text>
                     </>

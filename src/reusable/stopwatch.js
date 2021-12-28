@@ -80,7 +80,7 @@ const StopWatch = (props) => {
                 showProgress={false}
                 title="Czas się skończył"
                 message="Czy chcesz ukończyć zadanie?"
-                closeOnTouchOutside={true}
+                closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
                 showCancelButton={true}
                 showConfirmButton={true}

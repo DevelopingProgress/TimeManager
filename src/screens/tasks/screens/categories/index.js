@@ -47,7 +47,6 @@ export const CategoriesScreen = ({navigation}) => {
                     </View>
                 }
             </ScrollView>
-            <AddFab type={0}/>
         </>
 
     )

@@ -54,8 +54,8 @@ export const HomeScreen = ({navigation}) => {
                 image={AnalyticsImage}
             />
             <Pane
-                title='Zintegruj zadania'
-                sub='Zintegruj swoje zadania z kalendarzem'
+                title='Kalendarz'
+                sub='Przeglądaj zadania we wbudowanym kalendarzu'
                 navigation={navigation}
                 navigate='CalendarScreen'
                 image={CalendarImage}
