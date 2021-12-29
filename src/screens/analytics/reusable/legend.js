@@ -7,11 +7,11 @@ import {Divider, Icon} from "react-native-elements";
 
 const Legend = (props) => {
 
-    const {tasks, day, week, month} = props
+    const {tasks, day, week, month, category, project} = props
     return (
         <View style={{paddingHorizontal: 20}}>
             {
-                tasks.filter((item) => {
+                tasks ? tasks.filter((item) => {
                     if(day) {
                         return moment(item.endDate && item.endDate.toDate(),"YYYY-MM-DD").dayOfYear() ===
                             moment(new Date(Date.now()), "YYYY-MM-DD").dayOfYear()
@@ -22,7 +22,15 @@ const Legend = (props) => {
                         return moment(item.endDate && item.endDate.toDate(), "YYYY-MM-DD").month() ===
                             moment(new Date(Date.now()), "YYYY-MM-DD").month()
                     }
-            }).map((item) => (
+                }).filter((item) => {
+                    if (category !== null) {
+                        return item.catID === category.id
+                    } else return item
+                }).filter(item => {
+                    if (project !== null) {
+                        return item.projID === project.id
+                    } else return item
+                }).map((item) => (
                 <>
                     <View style={{flexDirection: 'row'}}>
                         <Icon name='circle' color={item.color} size={30} style={{marginTop: 10}}/>
@@ -37,7 +45,7 @@ const Legend = (props) => {
                     <Divider />
                 </>
 
-           ))}
+           )) : null}
         </View>
 
     );

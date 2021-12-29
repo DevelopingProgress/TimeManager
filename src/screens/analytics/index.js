@@ -10,7 +10,7 @@ import DayAnalytics from "./screens/DayAnalytics";
 import { Colors } from "../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
 import {useFocusEffect} from "@react-navigation/core";
-import {listAllTasks} from "../../store/actions/tasksActions";
+import {listAllProjects, listAllTasks} from "../../store/actions/tasksActions";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -21,6 +21,7 @@ export const AnalyticsScreen = ({navigation}) => {
 
     useFocusEffect(React.useCallback(() => {
         dispatch(listAllTasks(user))
+        dispatch(listAllProjects(user))
     }, []))
 
     return (

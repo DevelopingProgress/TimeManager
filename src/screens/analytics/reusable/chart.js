@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Text, View} from 'react-native';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import ChooseAble from "./chooseAble";
 import {useDispatch, useSelector} from "react-redux";
 import {PieChart} from "react-native-chart-kit";
@@ -16,18 +16,16 @@ const Chart = (props) => {
     const tasks = useSelector(state => state.app.tasks)
     const loading = useSelector(state => state.app.loading)
     const dispatch = useDispatch()
-    const [categoriesTrigger, setCategoriesTrigger] = useState('');
-    const [projectsTrigger, setProjectsTrigger] = useState('');
-    const {day, week, month} = props
+    const [category, setCategory] = useState(null);
+    const [project, setProject] = useState(null);
+    const [categoriesTrigger, setCategoriesTrigger] = useState('Wszystkie kategorie');
+    const [projectsTrigger, setProjectsTrigger] = useState('Wszystkie projekty');
+    const {day, week, month, navigation} = props
 
-    useEffect(() => {
-        dispatch(setLoading())
-        dispatch(listProjects(user, categories[0]))
-        dispatch(setLoading())
-        dispatch(listTasks(user, categories[0], projects[0]))
-    }, [])
+    useEffect(() => {}, [tasks]);
 
-    const data = tasks.filter((item) => {
+
+    const data = tasks && tasks.filter((item) => {
         if(day) {
             return moment(item.endDate && item.endDate.toDate(),"YYYY-MM-DD").dayOfYear() ===
                 moment(new Date(Date.now()), "YYYY-MM-DD").dayOfYear()
@@ -38,8 +36,17 @@ const Chart = (props) => {
             return moment(item.endDate && item.endDate.toDate(), "YYYY-MM-DD").month() ===
                 moment(new Date(Date.now()), "YYYY-MM-DD").month()
         }
-    }).filter((item) => item.timeSpent).map((item) => {
+    }).filter((item) => item.timeSpent).filter((item) => {
+            if (category !== null) {
+                return item.catID === category.id
+            } else return item
+        }).filter(item => {
+            if (project !== null) {
+                return item.projID === project.id
+            } else return item
+        }).map((item) => {
         return {
+            id: item.id,
             name: item.name,
             timeSpent: item.timeSpent,
             color: item.color,
@@ -48,16 +55,18 @@ const Chart = (props) => {
         }
     })
 
-
     return (
+        tasks.length > 0 ?
         <View>
             <ChooseAble data={{
                 user, categories, projects, tasks,
                 loading, dispatch,
+                category, setCategory,
+                project, setProject,
                 categoriesTrigger, setCategoriesTrigger,
-                projectsTrigger, setProjectsTrigger
+                projectsTrigger, setProjectsTrigger,
             }}/>
-            {data !== [] ?
+            {data.length > 0 ?
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <PieChart
                     hasLegend={false}
@@ -79,12 +88,23 @@ const Chart = (props) => {
                     backgroundColor={"transparent"}
                     paddingLeft={"85"}
                 />
-                <Legend tasks={tasks} day={day} week={week} month={month}/>
+                <Legend tasks={tasks} day={day} week={week} month={month} category={category} project={project}/>
             </View> :
-                <View style={{alignContent: 'center', alignItems: 'center'}}>
-                    <Text style={{fontSize: 20, color: Colors.red}}>Brak analityki dla wybranego projektu</Text>
+                <View style={{alignContent: 'center', alignItems: 'center', marginTop: 20}}>
+                    <Text style={{fontSize: 20, color: Colors.red}}>Brak zadań do analizy</Text>
+                    <Text style={{fontSize: 17, color: Colors.black3}}>
+                        Wybierz odpowiednią kategorię i projekt
+                    </Text>
                 </View>
             }
+        </View> :
+        <View style={{alignContent: 'center', alignItems: 'center', Top: 20}}>
+            <Text style={{fontSize: 20, color: Colors.red}}>Brak zadań do analizy</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('CategoriesScreen')}>
+                <Text style={{fontSize: 17, color: Colors.black3}}>
+                    Kliknij tutaj aby przejść do tworzenia zadań
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 };

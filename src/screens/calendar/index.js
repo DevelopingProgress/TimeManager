@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Text, TouchableOpacity, View} from 'react-native'
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native'
 import { GreetingText } from '../../reusable/utils/greetingText'
 import { styles } from '../home'
 import { LogoutIcon } from '../../reusable/logoutIcon'
@@ -68,16 +68,27 @@ export const CalendarScreen = ({navigation}) => {
                 <GreetingText title='Kalendarz'/>
                 <LogoutIcon navigation={navigation}/>
             </View>
-            {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
-                <View style={{flex: 1}}>
-                    <Agenda
-                        items={items}
-                        loadItemsForMonth={loadItems}
-                        selected={moment(new Date(Date.now()), 'YYYY-MM-DD').toString()}
-                        renderItem={renderItem}
-                        minDate={'2012-05-10'}
-                    />
-                </View>
+            {
+                tasks.length !== 0 ?
+                    loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
+                        <View style={{flex: 1}}>
+                            <Agenda
+                                items={items}
+                                loadItemsForMonth={loadItems}
+                                selected={moment(new Date(Date.now()), 'YYYY-MM-DD').toString()}
+                                renderItem={renderItem}
+                                minDate={'2012-05-10'}
+                            />
+                        </View>
+                    :
+                    <View style={{alignContent: 'center', alignItems: 'center', margin: 20}}>
+                        <Text style={{fontSize: 20, color: Colors.red}}>Brak zadań w kalendarzu</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('CategoriesScreen')}>
+                            <Text style={{fontSize: 17, color: Colors.black3}}>
+                                Kliknij tutaj aby przejść do tworzenia zadań
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
             }
         </>
     )

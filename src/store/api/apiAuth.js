@@ -22,10 +22,10 @@ export const register = async({email, name, password}) => {
 
         await firebase.auth().signOut()
 
-        return {isAuth: false, isVerified: false, message: 'Wysłano wiadomość e-mail z potwierdzeniem.'}
+        return {loading: false, isAuth: false, isVerified: false, message: 'Wysłano wiadomość e-mail z potwierdzeniem.'}
 
     } catch (error) {
-        return {error: 'Nie udało się zarejestrować, proszę sprawdzić swoje dane logowania.', errStatus: error.message}
+        return {loading: false, error: 'Nie udało się zarejestrować, proszę sprawdzić swoje dane logowania.', errStatus: error.message}
     }
 }
 
@@ -42,11 +42,12 @@ export const login = async({email, password}) => {
             return {
                 isAuth: false,
                 isVerified: false,
+                loading: false,
                 error: 'Proszę zweryfikować konto poprzez automatycznie wysłaną wiadomość e-mail.'}
         }
 
     } catch (error) {
-        return {error: 'Nie udało się zalogować, proszę sprawdzić swoje dane logowania.', errStatus: error.message}
+        return {loading: false, error: 'Nie udało się zalogować, proszę sprawdzić swoje dane logowania.', errStatus: error.message}
     }
 }
 
@@ -81,7 +82,7 @@ export const loginFacebook = async() => {
             }
         }
     } catch (error) {
-        return {error: "Nie udało się zalogować, błąd logowania poprzez Facebook.", errStatus: error.message}
+        return {loading: false, error: "Nie udało się zalogować, błąd logowania poprzez Facebook.", errStatus: error.message}
     }
 
 }
@@ -146,6 +147,6 @@ export const passwordReset = async(email) => {
         await firebase.auth().sendPasswordResetEmail(email)
         return {message: 'Wysłano e-mail do resetu hasła.'}
     } catch (error) {
-        return {error: "Problem z wysłaniem wiadomości e-mail resetującej hasło."}
+        return {loading: false, error: "Problem z wysłaniem wiadomości e-mail resetującej hasło.", errStatus: error.message}
     }
 }

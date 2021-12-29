@@ -19,7 +19,7 @@ export const listCat = async(user) => {
 
         return {categories: categoriesList, loading: false}
     } catch (error) {
-        return {error: "Problem z wyświetleniem listy kategorii."}
+        return {loading: false, error: "Problem z wyświetleniem listy kategorii.", errStatus: error.message}
     }
 
 }
@@ -40,7 +40,7 @@ export const listProj = async(user, category) => {
 
         return {projects: projectsList, loading: false}
     } catch (error) {
-        return {error: "Problem z wyświetleniem listy projektów."}
+        return {loading: false, error: "Problem z wyświetleniem listy projektów.", errStatus: error.message}
     }
 }
 
@@ -64,7 +64,40 @@ export const listTsk = async(user, category, project) => {
         return {tasks: tasksList, loading: false}
 
     } catch (error) {
-        return {error: "Problem z wyświetleniem listy zadań."}
+        return {loading: false, error: "Problem z wyświetleniem listy zadań.", errStatus: error.message}
+    }
+}
+
+export const listAllProj = async (user) => {
+    try {
+        let categoriesList = []
+        let projectsList = []
+        const categories = await usersCollection
+            .doc(user.uid)
+            .collection('categories')
+            .orderBy("createdAt", "asc")
+            .get()
+
+        categories.forEach(doc => {
+            categoriesList.push(doc.data())
+        })
+
+        for (const category of categoriesList) {
+            const projects = await usersCollection
+                .doc(user.uid)
+                .collection('categories')
+                .doc(category.id)
+                .collection('projects')
+                .orderBy("createdAt", "asc")
+                .get()
+            projects.forEach(doc => {
+                projectsList.push({...doc.data(), catID: category.id})
+            })
+        }
+
+        return {projects: projectsList, loading: false}
+    } catch (error) {
+        return {loading: false, error: "Problem z wyświetleniem listy projektów.", errStatus: error.message}
     }
 }
 
@@ -113,7 +146,7 @@ export const listAllTsk = async (user) => {
         }
         return {tasks: tasksList, loading: false}
     } catch (error) {
-        return {error: "Problem z wyświetleniem listy zadań."}
+        return {loading: false, error: "Problem z wyświetleniem listy zadań.", errStatus: error.message}
     }
 }
 
@@ -131,7 +164,7 @@ export const addCat = async(name, user) => {
         }
         return {status: 'category_added', message: "Dodano kategorię.", loading: false}
     } catch (error) {
-        return {error: "Problem przy dodawaniu kategorii."}
+        return {loading: false, error: "Problem przy dodawaniu kategorii.", errStatus: error.message}
     }
 }
 
@@ -153,7 +186,7 @@ export const addProj = async(user, name, category) => {
         }
         return {status: 'project_added', message: "Dodano projekt.", loading: false}
     } catch (error) {
-        return {error: "Problem przy dodawaniu projektu."}
+        return {loading: false, error: "Problem przy dodawaniu projektu.", errStatus: error.message}
     }
 }
 
@@ -198,7 +231,7 @@ export const addTsk = async(user, name, category, project, dueDate, timer, descr
         }
         return {status: 'task_added', message: "Dodano zadanie.", loading: false}
     } catch (error) {
-        return {error: "Problem przy dodawaniu zadania."}
+        return {loading: false, error: "Problem przy dodawaniu zadania.", errStatus: error.message}
     }
 }
 
@@ -208,7 +241,7 @@ export const delCat = async (user, category) => {
         await usersCollection.doc(user.uid).collection('categories').doc(category.id).delete()
         return {status: 'category_deleted', message: "Usunięto  kategorię.", loading: false}
     } catch (error) {
-        return {error: "Problem przy usuwaniu  kategorii."}
+        return {loading: false, error: "Problem przy usuwaniu  kategorii.", errStatus: error.message}
     }
 }
 
@@ -222,7 +255,7 @@ export const delProj= async (user, category, project) => {
             .doc(project.id).delete()
         return {status: 'project_deleted', message: "Usunięto  projekt.", loading: false}
     } catch (error) {
-        return {error: "Problem przy usuwaniu  projektu."}
+        return {loading: false, error: "Problem przy usuwaniu  projektu.", errStatus: error.message}
     }
 }
 
@@ -240,7 +273,7 @@ export const delTsk= async (user, category, project, task) => {
 
         return {status: 'task_deleted', message: "Usunięto  zadanie.", loading: false}
     } catch (error) {
-        return {error: "Problem przy usuwaniu  zadania."}
+        return {loading: false, error: "Problem przy usuwaniu  zadania.", errStatus: error.message}
     }
 }
 
@@ -252,7 +285,7 @@ export const updateCat = async (name, user, category) => {
         })
         return {status: 'category_updated', message: "Zaktualizowano  kategorię.", loading: false}
     } catch (error) {
-        return {error: "Problem przy aktualizacji  kategorii."}
+        return {loading: false, error: "Problem przy aktualizacji  kategorii.", errStatus: error.message}
     }
 }
 
@@ -269,7 +302,7 @@ export const updateProj= async (user, name, category, project) => {
             })
         return {status: 'project_updated', message: "Zaktualizowano  projekt.", loading: false}
     } catch (error) {
-        return {error: "Problem przy aktualizacji  projektu."}
+        return {loading: false, error: "Problem przy aktualizacji  projektu.", errStatus: error.message}
     }
 }
 
@@ -311,7 +344,7 @@ export const updateTsk= async (user, name, category, project, task, dueDate, tim
         }
         return {status: 'task_updated', message: "Zaktualizowano  zadanie.", loading: false}
     } catch (error) {
-        return {error: "Problem przy aktualizacji  zadania."}
+        return {loading: false, error: "Problem przy aktualizacji  zadania.", errStatus: error.message}
     }
 }
 
@@ -332,7 +365,7 @@ export const endTsk = async (user, category, project, task, endDate) => {
         }
         return {status: 'task_ended', message: "Ukończono  zadanie.", loading: false}
     } catch (error) {
-        return {error: "Problem przy ukończeniu  zadania."}
+        return {loading: false, error: "Problem przy ukończeniu  zadania.", errStatus: error.message}
     }
 }
 
@@ -355,6 +388,6 @@ export const endNoDateTsk = async (user, category, project, task, endDate, timeS
         }
         return {status: 'task_ended', message: "Ukończono  zadanie.", loading: false}
     } catch (error) {
-        return {error: "Problem przy ukończeniu  zadania."}
+        return {loading: false, error: "Problem przy ukończeniu  zadania.", errStatus: error.message}
     }
 }

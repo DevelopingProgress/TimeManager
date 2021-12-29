@@ -12,27 +12,30 @@ import {
     setLoading
 } from "../../../store/actions/tasksActions";
 import {Loading} from "../../../reusable/utils/loading";
+import {Colors} from "../../../reusable/utils/tools";
 
 const ChooseAble = (props) => {
 
     const data = props.data
     const {user, categories, projects, loading, dispatch, categoriesTrigger, setCategoriesTrigger,
-        projectsTrigger, setProjectsTrigger} = data
-    const [category, setCategory] = useState(null);
-    useEffect(() => {
-        setCategoriesTrigger(categories[0].name && categories[0].name)
-    }, [])
+        projectsTrigger, setProjectsTrigger, category, setCategory, setProject} = data
+
 
     return (
         loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
                 <View style={styles.row}>
                     <View style={styles.rowContainer}>
                         <Menu onSelect={(value) => {
-                                dispatch(clearProjects())
-                                dispatch(setLoading())
-                                dispatch(listProjects(user, value))
+                            if(value.id) {
                                 setCategory(value)
                                 setCategoriesTrigger(value.name)
+                                setProjectsTrigger('Wszystkie projekty')
+                            } else {
+                                setCategory(null)
+                                setProject(null)
+                                setCategoriesTrigger(value.name)
+                                setProjectsTrigger('Wszystkie projekty')
+                            }
                         }}>
                             <MenuTrigger>
                                 <View style={{flexDirection: 'row', alignContent: 'center'}}>
@@ -41,6 +44,9 @@ const ChooseAble = (props) => {
                                 </View>
                             </MenuTrigger>
                             <MenuOptions optionsContainerStyle={{marginTop: 20}}>
+                                <MenuOption value={{name: 'Wszystkie kategorie'}}>
+                                    <Text style={[styles.optionStyle, {color: Colors.black}]}>Wszystkie kategorie</Text>
+                                </MenuOption>
                                 {(categories.map((item) => (
                                     <MenuOption value={item}  key={item.id}>
                                         <Text style={[styles.optionStyle, {color: item.color}]}>{item.name}</Text>
@@ -52,11 +58,13 @@ const ChooseAble = (props) => {
                     {category !== null &&
                         <View style={styles.rowContainer}>
                             <Menu onSelect={(value) => {
-                                dispatch(clearTasks())
-                                dispatch(setLoading())
-                                dispatch(listTasks(user, category, value))
-                                setCategoriesTrigger(category.name)
-                                setProjectsTrigger(value.name)
+                                if(value.id) {
+                                    setProject(value)
+                                    setProjectsTrigger(value.name)
+                                } else {
+                                    setProject(null)
+                                    setProjectsTrigger(value.name)
+                                }
                             }}>
                                 <MenuTrigger>
                                     <View style={{flexDirection: 'row', alignContent: 'center'}}>
@@ -65,7 +73,10 @@ const ChooseAble = (props) => {
                                     </View>
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{marginTop: 20}}>
-                                    {(projects.map((item) => (
+                                    <MenuOption value={{name: 'Wszystkie projekty'}}>
+                                        <Text style={[styles.optionStyle, {color: Colors.black}]}>Wszystkie projekty</Text>
+                                    </MenuOption>
+                                    {(projects.filter(item => item.catID === category.id).map((item) => (
                                         <MenuOption value={item}  key={item.id}>
                                             <Text style={[styles.optionStyle, {color: item.color}]}>{item.name}</Text>
                                         </MenuOption>
