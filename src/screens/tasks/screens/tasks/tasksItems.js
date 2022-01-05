@@ -9,19 +9,24 @@ const TasksItems = (props) => {
     const {user, category, project, filter, tasks, navigation} = props
 
     const getPolishMonths = (item) => {
-        return item.dueDate && item.dueDate ? item.dueDate.toDate().getDate().toString()
+        return category && category.id === item.catID && project && project.id === item.projID &&
+        item.dueDate && item.dueDate ? item.dueDate.toDate().getDate().toString()
             + ' ' + polishShortMonths(item.dueDate && item.dueDate.toDate().getUTCMonth() + 1) : 'brak'
     }
 
     const compareDates = (item) => {
         if(filter === 'today')
-            return item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()
+            return category && category.id === item.catID && project && project.id === item.projID &&
+                item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()
         if(filter === 'overdue')
-            return item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") < getTodayDate()
+            return category && category.id === item.catID && project && project.id === item.projID &&
+                item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") < getTodayDate()
         if(filter === 'next')
-            return item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()
+            return category && category.id === item.catID && project && project.id === item.projID &&
+                item.dueDate && !item.done && moment(item.dueDate.toDate()).format("YYYY-MM-DD") > getTodayDate()
         if(filter === 'nodate')
-            return !item.done && !item.dueDate
+            return category && category.id === item.catID && project && project.id === item.projID &&
+                !item.done && !item.dueDate
     }
 
     return (

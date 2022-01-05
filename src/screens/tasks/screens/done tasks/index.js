@@ -5,8 +5,9 @@ import {ListItem} from "react-native-elements";
 import {Colors, polishShortMonths} from "../../../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
 import {useFocusEffect} from "@react-navigation/core";
-import {listTasks, setLoading} from "../../../../store/actions/tasksActions";
+import {listAllTasks, setLoading} from "../../../../store/actions/tasksActions";
 import {Loading} from "../../../../reusable/utils/loading";
+import {StackHeader} from "../../../../reusable/stackHeader";
 
 export const DoneTasksScreen = (props) => {
 
@@ -21,7 +22,7 @@ export const DoneTasksScreen = (props) => {
     useFocusEffect (
         React.useCallback(() => {
             dispatch(setLoading())
-            dispatch(listTasks(user, category, project))
+            dispatch(listAllTasks(user))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,
@@ -30,38 +31,43 @@ export const DoneTasksScreen = (props) => {
     );
 
     const getPolishMonths = (item) => {
-        return item.dueDate && item.dueDate ? item.dueDate.toDate().getDate().toString()
+        return category && category.id === item.catID && project && project.id === item.projID &&
+        item.dueDate && item.dueDate ? item.dueDate.toDate().getDate().toString()
             + ' ' + polishShortMonths(item.dueDate && item.dueDate.toDate().getUTCMonth() + 1) : 'brak'
     }
 
     return (
-        <ScrollView style={styles.mainContainer}>
-            {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
-                tasks.filter((item) =>  item.done === true).length > 0 ?
-                    tasks
-                        .filter((item) =>  item.done === true)
-                        .map((item) => (
-                            <View key={item.id}>
-                                <ListItem onPress={() => {
-                                    props.navigation.navigate('TaskDetailsScreen', {
-                                        task: item,
-                                        user: user,
-                                        category: category,
-                                        project: project,
-                                    })
-                                }}>
-                                    <ListItem.Title style={{color: item.color, fontWeight: 'bold', flex: 5}}>{item.name}</ListItem.Title>
-                                    <ListItem.Content><Text style={{alignSelf: 'flex-end'}}>{item.dueDate && getPolishMonths(item)}</Text></ListItem.Content>
-                                    <ListItem.Chevron color={Colors.black2} iconStyle={{alignSelf: 'flex-end'}}/>
-                                </ListItem>
+        <>
+            <ScrollView style={styles.mainContainer}>
+                {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
+                    tasks.filter((item) =>  category && category.id === item.catID && project && project.id === item.projID &&
+                        item.done === true).length > 0 ?
+                        tasks
+                            .filter((item) =>  category && category.id === item.catID && project && project.id === item.projID && item.done === true)
+                            .map((item) => (
+                                <View key={item.id}>
+                                    <ListItem onPress={() => {
+                                        props.navigation.navigate('TaskDetailsScreen', {
+                                            task: item,
+                                            user: user,
+                                            category: category,
+                                            project: project,
+                                        })
+                                    }}>
+                                        <ListItem.Title style={{color: item.color, fontWeight: 'bold', flex: 5}}>{item.name}</ListItem.Title>
+                                        <ListItem.Content><Text style={{alignSelf: 'flex-end'}}>{item.dueDate && getPolishMonths(item)}</Text></ListItem.Content>
+                                        <ListItem.Chevron color={Colors.black2} iconStyle={{alignSelf: 'flex-end'}}/>
+                                    </ListItem>
+                                </View>
+                            )) : (
+                            <View style={{alignContent: 'center', alignItems: 'center', marginTop: 10}}>
+                                <Text style={{fontSize: 20, color: Colors.red}}>Brak ukończonych zadań</Text>
                             </View>
-                        )) : (
-                        <View style={{alignContent: 'center', alignItems: 'center', marginTop: 10}}>
-                            <Text style={{fontSize: 20, color: Colors.red}}>Brak ukończonych zadań</Text>
-                        </View>
-                    )
-            }
-        </ScrollView>
+                        )
+                }
+            </ScrollView>
+        </>
+
     );
 };
 

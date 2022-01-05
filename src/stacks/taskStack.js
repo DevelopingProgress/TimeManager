@@ -10,15 +10,8 @@ import {View} from "react-native";
 const Tab = createMaterialTopTabNavigator();
 
 export  const TaskStack = (props) => {
-
-    const user = useSelector(state => state.auth.user)
-    const project  = props.route.params.item
-    const category = props.route.params.category
     return (
         <>
-            <View style={{paddingBottom: 10, backgroundColor: Colors.white}}>
-                <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category} project={project}/>
-            </View>
             <Tab.Navigator
                 initialRouteName='TaskScreen'
             >

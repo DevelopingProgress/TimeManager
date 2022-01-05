@@ -7,7 +7,7 @@ import {Agenda} from "react-native-calendars";
 import moment from "moment";
 import {Colors} from "../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
-import {listAllTasks, setLoading} from "../../store/actions/tasksActions";
+import {listAllProjects, listAllTasks, listCategories, setLoading} from "../../store/actions/tasksActions";
 import {useFocusEffect} from "@react-navigation/core";
 import {Loading} from "../../reusable/utils/loading";
 
@@ -16,12 +16,16 @@ export const CalendarScreen = ({navigation}) => {
     const [items, setItems] = useState({});
     const user = useSelector(state => state.auth.user)
     const tasks = useSelector(state => state.app.tasks)
+    const categories = useSelector(state => state.app.categories)
+    const projects = useSelector(state => state.app.projects)
     const loading = useSelector(state => state.app.loading)
     const dispatch = useDispatch()
 
     useFocusEffect(React.useCallback(() => {
         dispatch(setLoading())
         dispatch(listAllTasks(user))
+        dispatch(listCategories(user))
+        dispatch(listAllProjects(user))
     }, []))
 
     const renderItem = (item) => {
@@ -38,7 +42,17 @@ export const CalendarScreen = ({navigation}) => {
                     marginRight: 20
                 }}
                 onPress={() => navigation.navigate('TaskDetailsScreen',
-                    {task: item, user: user, category: item.catID, project: item.projID})}
+                    {
+                        task: item,
+                        user: user,
+                        category: categories && categories.find(function (category) {
+                            return category.id === item.catID
+                        }),
+                        project: projects && projects.find(function (project) {
+                            return project.id === item.projID
+                        }),
+                        navigation: navigation
+                    })}
             >
                 <Text style={{color: Colors.white}}>{item.name}</Text>
             </TouchableOpacity>

@@ -1,0 +1,1 @@
+/home/kacper/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/213.6461.79/bin/idea.sh

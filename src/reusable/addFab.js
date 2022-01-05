@@ -6,7 +6,7 @@ import {
     addCategory,
     addProject,
     addTask,
-    clearStatus,
+    clearStatus, listAllProjects, listAllTasks,
     listCategories, listProjects, listTasks, setLoading,
 } from '../store/actions/tasksActions';
 import {Button, Icon} from "react-native-elements";
@@ -81,12 +81,13 @@ export const AddFab = (props) => {
         if(status === 'project_added') {
             setModalVisible(false)
             dispatch(clearStatus())
-            dispatch(listProjects(user, category))
+            dispatch(listAllProjects(user))
         }
         if(status === 'task_added') {
             setModalVisible(false)
             dispatch(clearStatus())
-            dispatch(listTasks(user, category, project))
+            dispatch(setLoading())
+            dispatch(listAllTasks(user))
         }
     }, [status]);
 

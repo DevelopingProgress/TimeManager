@@ -7,7 +7,13 @@ import {Tiles} from "../../../../reusable/tiles";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors} from "../../../../reusable/utils/tools";
-import {clearStatus, listProjects, listTasks, setLoading} from "../../../../store/actions/tasksActions";
+import {
+    clearStatus,
+    listAllProjects,
+    listProjects,
+    listTasks,
+    setLoading
+} from "../../../../store/actions/tasksActions";
 import {Loading} from "../../../../reusable/utils/loading";
 import {useFocusEffect} from "@react-navigation/core";
 
@@ -22,7 +28,7 @@ export const ProjectsScreen = (props) => {
     useFocusEffect (
         React.useCallback(() => {
             dispatch(setLoading())
-            dispatch(listProjects(user, category))
+            dispatch(listAllProjects(user))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,

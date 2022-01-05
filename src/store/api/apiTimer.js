@@ -55,7 +55,7 @@ export const toggleTmr = async (user, category, project, tasks, task, isPlaying)
         item.id === task.id ? {...item, isPlaying: isPlaying} : {...item}
     ))
 
-    return {tasks:  newTasks}
+    return {tasks:  newTasks, loading: false}
 }
 
 export  const updateSW = async (tasks, task) => {
@@ -67,5 +67,6 @@ export  const updateSWDatabase = async (user, category, project, tasks, task, ti
 }
 
 export const preserveTmr = async (user, category, project, tasks, task, timer, additionalTime, timeSpent) => {
-    await taskAwait(user, category, project, task).set({...task, timer: timer, additionalTime: additionalTime, timeSpent: timeSpent})
+    await taskAwait(user, category, project, task).set({...task, timer: timer, additionalTime: additionalTime, timeSpent: timeSpent, isPlaying: false})
+    return {loading: false}
 }

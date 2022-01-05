@@ -90,9 +90,9 @@ export const loginFacebook = async() => {
 export const loginGoogle = async() => {
     try {
         const { type, idToken} = await Google.logInAsync({
-            androidClientId: `148201193183-45607r93v6vlvtkr4u8gcec95l7tc9rm.apps.googleusercontent.com`,
-            iosClientId: `148201193183-tc11ghq6ecuvlbb4blcslvg6oustjod9.apps.googleusercontent.com`,
-            expoClientId: ``,
+            androidClientId: `148201193183-fdopkabhqf1oq25oo78b5ihpla9lie3u.apps.googleusercontent.com`,
+            // iosClientId: `148201193183-tc11ghq6ecuvlbb4blcslvg6oustjod9.apps.googleusercontent.com`,
+            // expoClientId: ``,
             scopes: ['profile', 'email'],
           });
         if(type === 'success') {

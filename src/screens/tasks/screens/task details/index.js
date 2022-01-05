@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {BackHandler, ScrollView, StyleSheet, View} from 'react-native';
+import {BackHandler, ScrollView, View} from 'react-native';
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
-import {clockify, Colors, getHours, getMinutes, getSeconds, parseSeconds} from "../../../../reusable/utils/tools";
+import {clockify, Colors, parseSeconds} from "../../../../reusable/utils/tools";
 import CountdownTimer  from "../../../../reusable/countdownTimer";
 import AddForm from "../../../../reusable/forms/addForm";
 import {clearStatus, setLoading, updateTask} from "../../../../store/actions/tasksActions";
@@ -11,9 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import StopWatch from "../../../../reusable/stopwatch";
 import moment from "moment";
 
-
 export const TaskDetailsScreen = (props) => {
-    const {navigation} = props
     const task = props.route.params.task
     const user = props.route.params.user
     const category = props.route.params.category
@@ -72,7 +70,6 @@ export const TaskDetailsScreen = (props) => {
             }
         }
     }, [isPlaying])
-
 
     return (
         <>
@@ -170,6 +167,7 @@ export const TaskDetailsScreen = (props) => {
                     }
                 </View>
             </ScrollView>
+            {!task.done &&
             <Button
                 icon={<Icon
                     name='edit'
@@ -189,8 +187,8 @@ export const TaskDetailsScreen = (props) => {
                     bottom: 20
                 }}
                 onPress={() => handlePress('task')}
-                disabled={task.done || isPlaying}
-            />
+                disabled={isPlaying}
+            />}
         </>
 
     );

@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     clearProjects, clearStatus,
     clearTasks,
-    deleteTask,
+    deleteTask, listAllProjects, listAllTasks,
     listCategories,
     listProjects, listTasks,
     setLoading
@@ -16,8 +16,7 @@ import {AddFab} from "./addFab";
 
 export const StackHeader = (props) => {
     const dispatch = useDispatch()
-    const {type, category, user, task, navigation, project, isPlaying, tasks, taskTimer} = props
-
+    const {type, category, user, task, navigation, project, isPlaying} = props
 
     return (
         <>
@@ -51,7 +50,9 @@ export const StackHeader = (props) => {
                                 color={Colors.black}
                                 size={30}
                                 onPress={() => {
-                                    navigation.goBack()
+                                    navigation.navigate('TasksScreen', {
+                                        screen: 'CategoriesScreen',
+                                    })
                                     dispatch(setLoading())
                                     dispatch(listCategories(user))
                                 }}
@@ -76,9 +77,14 @@ export const StackHeader = (props) => {
                                     color={Colors.black}
                                     size={30}
                                     onPress={() => {
-                                        navigation.goBack()
+                                        navigation.navigate('TasksScreen', {
+                                            screen: 'ProjectsScreen',
+                                            params: {
+                                                item: category
+                                            }
+                                        })
                                         dispatch(setLoading())
-                                        dispatch(listProjects(user, category))
+                                        dispatch(listAllProjects(user))
                                     }}
                                 />
                             </View>
@@ -89,7 +95,8 @@ export const StackHeader = (props) => {
                             </View>
                             <AddFab type={2} category={category} project={project}/>
                         </View>
-                        <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w projekcie {project.name}</Text>
+
+                        <Text style={{color: Colors.black2, fontSize: 20, textAlign: 'center'}}> w projekcie {project && project.name}</Text>
                     </>
                 ) : type === 'task' ? (
                 <View style={styles.container}>
@@ -101,7 +108,17 @@ export const StackHeader = (props) => {
                         color={!isPlaying ? Colors.black : Colors.grey }
                         size={30}
                         onPress={() => {
-                            sleep(1000).then(navigation.goBack())
+                            dispatch(setLoading())
+                            dispatch(listAllTasks(user))
+                            navigation.navigate('TasksScreen', {
+                                screen: 'TaskStack',
+                                params: {
+                                    screen: 'TaskScreen',
+                                    user: user,
+                                    category: category,
+                                    item: project,
+                                }
+                            })
                         }}
                         disabled={isPlaying}
                         disabledStyle={{backgroundColor: 'transparent'}}
@@ -136,7 +153,17 @@ export const StackHeader = (props) => {
                                             onPress: () => {
                                                 dispatch(setLoading())
                                                 dispatch(deleteTask(user, category, project, task))
-                                                navigation.navigate('TaskScreen')
+                                                dispatch(setLoading())
+                                                dispatch(listAllTasks(user))
+                                                navigation.navigate('TasksScreen', {
+                                                    screen: 'TaskStack',
+                                                    params: {
+                                                        screen: 'TaskScreen',
+                                                        user: user,
+                                                        category: category,
+                                                        item: project,
+                                                    }
+                                                })
                                             }
                                         }
                                     ], {cancelable: true})

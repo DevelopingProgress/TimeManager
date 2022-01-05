@@ -7,7 +7,7 @@ import {
     clearError, clearMessage,
     clearStatus,
     deleteCategory,
-    deleteProject,
+    deleteProject, listAllProjects,
     listCategories,
     listProjects, listTasks, setLoading, updateCategory, updateProject
 } from '../store/actions/tasksActions'
@@ -72,7 +72,7 @@ export const ItemOptions = (props) => {
         if(status === 'project_deleted') {
             dispatch(clearStatus())
             dispatch(setLoading())
-            dispatch(listProjects(user, category))
+            dispatch(listAllProjects(user))
         }
         if(status === 'category_updated') {
             dispatch(clearStatus())
@@ -84,7 +84,7 @@ export const ItemOptions = (props) => {
             dispatch(clearStatus())
             setModalVisible(false)
             dispatch(setLoading())
-            dispatch(listProjects(user, category))
+            dispatch(listAllProjects(user))
         }
 
         if(error !== null) {

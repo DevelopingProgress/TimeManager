@@ -5,7 +5,7 @@ export const Tiles = (props) => {
     const {array, type, navigation, category, goToScreen} = props
     return (
         <>
-            {array ? array.map((item) => (
+            {array && category ? array.filter((item) => category.id === item.catID).map((item) => (
                 <ItemOptions
                     key={item.id}
                     item={item}
@@ -13,7 +13,15 @@ export const Tiles = (props) => {
                     goToScreen={goToScreen}
                     category={category}
                     type={type}
-                />)): null}
+                />)): array ? array.map((item) => (
+                <ItemOptions
+                    key={item.id}
+                    item={item}
+                    navigation={navigation}
+                    goToScreen={goToScreen}
+                    category={category}
+                    type={type}
+                />)) : null}
         </>
     )
 }

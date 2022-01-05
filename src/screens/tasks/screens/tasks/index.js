@@ -7,7 +7,7 @@ import {Alert, BackHandler, ScrollView, Text, View} from 'react-native'
 import {
     clearStatus,
     clearTasks,
-    deleteTask,
+    deleteTask, listAllTasks,
     listProjects,
     listTasks,
     setLoading
@@ -37,7 +37,7 @@ export const TaskScreen = (props) => {
     useFocusEffect (
         React.useCallback(() => {
             dispatch(setLoading())
-            dispatch(listTasks(user, category, project))
+            dispatch(listAllTasks(user))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,
@@ -47,13 +47,17 @@ export const TaskScreen = (props) => {
 
     useEffect(() => {
         if(status === 'task_deleted') {
-            dispatch(listTasks(user, category, project))
+            dispatch(setLoading())
+            dispatch(listAllTasks(user))
             dispatch(clearStatus())
         }
     }, [status]);
 
     return (
         <>
+            <View style={{paddingBottom: 10, backgroundColor: Colors.white}}>
+                <StackHeader type='tasks' navigation={props.navigation}  user={user} category={category} project={project}/>
+            </View>
             <ScrollView style={styles.mainContainer} ref={scrollRef}>
                 {loading ? <View style={{alignItems: 'center'}}><Loading circlesnail/></View> :
                 <View style={{margin: 20, marginTop: 10}}>
@@ -66,6 +70,8 @@ export const TaskScreen = (props) => {
                                             <ListItem.Title h4>
                                                 Dzisiaj ({
                                                     tasks.filter((item) =>
+                                                        category && category.id === item.catID &&
+                                                        project && project.id === item.projID &&
                                                         item.dueDate &&
                                                         !item.done &&
                                                         moment(item.dueDate.toDate()).format("YYYY-MM-DD") === getTodayDate()).length
@@ -101,6 +107,8 @@ export const TaskScreen = (props) => {
                                         <ListItem.Content>
                                             <ListItem.Title h4>Zaległe ({
                                                 tasks.filter((item) =>
+                                                    category && category.id === item.catID &&
+                                                    project && project.id === item.projID &&
                                                     item.dueDate &&
                                                     !item.done &&
                                                     moment(item.dueDate.toDate()).format("YYYY-MM-DD") <  getTodayDate()).length
@@ -134,6 +142,8 @@ export const TaskScreen = (props) => {
                                         <ListItem.Content>
                                             <ListItem.Title h4>Następne ({
                                                 tasks.filter((item) =>
+                                                    category && category.id === item.catID &&
+                                                    project && project.id === item.projID &&
                                                     item.dueDate &&
                                                     !item.done &&
                                                     moment(item.dueDate.toDate()).format("YYYY-MM-DD") >  getTodayDate()).length
@@ -167,6 +177,8 @@ export const TaskScreen = (props) => {
                                         <ListItem.Content>
                                             <ListItem.Title h4>Bez daty ({
                                                 tasks.filter((item) =>
+                                                    category && category.id === item.catID &&
+                                                    project && project.id === item.projID &&
                                                     !item.done &&
                                                     !item.dueDate).length
                                             })</ListItem.Title>

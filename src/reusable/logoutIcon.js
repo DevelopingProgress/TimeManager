@@ -5,7 +5,7 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 import { Icon } from 'react-native-elements'
 import { useDispatch } from 'react-redux'
 import { logoutUser } from '../store/actions/authActions'
-import { clearCategories } from '../store/actions/tasksActions'
+import {clearCategories, clearProjects, clearTasks} from '../store/actions/tasksActions'
 
 export const LogoutIcon = ({navigation}) => {
 
@@ -14,6 +14,8 @@ export const LogoutIcon = ({navigation}) => {
     const handleLogout = () => {
         dispatch(logoutUser())
         dispatch(clearCategories())
+        dispatch(clearProjects())
+        dispatch(clearTasks())
     }
 
     return (
