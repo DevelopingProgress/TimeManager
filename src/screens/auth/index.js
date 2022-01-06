@@ -8,7 +8,7 @@ export const AuthScreen = () => {
     return (
         <ScrollView style={styles.mainContainer}>
             <View style={styles.container}>
-                <Logo style={{width: Platform.OS === 'android' ?  250 : 150, height: Platform.OS === 'android' ?  250 : 150}}/>
+                <Logo style={{width: Platform.OS === 'android' ?  200 : 150, height: Platform.OS === 'android' ?  200 : 150}}/>
                 <AuthForm/>
             </View>
         </ScrollView>

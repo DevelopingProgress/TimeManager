@@ -49,8 +49,28 @@ export const TaskDetailsScreen = (props) => {
        if(modalType === 'task') {
             dispatch(setLoading())
            if(values.withoutDate)
-               dispatch(updateTask(user, values.name, category, project, task, null, 0, null, values.description))
-           else dispatch(updateTask(user, values.name, category, project, task, values.date, parseSeconds(values.hours, values.minutes, values.seconds), taskTimer, values.description))
+               dispatch(updateTask(
+                   user,
+                   values.name,
+                   category,
+                   project,
+                   task,
+                   null,
+                   0,
+                   null,
+                   values.description
+               ))
+           else dispatch(updateTask(
+               user,
+               values.name,
+               category,
+               project,
+               task,
+               values.date,
+               parseSeconds(values.hours, values.minutes, values.seconds),
+               taskTimer,
+               values.description
+           ))
         }
     }
 

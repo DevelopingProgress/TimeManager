@@ -26,7 +26,8 @@ export  const updateTmrDatabase = async (user, category, project, tasks, task, a
 
     await taskAwait(user, category, project, task).set({
         ...task,
-        timeSpent: additionalTime === 0 ? parseInt(task.timer) : (parseInt(previousTask.timeSpent) + parseInt(additionalTime))
+        timeSpent: additionalTime === 0 ? (parseInt(previousTask.timeSpent) + parseInt(task.timer))
+            : (parseInt(previousTask.timeSpent) + parseInt(additionalTime))
     })
 }
 
