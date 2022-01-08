@@ -86,38 +86,38 @@ export const loginFacebook = async() => {
     }
 }
 
-export const loginGoogle = async() => {
-    try {
-        const { type, idToken} = await Google.logInAsync({
-            androidClientId: `148201193183-fdopkabhqf1oq25oo78b5ihpla9lie3u.apps.googleusercontent.com`,
-            // iosClientId: `148201193183-tc11ghq6ecuvlbb4blcslvg6oustjod9.apps.googleusercontent.com`,
-            // expoClientId: ``,
-            scopes: ['profile', 'email'],
-          });
-        if(type === 'success') {
-            const credential = firebase.auth.GoogleAuthProvider.credential(idToken)
-            const res = await firebase.auth().signInWithCredential(credential)
-
-            const userProfile = {
-                uid: res.user.uid,
-                email: res.user.email,
-                name: res.user.displayName
-            }
-            const ActiveUser = await usersCollection.doc(res.user.uid).get();
-
-            if(ActiveUser.exists) {
-                const data = ActiveUser.data();
-                return {isAuth: true, isVerified: true, user: data}
-            } else {
-                await usersCollection.doc(res.user.uid).set(userProfile);
-                return {isAuth: true, isVerified: true, user: userProfile}
-            }
-        }
-    } catch (error) {
-        return {error: 'Nie udało się zalogować, błąd logowania poprzez Google.', errStatus: error.message}
-    }
-
-}
+// export const loginGoogle = async() => {
+//     try {
+//         const { type, idToken} = await Google.logInAsync({
+//             androidStandaloneAppClientId: `148201193183-fdopkabhqf1oq25oo78b5ihpla9lie3u.apps.googleusercontent.com`,
+//             // iosClientId: `148201193183-tc11ghq6ecuvlbb4blcslvg6oustjod9.apps.googleusercontent.com`,
+//             // expoClientId: ``,
+//             scopes: ['profile', 'email'],
+//           });
+//         if(type === 'success') {
+//             const credential = firebase.auth.GoogleAuthProvider.credential(idToken)
+//             const res = await firebase.auth().signInWithCredential(credential)
+//
+//             const userProfile = {
+//                 uid: res.user.uid,
+//                 email: res.user.email,
+//                 name: res.user.displayName
+//             }
+//             const ActiveUser = await usersCollection.doc(res.user.uid).get();
+//
+//             if(ActiveUser.exists) {
+//                 const data = ActiveUser.data();
+//                 return {isAuth: true, isVerified: true, user: data}
+//             } else {
+//                 await usersCollection.doc(res.user.uid).set(userProfile);
+//                 return {isAuth: true, isVerified: true, user: userProfile}
+//             }
+//         }
+//     } catch (error) {
+//         return {error: 'Nie udało się zalogować, błąd logowania poprzez Google.', errStatus: error}
+//     }
+//
+// }
 
 export const autoLogin = () => (
     new Promise((resolve,reject)=>{

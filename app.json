@@ -36,7 +36,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.developingprogress.TimeManager",
+      "package": "com.developingprogress.TimeManager"
     },
     "web": {
       "favicon": "./assets/favicon.png"

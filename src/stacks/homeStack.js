@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {Colors} from "../reusable/utils/tools";
 import {HomeScreen} from "../screens/home";
@@ -7,6 +7,8 @@ import {CalendarScreen} from "../screens/calendar";
 import {Icon} from "react-native-elements";
 import {TasksScreen} from "../screens/tasks";
 import {TouchableOpacity} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
+import {listTasks} from "../store/actions/tasksActions";
 
 
 const Tab = createBottomTabNavigator();
@@ -17,10 +19,23 @@ const tabOptions = {
 
 export const HomeStack = (props) => {
 
+    const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(listTasks(user))
+    }, []);
+
+
+    const tasks = useSelector(state => state.app.tasks)
+    const isPlaying = tasks.find(function (item) {
+        return item.isPlaying
+    })
+
     return (
         <>
             <Tab.Navigator
-                initialRouteName="TasksScreen"
+                initialRouteName="HomeScreen"
                 screenOptions={{
                     headerBackTitleVisible: false,
                     headerShown: false,
@@ -48,7 +63,7 @@ export const HomeStack = (props) => {
                                 />
                             )
                         },
-                        tabBarButton: (props) => <TouchableOpacity {...props}  />
+                        tabBarButton: (props) => <TouchableOpacity {...props} disabled={tasks && isPlaying} />
                     }}
                 />
                 <Tab.Screen
@@ -90,7 +105,7 @@ export const HomeStack = (props) => {
                                 />
                             )
                         },
-                        tabBarButton: (props) => <TouchableOpacity {...props}  />
+                        tabBarButton: (props) => <TouchableOpacity {...props}  disabled={tasks && isPlaying}/>
                     }}
                 />
                 <Tab.Screen
@@ -108,7 +123,7 @@ export const HomeStack = (props) => {
                                 />
                             )
                         },
-                        tabBarButton: (props) => <TouchableOpacity {...props}  />
+                        tabBarButton: (props) => <TouchableOpacity {...props}  disabled={tasks && isPlaying}/>
                     }}
                 />
             </Tab.Navigator>

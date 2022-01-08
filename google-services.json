@@ -7,12 +7,21 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:872972852759:android:fbc502f3405f95526d0652",
+        "mobilesdk_app_id": "1:872972852759:android:34da28ce311944646d0652",
         "android_client_info": {
           "package_name": "com.developingprogress.TimeManager"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "872972852759-029rvhku80gek9clvjgig8gkmt7s18bi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developingprogress.TimeManager",
+            "certificate_hash": "3e6143d50453df8b030f1022b08672543bed502c"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBFbk6smnwB669DhWfaElbI6fee3cHqQ0g"

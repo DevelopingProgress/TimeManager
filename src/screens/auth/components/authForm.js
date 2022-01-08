@@ -26,7 +26,7 @@ export const AuthForm = () => {
     const [showConfirmPass, setShowConfirmPass] = useState(true)
     const [loading, setLoading] = useState(false)
     const [loadingFacebook, setLoadingFacebook] = useState(false)
-    const [loadingGoogle, setLoadingGoogle] = useState(false)
+    // const [loadingGoogle, setLoadingGoogle] = useState(false)
     const nameRegex =  /^[A-Za-z0-9]+([A-Za-z0-9]*|[._-]?[A-Za-z0-9]+)*$/g
     const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
     const error = useSelector(state => state.auth.error)
@@ -39,13 +39,13 @@ export const AuthForm = () => {
             setShowErrorAlert(true)
             setLoading(false)
             setLoadingFacebook(false)
-            setLoadingGoogle(false)
+            // setLoadingGoogle(false)
         }
         if(message !== null) {
             setShowMessageAlert(true)
             setLoading(false)
             setLoadingFacebook(false)
-            setLoadingGoogle(false)
+            // setLoadingGoogle(false)
         }
     }, [error, message])
 
@@ -71,10 +71,10 @@ export const AuthForm = () => {
         dispatch(loginFacebookUser())
     }
 
-    const handleGoogleLogin = () => {
-        setLoadingGoogle(true)
-        dispatch(loginGoogleUser())
-    }
+    // const handleGoogleLogin = () => {
+    //     setLoadingGoogle(true)
+    //     dispatch(loginGoogleUser())
+    // }
 
     const changeType = () => {
         if(formType === 'Login') {
@@ -286,26 +286,26 @@ export const AuthForm = () => {
             }}
         />
 
-        <Button
-            title="Zaloguj za pomocą Google"
-            buttonStyle={{
-                backgroundColor: Colors.red,
-                margin: 10,
-                padding: 10
-            }}
-            titleStyle={{
-                marginLeft: 6,
-                fontSize: Platform.OS === 'ios' ? 12 : 15
-            }}
-            onPress={handleGoogleLogin}
-            loading={loadingGoogle}
-            icon={{
-                type: "fontisto",
-                name: "google",
-                color: Colors.white,
-                style: {marginStart: 0}
-            }}
-        />
+        {/*<Button*/}
+        {/*    title="Zaloguj za pomocą Google"*/}
+        {/*    buttonStyle={{*/}
+        {/*        backgroundColor: Colors.red,*/}
+        {/*        margin: 10,*/}
+        {/*        padding: 10*/}
+        {/*    }}*/}
+        {/*    titleStyle={{*/}
+        {/*        marginLeft: 6,*/}
+        {/*        fontSize: Platform.OS === 'ios' ? 12 : 15*/}
+        {/*    }}*/}
+        {/*    onPress={handleGoogleLogin}*/}
+        {/*    loading={loadingGoogle}*/}
+        {/*    icon={{*/}
+        {/*        type: "fontisto",*/}
+        {/*        name: "google",*/}
+        {/*        color: Colors.white,*/}
+        {/*        style: {marginStart: 0}*/}
+        {/*    }}*/}
+        {/*/>*/}
         </>
         }
 

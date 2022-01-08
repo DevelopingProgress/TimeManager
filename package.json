@@ -54,7 +54,8 @@
     "redux": "^4.1.2",
     "redux-flipper": "^2.0.1",
     "redux-promise": "^0.6.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-app-auth": "~11.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
