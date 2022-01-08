@@ -5,9 +5,8 @@ import {ListItem} from "react-native-elements";
 import {Colors, polishShortMonths} from "../../../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
 import {useFocusEffect} from "@react-navigation/core";
-import {listAllTasks, setLoading} from "../../../../store/actions/tasksActions";
+import {listTasks, setLoading} from "../../../../store/actions/tasksActions";
 import {Loading} from "../../../../reusable/utils/loading";
-import {StackHeader} from "../../../../reusable/stackHeader";
 
 export const DoneTasksScreen = (props) => {
 
@@ -22,7 +21,7 @@ export const DoneTasksScreen = (props) => {
     useFocusEffect (
         React.useCallback(() => {
             dispatch(setLoading())
-            dispatch(listAllTasks(user))
+            dispatch(listTasks(user))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,

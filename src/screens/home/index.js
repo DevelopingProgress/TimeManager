@@ -1,13 +1,13 @@
-import React, { useRef } from 'react'
-import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native'
-import { useSelector } from 'react-redux'
-import { Colors } from '../../reusable/utils/tools'
-import { Pane } from './components/pane'
+import React, {useRef} from 'react'
+import {Platform, ScrollView, StyleSheet, Text, View} from 'react-native'
+import {useSelector} from 'react-redux'
+import {Colors} from '../../reusable/utils/tools'
+import {Pane} from './components/pane'
 import TasksImage from '../../assets/images/Tasks.jpg'
 import AnalyticsImage from '../../assets/images/Analytics.jpg'
 import CalendarImage from '../../assets/images/Calendar.jpg'
-import { LogoutIcon } from '../../reusable/logoutIcon'
-import { useFocusEffect } from '@react-navigation/core'
+import {LogoutIcon} from '../../reusable/logoutIcon'
+import {useFocusEffect} from '@react-navigation/core'
 
 
 export const HomeScreen = ({navigation}) => {

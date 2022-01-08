@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import { Colors} from './utils/tools';
+import {Colors} from './utils/tools';
 import AddForm from './forms/addForm';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
     addCategory,
     addProject,
     addTask,
-    clearStatus, listAllProjects, listAllTasks,
-    listCategories, listProjects, listTasks, setLoading,
+    clearStatus,
+    listProjects,
+    listTasks,
+    listCategories,
+    setLoading,
 } from '../store/actions/tasksActions';
 import {Button, Icon} from "react-native-elements";
 
@@ -81,13 +84,13 @@ export const AddFab = (props) => {
         if(status === 'project_added') {
             setModalVisible(false)
             dispatch(clearStatus())
-            dispatch(listAllProjects(user))
+            dispatch(listProjects(user))
         }
         if(status === 'task_added') {
             setModalVisible(false)
             dispatch(clearStatus())
             dispatch(setLoading())
-            dispatch(listAllTasks(user))
+            dispatch(listTasks(user))
         }
     }, [status]);
 

@@ -1,5 +1,5 @@
-import { Text, View } from "react-native";
-import { styles } from "../../screens/home";
+import {Text, View} from "react-native";
+import {styles} from "../../screens/home";
 import React from "react";
 
 export const GreetingText = (props) => (

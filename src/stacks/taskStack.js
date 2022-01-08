@@ -3,9 +3,6 @@ import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs
 import {DoneTasksScreen} from "../screens/tasks/screens/done tasks";
 import {TaskScreen} from "../screens/tasks/screens/tasks";
 import {Colors} from "../reusable/utils/tools";
-import {StackHeader} from "../reusable/stackHeader";
-import {useSelector} from "react-redux";
-import {View} from "react-native";
 
 const Tab = createMaterialTopTabNavigator();
 

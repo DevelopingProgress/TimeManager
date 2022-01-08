@@ -1,19 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useRef} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import { AddFab } from '../../../../reusable/addFab'
-import {ScrollView, View} from 'react-native'
-import {Text} from "react-native";
+import {ScrollView, Text, View} from 'react-native'
 import {Tiles} from "../../../../reusable/tiles";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors} from "../../../../reusable/utils/tools";
-import {
-    clearStatus,
-    listAllProjects,
-    listProjects,
-    listTasks,
-    setLoading
-} from "../../../../store/actions/tasksActions";
+import {listProjects, setLoading} from "../../../../store/actions/tasksActions";
 import {Loading} from "../../../../reusable/utils/loading";
 import {useFocusEffect} from "@react-navigation/core";
 
@@ -28,7 +20,7 @@ export const ProjectsScreen = (props) => {
     useFocusEffect (
         React.useCallback(() => {
             dispatch(setLoading())
-            dispatch(listAllProjects(user))
+            dispatch(listProjects(user))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,

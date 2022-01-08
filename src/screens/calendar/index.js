@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native'
-import { GreetingText } from '../../reusable/utils/greetingText'
-import { styles } from '../home'
-import { LogoutIcon } from '../../reusable/logoutIcon'
+import {Text, TouchableOpacity, View} from 'react-native'
+import {GreetingText} from '../../reusable/utils/greetingText'
+import {styles} from '../home'
+import {LogoutIcon} from '../../reusable/logoutIcon'
 import {Agenda} from "react-native-calendars";
 import moment from "moment";
 import {Colors} from "../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
-import {listAllProjects, listAllTasks, listCategories, setLoading} from "../../store/actions/tasksActions";
+import {listProjects, listTasks, listCategories, setLoading} from "../../store/actions/tasksActions";
 import {useFocusEffect} from "@react-navigation/core";
 import {Loading} from "../../reusable/utils/loading";
 
@@ -23,9 +23,9 @@ export const CalendarScreen = ({navigation}) => {
 
     useFocusEffect(React.useCallback(() => {
         dispatch(setLoading())
-        dispatch(listAllTasks(user))
+        dispatch(listTasks(user))
         dispatch(listCategories(user))
-        dispatch(listAllProjects(user))
+        dispatch(listProjects(user))
     }, []))
 
     const renderItem = (item) => {

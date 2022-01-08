@@ -1,5 +1,5 @@
-import { login, loginFacebook, loginGoogle, register, autoLogin, logout, passwordReset } from "../api/apiAuth"
-import { AUTH_USER, CLEAR_AUTH_ERROR, CLEAR_AUTH_MESSAGE, LOGOUT_USER, PASSWORD_RESET } from "../types"
+import {autoLogin, login, loginFacebook, loginGoogle, logout, passwordReset, register} from "../api/apiAuth"
+import {AUTH_USER, CLEAR_AUTH_ERROR, CLEAR_AUTH_MESSAGE, LOGOUT_USER, PASSWORD_RESET} from "../types"
 
 export const registerUser = (values) => ({
     type: AUTH_USER,

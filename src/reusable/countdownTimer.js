@@ -3,14 +3,13 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import {Text, View} from 'react-native';
 import {Icon} from "react-native-elements";
 import {clockify, Colors, getTodayDate, parseSeconds, sleep} from "./utils/tools";
-import {useDispatch, useSelector} from "react-redux";
-import {endTask, listAllTasks, listTasks, setLoading} from "../store/actions/tasksActions";
+import {useDispatch} from "react-redux";
+import {endTask, listTasks, setLoading} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 import AddTimeForm from "./forms/addTimeForm";
 import {addTime, preserveTimer, toggleTimer, updateTimer, updateTimerDatabase} from "../store/actions/timerActions";
 import moment from "moment";
 import {displayEndTaskNotification, displayStartTaskNotification} from "./notifications";
-
 
 
 const CountdownTimer = (props) => {
@@ -121,7 +120,7 @@ const CountdownTimer = (props) => {
                     setShowAlert(false)
                     dispatch(endTask(user, category, project, task, new Date(Date.now())))
                     dispatch(setLoading())
-                    dispatch(listAllTasks(user))
+                    dispatch(listTasks(user))
                     sleep(1000).then(
                         navigation.navigate('DoneTasksScreen', {
                             item: project,

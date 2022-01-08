@@ -1,16 +1,16 @@
 import React from 'react'
-import { View } from 'react-native'
-import { GreetingText } from '../../reusable/utils/greetingText'
-import { LogoutIcon } from '../../reusable/logoutIcon'
-import { styles } from '../home'
+import {View} from 'react-native'
+import {GreetingText} from '../../reusable/utils/greetingText'
+import {LogoutIcon} from '../../reusable/logoutIcon'
+import {styles} from '../home'
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import MonthAnalytics from "./screens/MonthAnalytics";
 import WeekAnalytics from "./screens/WeekAnalytics";
 import DayAnalytics from "./screens/DayAnalytics";
-import { Colors } from "../../reusable/utils/tools";
+import {Colors} from "../../reusable/utils/tools";
 import {useDispatch, useSelector} from "react-redux";
 import {useFocusEffect} from "@react-navigation/core";
-import {listAllProjects, listAllTasks, setLoading} from "../../store/actions/tasksActions";
+import {listProjects, listTasks, setLoading} from "../../store/actions/tasksActions";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -21,9 +21,9 @@ export const AnalyticsScreen = ({navigation}) => {
 
     useFocusEffect(React.useCallback(() => {
         dispatch(setLoading())
-        dispatch(listAllTasks(user))
+        dispatch(listTasks(user))
         dispatch(setLoading())
-        dispatch(listAllProjects(user))
+        dispatch(listProjects(user))
     }, []))
 
     return (

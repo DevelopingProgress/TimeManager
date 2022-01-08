@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Text, View} from 'react-native';
 import moment from "moment";
-import {clockify, getTodayDate} from "../../../reusable/utils/tools";
+import {clockify} from "../../../reusable/utils/tools";
 import {Divider, Icon} from "react-native-elements";
 
 const Legend = (props) => {

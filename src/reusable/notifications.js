@@ -1,4 +1,4 @@
-import notifee, { IOSAuthorizationStatus } from '@notifee/react-native';
+import notifee, {IOSAuthorizationStatus} from '@notifee/react-native';
 
 export async function requestUserPermission() {
     const settings = await notifee.requestPermission();

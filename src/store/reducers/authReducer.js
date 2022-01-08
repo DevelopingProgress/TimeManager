@@ -1,4 +1,4 @@
-import { AUTH_USER, CLEAR_AUTH_ERROR, CLEAR_AUTH_MESSAGE, LOGOUT_USER, PASSWORD_RESET } from "../types";
+import {AUTH_USER, CLEAR_AUTH_ERROR, CLEAR_AUTH_MESSAGE, LOGOUT_USER, PASSWORD_RESET} from "../types";
 
 const INITIAL_STATE = {
     user: [],
@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     isVerified: false,
     error: null,
     message: null
-} 
+}
 
 export default function (state=INITIAL_STATE,action) {
     switch (action.type) {

@@ -1,20 +1,11 @@
-import {Button, Divider, Icon, ListItem} from "react-native-elements";
+import {Divider, ListItem} from "react-native-elements";
 import React, {useEffect, useRef, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-
-import { AddFab } from '../../../../reusable/addFab'
-import {Alert, BackHandler, ScrollView, Text, View} from 'react-native'
-import {
-    clearStatus,
-    clearTasks,
-    deleteTask, listAllTasks,
-    listProjects,
-    listTasks,
-    setLoading
-} from "../../../../store/actions/tasksActions";
+import {ScrollView, Text, View} from 'react-native'
+import {clearStatus, listTasks, setLoading} from "../../../../store/actions/tasksActions";
 import {styles} from '../../../home/index'
 import {StackHeader} from "../../../../reusable/stackHeader";
-import {Colors, getTodayDate, polishShortMonths} from "../../../../reusable/utils/tools";
+import {Colors, getTodayDate} from "../../../../reusable/utils/tools";
 import TasksItems from "./tasksItems";
 import moment from "moment";
 import {useFocusEffect} from "@react-navigation/core";
@@ -37,7 +28,7 @@ export const TaskScreen = (props) => {
     useFocusEffect (
         React.useCallback(() => {
             dispatch(setLoading())
-            dispatch(listAllTasks(user))
+            dispatch(listTasks(user))
             scrollRef.current?.scrollTo({
                 y: 0,
                 animated: true,
@@ -48,7 +39,7 @@ export const TaskScreen = (props) => {
     useEffect(() => {
         if(status === 'task_deleted') {
             dispatch(setLoading())
-            dispatch(listAllTasks(user))
+            dispatch(listTasks(user))
             dispatch(clearStatus())
         }
     }, [status]);

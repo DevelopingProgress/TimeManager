@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Divider, Icon, Input, Switch} from "react-native-elements";
-import {Text, TouchableOpacity, View, StyleSheet, ScrollView, TextInput} from "react-native";
+import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import {Colors} from "../utils/tools";
 import ModalTimerAdd from "../modalTimerAdd";
+
 const TaskForm  = (props) => {
     const {handleChange, handleBlur, values, containerStyle, setFieldValue, errors, errorStyle, inputStyle, maxLength, touched} = props
     const [mode, setMode] = useState('date');

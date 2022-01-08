@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Button, Card, Text } from 'react-native-elements'
-import { Colors } from '../../../reusable/utils/tools'
+import {StyleSheet, View} from 'react-native'
+import {Button, Card, Text} from 'react-native-elements'
+import {Colors} from '../../../reusable/utils/tools'
 
 export const Pane = (props) => {
     return (

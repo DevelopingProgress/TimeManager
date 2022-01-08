@@ -1,23 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import {Text, View, StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Menu, MenuOption, MenuOptions, MenuTrigger} from "react-native-popup-menu";
 import {Icon} from "react-native-elements";
-import {
-    clearProjects,
-    clearTasks,
-    listCategories,
-    listProjects,
-    listTasks,
-    setLoading
-} from "../../../store/actions/tasksActions";
 import {Loading} from "../../../reusable/utils/loading";
 import {Colors} from "../../../reusable/utils/tools";
 
 const ChooseAble = (props) => {
 
     const data = props.data
-    const {user, categories, projects, loading, dispatch, categoriesTrigger, setCategoriesTrigger,
+    const {categories, projects, loading, categoriesTrigger, setCategoriesTrigger,
         projectsTrigger, setProjectsTrigger, category, setCategory, setProject} = data
 
 

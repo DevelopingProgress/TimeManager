@@ -3,7 +3,6 @@ import {
     ADD_PROJECT,
     ADD_TASK,
     ADD_TIME,
-    ADD_TIMER,
     CLEAR_CATEGORIES,
     CLEAR_ERROR,
     CLEAR_MESSAGE,

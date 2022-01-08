@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import ChooseAble from "./chooseAble";
 import {useDispatch, useSelector} from "react-redux";
 import {PieChart} from "react-native-chart-kit";
-import {listProjects, listTasks, setLoading} from "../../../store/actions/tasksActions";
-import {Colors, getTodayDate} from "../../../reusable/utils/tools";
+import {Colors} from "../../../reusable/utils/tools";
 import moment from "moment";
 import Legend from "./legend";
 

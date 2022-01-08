@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Text, View} from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
 import {clockify, Colors, sleep} from "./utils/tools";
 import {Icon} from "react-native-elements";
 import AwesomeAlert from "react-native-awesome-alerts";
-import {endNoDateTask, listAllTasks, listTasks, setLoading} from "../store/actions/tasksActions";
+import {endNoDateTask, listTasks, setLoading} from "../store/actions/tasksActions";
 import ReactNativeBackgroundTimer from "react-native-background-timer";
 import {toggleTimer, updateStopwatch, updateStopWatchDatabase} from "../store/actions/timerActions";
 
@@ -95,7 +95,7 @@ const StopWatch = (props) => {
                     setShowAlert(false)
                     dispatch(endNoDateTask(user, category, project, task, new Date(Date.now()), parseInt(taskTimer)))
                     dispatch(setLoading())
-                    dispatch(listAllTasks(user))
+                    dispatch(listTasks(user))
                     sleep(1000).then(
                         navigation.navigate('DoneTasksScreen', {
                             item: project,

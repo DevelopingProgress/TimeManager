@@ -1,24 +1,12 @@
-import { AddFab } from '../../../../reusable/addFab'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {ScrollView, Text, View} from 'react-native'
-import { styles } from '../../../home/index'
+import {styles} from '../../../home/index'
 import {Tiles} from "../../../../reusable/tiles";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    clearError,
-    clearMessage,
-    clearStatus,
-    listCategories,
-    listProjects,
-    listTasks, setLoading
-} from "../../../../store/actions/tasksActions";
+import {listCategories, setLoading} from "../../../../store/actions/tasksActions";
 import {StackHeader} from "../../../../reusable/stackHeader";
 import {Colors} from "../../../../reusable/utils/tools";
 import {Loading} from "../../../../reusable/utils/loading";
-import {useFocusEffect} from "@react-navigation/core";
-import Error from "../../../../reusable/utils/error";
-import Message from "../../../../reusable/utils/message";
-import {clearAuthError, clearAuthMessage} from "../../../../store/actions/authActions";
 
 export const CategoriesScreen = ({navigation}) => {
     const dispatch = useDispatch();

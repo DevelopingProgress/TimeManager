@@ -1,4 +1,4 @@
-import { firebase, usersCollection } from "../../database/firebase";
+import {firebase, usersCollection} from "../../database/firebase";
 import {randDarkColor} from "../../reusable/utils/tools";
 
 
@@ -24,51 +24,7 @@ export const listCat = async(user) => {
 
 }
 
-export const listProj = async(user, category) => {
-    try {
-        let projectsList = []
-        const projects = await usersCollection
-        .doc(user.uid)
-        .collection('categories')
-        .doc(category.id)
-        .collection('projects')
-        .orderBy("createdAt", "asc")
-        .get()
-        projects.forEach(doc => {
-            projectsList.push(doc.data())
-        })
-
-        return {projects: projectsList, loading: false}
-    } catch (error) {
-        return {loading: false, error: "Problem z wyświetleniem listy projektów.", errStatus: error.message}
-    }
-}
-
-export const listTsk = async(user, category, project) => {
-    try {
-        let tasksList = []
-        const tasks = await usersCollection
-            .doc(user.uid)
-            .collection('categories')
-            .doc(category.id)
-            .collection('projects')
-            .doc(project.id)
-            .collection('tasks')
-            .orderBy("createdAt", "asc")
-            .get()
-
-        tasks.forEach(doc => {
-            tasksList.push(doc.data())
-        })
-
-        return {tasks: tasksList, loading: false}
-
-    } catch (error) {
-        return {loading: false, error: "Problem z wyświetleniem listy zadań.", errStatus: error.message}
-    }
-}
-
-export const listAllProj = async (user) => {
+export const listProj = async (user) => {
     try {
         let categoriesList = []
         let projectsList = []
@@ -101,7 +57,7 @@ export const listAllProj = async (user) => {
     }
 }
 
-export const listAllTsk = async (user) => {
+export const listTsk = async (user) => {
     try {
         let categoriesList = []
         let projectsList = []

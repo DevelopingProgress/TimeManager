@@ -2,25 +2,39 @@ import {
     addCat,
     addProj,
     addTsk,
-    listCat,
-    listProj,
-    listTsk,
     delCat,
     delProj,
     delTsk,
+    endNoDateTsk,
+    endTsk,
+    listProj,
+    listTsk,
+    listCat,
     updateCat,
-    updateProj, updateTsk, endTsk, endNoDateTsk, listAllTsk, listAllProj
+    updateProj,
+    updateTsk
 } from "../api/apiTasks";
 import {
     ADD_CATEGORY,
     ADD_PROJECT,
     ADD_TASK,
-    CLEAR_CATEGORIES, CLEAR_ERROR, CLEAR_MESSAGE,
-    CLEAR_PROJECTS, CLEAR_STATUS,
-    CLEAR_TASKS, DELETE_CATEGORY, DELETE_PROJECT, DELETE_TASK, END_TASK,
+    CLEAR_CATEGORIES,
+    CLEAR_ERROR,
+    CLEAR_MESSAGE,
+    CLEAR_PROJECTS,
+    CLEAR_STATUS,
+    CLEAR_TASKS,
+    DELETE_CATEGORY,
+    DELETE_PROJECT,
+    DELETE_TASK,
+    END_TASK,
     LIST_CATEGORIES,
     LIST_PROJECTS,
-    LIST_TASKS, LOADING, UPDATE_CATEGORY, UPDATE_PROJECT, UPDATE_TASK
+    LIST_TASKS,
+    LOADING,
+    UPDATE_CATEGORY,
+    UPDATE_PROJECT,
+    UPDATE_TASK
 } from "../types";
 
 //LIST
@@ -28,21 +42,13 @@ export const listCategories = (user) => ({
     type: LIST_CATEGORIES,
     payload: listCat(user)
 })
-export const listProjects = (user, category) => ({
+export const listProjects = (user) => ({
     type: LIST_PROJECTS,
-    payload: listProj(user, category)
+    payload: listProj(user)
 })
-export const listTasks = (user, category, project) => ({
+export const listTasks = (user) => ({
     type: LIST_TASKS,
-    payload: listTsk(user, category, project)
-})
-export const listAllProjects = (user) => ({
-    type: LIST_PROJECTS,
-    payload: listAllProj(user)
-})
-export const listAllTasks = (user) => ({
-    type: LIST_TASKS,
-    payload: listAllTsk(user)
+    payload: listTsk(user)
 })
 
 //ADD

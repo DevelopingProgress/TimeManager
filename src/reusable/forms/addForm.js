@@ -1,6 +1,6 @@
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Modal, Text, View, ScrollView} from 'react-native';
+import {Modal, ScrollView, StyleSheet, Text} from 'react-native';
 import {clockify, Colors, hoursRegex, minsecsRegex} from '../utils/tools';
 import * as Yup from "yup";
 import {Button} from 'react-native-elements';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Formik } from 'formik';
-import {Modal, StyleSheet, Text, View} from 'react-native';
+import {Formik} from 'formik';
+import {Modal, Text, View} from 'react-native';
 import {styles} from "../../screens/home";
 import {Colors, hoursRegex, minsecsRegex} from "../utils/tools";
 import * as Yup from "yup";

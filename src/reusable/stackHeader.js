@@ -1,17 +1,9 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Alert, StyleSheet, Text, View} from "react-native";
 import {Icon} from "react-native-elements";
-import {Colors, sleep} from "./utils/tools";
-import {useDispatch, useSelector} from "react-redux";
-import {
-    clearProjects, clearStatus,
-    clearTasks,
-    deleteTask, listAllProjects, listAllTasks,
-    listCategories,
-    listProjects, listTasks,
-    setLoading
-} from "../store/actions/tasksActions";
-import {preserveTimer, updateTimerDatabase} from "../store/actions/timerActions";
+import {Colors} from "./utils/tools";
+import {useDispatch} from "react-redux";
+import {deleteTask, listProjects, listTasks, listCategories, setLoading} from "../store/actions/tasksActions";
 import {AddFab} from "./addFab";
 
 export const StackHeader = (props) => {
@@ -84,7 +76,7 @@ export const StackHeader = (props) => {
                                             }
                                         })
                                         dispatch(setLoading())
-                                        dispatch(listAllProjects(user))
+                                        dispatch(listProjects(user))
                                     }}
                                 />
                             </View>
@@ -109,7 +101,7 @@ export const StackHeader = (props) => {
                         size={30}
                         onPress={() => {
                             dispatch(setLoading())
-                            dispatch(listAllTasks(user))
+                            dispatch(listTasks(user))
                             navigation.navigate('TasksScreen', {
                                 screen: 'TaskStack',
                                 params: {
@@ -154,7 +146,7 @@ export const StackHeader = (props) => {
                                                 dispatch(setLoading())
                                                 dispatch(deleteTask(user, category, project, task))
                                                 dispatch(setLoading())
-                                                dispatch(listAllTasks(user))
+                                                dispatch(listTasks(user))
                                                 navigation.navigate('TasksScreen', {
                                                     screen: 'TaskStack',
                                                     params: {

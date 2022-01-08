@@ -1,7 +1,7 @@
 import React from 'react'
-import {Platform, StyleSheet, Text, View} from 'react-native'
-import { Loading } from '../../reusable/utils/loading'
-import { Logo } from '../../reusable/utils/logo'
+import {StyleSheet, Text, View} from 'react-native'
+import {Loading} from '../../reusable/utils/loading'
+import {Logo} from '../../reusable/utils/logo'
 
 export const SplashScreen = () => {
     return (

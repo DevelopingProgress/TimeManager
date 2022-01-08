@@ -1,12 +1,20 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Formik } from 'formik'
+import React, {useCallback, useEffect, useState} from 'react'
+import {Formik} from 'formik'
 import * as Yup from 'yup'
-import { Input, Button } from 'react-native-elements'
-import { Platform, StyleSheet } from 'react-native'
-import { Colors } from '../../../reusable/utils/tools'
-import { useDispatch, useSelector } from 'react-redux'
-import { clearAuthError, clearAuthMessage, loginFacebookUser, loginGoogleUser, loginUser, passwordResetUser, registerUser } from '../../../store/actions/authActions'
-import { useFocusEffect } from '@react-navigation/core'
+import {Button, Input} from 'react-native-elements'
+import {Platform, StyleSheet} from 'react-native'
+import {Colors} from '../../../reusable/utils/tools'
+import {useDispatch, useSelector} from 'react-redux'
+import {
+    clearAuthError,
+    clearAuthMessage,
+    loginFacebookUser,
+    loginGoogleUser,
+    loginUser,
+    passwordResetUser,
+    registerUser
+} from '../../../store/actions/authActions'
+import {useFocusEffect} from '@react-navigation/core'
 import Error from "../../../reusable/utils/error";
 import Message from "../../../reusable/utils/message";
 

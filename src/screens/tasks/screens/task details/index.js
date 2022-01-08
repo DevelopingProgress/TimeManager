@@ -4,7 +4,7 @@ import {StackHeader} from "../../../../reusable/stackHeader";
 import {styles} from "../../../home";
 import {Button, Icon, Text} from "react-native-elements";
 import {clockify, Colors, parseSeconds} from "../../../../reusable/utils/tools";
-import CountdownTimer  from "../../../../reusable/countdownTimer";
+import CountdownTimer from "../../../../reusable/countdownTimer";
 import AddForm from "../../../../reusable/forms/addForm";
 import {clearStatus, setLoading, updateTask} from "../../../../store/actions/tasksActions";
 import {useDispatch, useSelector} from "react-redux";

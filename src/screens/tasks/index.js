@@ -1,11 +1,11 @@
 import React from 'react'
-import { CategoriesScreen } from './screens/categories'
-import { GreetingText } from '../../reusable/utils/greetingText'
-import { ProjectsScreen } from './screens/projects'
-import { LogoutIcon } from '../../reusable/logoutIcon'
-import { View } from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { styles } from '../home'
+import {CategoriesScreen} from './screens/categories'
+import {GreetingText} from '../../reusable/utils/greetingText'
+import {ProjectsScreen} from './screens/projects'
+import {LogoutIcon} from '../../reusable/logoutIcon'
+import {View} from 'react-native'
+import {createStackNavigator} from '@react-navigation/stack'
+import {styles} from '../home'
 import {TaskDetailsScreen} from "./screens/task details";
 import {TaskStack} from "../../stacks/taskStack";
 

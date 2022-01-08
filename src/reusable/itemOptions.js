@@ -1,15 +1,19 @@
-import { Icon, Button } from 'react-native-elements'
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { Colors } from './utils/tools'
+import {Button, Icon} from 'react-native-elements'
+import {Alert, Text, TouchableOpacity, View} from 'react-native'
+import {useDispatch, useSelector} from 'react-redux'
+import {Colors} from './utils/tools'
 import React, {useEffect, useState} from 'react'
 import {
-    clearError, clearMessage,
+    clearError,
+    clearMessage,
     clearStatus,
     deleteCategory,
-    deleteProject, listAllProjects,
+    deleteProject,
+    listProjects,
     listCategories,
-    listProjects, listTasks, setLoading, updateCategory, updateProject
+    setLoading,
+    updateCategory,
+    updateProject
 } from '../store/actions/tasksActions'
 import AddForm from "./forms/addForm";
 import {Loading} from "./utils/loading";
@@ -72,7 +76,7 @@ export const ItemOptions = (props) => {
         if(status === 'project_deleted') {
             dispatch(clearStatus())
             dispatch(setLoading())
-            dispatch(listAllProjects(user))
+            dispatch(listProjects(user))
         }
         if(status === 'category_updated') {
             dispatch(clearStatus())
@@ -84,7 +88,7 @@ export const ItemOptions = (props) => {
             dispatch(clearStatus())
             setModalVisible(false)
             dispatch(setLoading())
-            dispatch(listAllProjects(user))
+            dispatch(listProjects(user))
         }
 
         if(error !== null) {

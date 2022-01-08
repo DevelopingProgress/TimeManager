@@ -84,7 +84,6 @@ export const loginFacebook = async() => {
     } catch (error) {
         return {loading: false, error: "Nie udało się zalogować, błąd logowania poprzez Facebook.", errStatus: error.message}
     }
-
 }
 
 export const loginGoogle = async() => {

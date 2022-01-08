@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Colors } from './utils/tools'
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
-import { Icon } from 'react-native-elements'
-import { useDispatch } from 'react-redux'
-import { logoutUser } from '../store/actions/authActions'
+import {StyleSheet, Text, View} from 'react-native'
+import {Colors} from './utils/tools'
+import {Menu, MenuOption, MenuOptions, MenuTrigger} from 'react-native-popup-menu'
+import {Icon} from 'react-native-elements'
+import {useDispatch} from 'react-redux'
+import {logoutUser} from '../store/actions/authActions'
 import {clearCategories, clearProjects, clearTasks} from '../store/actions/tasksActions'
 
 export const LogoutIcon = ({navigation}) => {
